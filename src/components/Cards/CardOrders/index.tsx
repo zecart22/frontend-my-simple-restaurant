@@ -29,3 +29,36 @@ export const CardOrders = () => {
     </Flex>
   );
 };
+
+interface CardOrderProps {
+  table: number;
+}
+
+export const CardOrdersList = ({ table }: CardOrderProps) => {
+  return (
+    <Flex
+      w={["270px", "380px", "400px", "600px"]}
+      h={"50px"}
+      border={"1px"}
+      borderColor={"theme.gray50"}
+      bg={"theme.white"}
+      boxShadow={"md"}
+      _hover={{
+        transform: "translateY(-2px)",
+        border: "2px",
+        borderColor: "#74F80C",
+      }}
+      transition="border 0.2s, ease 0s, transform 0.2s"
+    >
+      <HStack>
+        <Box w={"20px"} h={"50px"} bg={"theme.green"}></Box>
+        <HStack spacing={[10, 40]}>
+          <Text fontSize={[15, 20]}>Mesa {table}</Text>
+          <Text fontSize={[15, 20]} color={"theme.red"}>
+            ver detalhes
+          </Text>
+        </HStack>
+      </HStack>
+    </Flex>
+  );
+};
