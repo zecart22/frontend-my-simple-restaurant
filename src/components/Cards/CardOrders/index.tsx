@@ -1,4 +1,5 @@
 import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { ModalListItensInOrder } from "../../modal";
 
 export const CardOrders = () => {
   return (
@@ -52,11 +53,9 @@ export const CardOrdersList = ({ table }: CardOrderProps) => {
     >
       <HStack>
         <Box w={"20px"} h={"50px"} bg={"theme.green"}></Box>
-        <HStack spacing={[10, 40]}>
+        <HStack spacing={[10, 80]}>
           <Text fontSize={[15, 20]}>Mesa {table}</Text>
-          <Text fontSize={[15, 20]} color={"theme.red"}>
-            ver detalhes
-          </Text>
+          <ModalListItensInOrder />
         </HStack>
       </HStack>
     </Flex>
