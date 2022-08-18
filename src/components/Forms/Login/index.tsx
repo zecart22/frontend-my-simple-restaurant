@@ -8,6 +8,7 @@ import {
   FormHelperText,
   FormErrorMessage,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 
 import { useAuth } from "../../../contexts/AuthContext";
@@ -16,8 +17,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-/* import { Input } from "../../Input"; */
 
 interface LoginDataProps {
   email: string;
@@ -45,6 +44,7 @@ export const LoginForm = () => {
   const isErrorPassword = inputPassword === "";
 
   const { signIn } = useAuth();
+  const toast = useToast();
 
   const {
     formState: { errors },
@@ -59,6 +59,14 @@ export const LoginForm = () => {
     signIn(data)
       .then((response) => {
         console.log(response);
+        toast({
+          position: "top",
+          title: "Yes...!",
+          description: "login realizado com sucesso",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
       })
       .catch((err) => {
         console.log(err);
