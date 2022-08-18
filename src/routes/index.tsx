@@ -7,6 +7,7 @@ import { OpenOrder } from "../pages/OpenOrder";
 import { CreateProduct } from "../pages/CreateProduct";
 import { ListCategory } from "../pages/ListCategories";
 import { ListOrders } from "../pages/ListOrders";
+import { ListProducts } from "../pages/ListProducts";
 
 export const Routes = () => {
   return (
@@ -19,6 +20,7 @@ export const Routes = () => {
       <Route exact path="/createproduct" component={CreateProduct} />
       <Route exact path="/listcategory" component={ListCategory} />
       <Route exact path="/listorders" component={ListOrders} />
+      <Route exact path="/listproducts" component={ListProducts} />
     </Switch>
   );
 };
