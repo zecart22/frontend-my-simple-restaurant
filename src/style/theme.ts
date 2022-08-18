@@ -4,10 +4,16 @@ const theme = extendTheme({
   colors: {
     theme: {
       white: "#FFFF",
-      black: "#0A0404",
-      red: "#F20606",
-      blue: "#00B9FF",
-      gray: "#D9D9D9",
+      red: "#9F0101",
+      wine: "#5B0101",
+      pink: "#F39494",
+      orange: "#F69420",
+      gray50: "#ECE7E7",
+      gray100: "#8A7F7F",
+      grafit: "#211D1D",
+      yellow: "#F8E00C",
+      green: "#74F80C",
+      blue: "#0CBFF8",
     },
     gray: {
       0: "#f5f5f5",
