@@ -31,7 +31,7 @@ export const Signup = () => {
     >
       {isLargerThan769 ? (
         <>
-          <HStack spacing={250} mt={10}>
+          <HStack spacing={250}>
             <VStack spacing={10} animation={`${AppearFromRight} 3s`}>
               <Text fontSize={100} fontFamily={"Rock Salt, cursive"}>
                 TEXAS
