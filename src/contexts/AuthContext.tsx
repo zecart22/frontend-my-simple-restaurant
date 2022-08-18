@@ -39,7 +39,7 @@ const useAuth = () => {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [data, setData] = useState<AuthState>(() => {
-    const accessToken = localStorage.getItem("@MyDailyEvents:accessToken");
+    const accessToken = localStorage.getItem("@MySimpleRestaurant:accessToken");
 
     if (accessToken) {
       return { accessToken };

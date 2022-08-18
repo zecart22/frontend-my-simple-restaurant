@@ -2,15 +2,69 @@ import {
   Flex,
   VStack,
   Text,
-  Link,
   FormLabel,
   FormControl,
   Button,
+  FormHelperText,
+  FormErrorMessage,
+  Input,
 } from "@chakra-ui/react";
 
-import { Input } from "../../Input";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+/* import { Input } from "../../Input"; */
+
+interface LoginDataProps {
+  email: string;
+  password: string;
+}
+
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Email obrigatório")
+    .email("Digite um email válido"),
+  password: yup.string().required("Senha obrigatória"),
+});
 
 export const LoginForm = () => {
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+
+  const handleInputChangeEmail = (e: any) => setInputEmail(e.target.value);
+
+  const handleInputChangePassword = (e: any) =>
+    setInputPassword(e.target.value);
+
+  const isErrorEmail = inputEmail === "";
+  const isErrorPassword = inputPassword === "";
+
+  const { signIn } = useAuth();
+
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const handleLogin = (data: LoginDataProps) => {
+    console.log(data);
+    signIn(data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Flex
       _hover={{
@@ -30,13 +84,34 @@ export const LoginForm = () => {
         <Text fontSize={30} mt={10}>
           Login
         </Text>
-        <FormControl>
+        <FormControl isRequired isInvalid={isErrorEmail}>
           <FormLabel>Email:</FormLabel>
-          <Input placeholder={"adicione seu email"} />
+          <Input
+            placeholder={"adicione seu email"}
+            {...register("email")}
+            value={inputEmail}
+            onChange={handleInputChangeEmail}
+          />
+          {isErrorEmail ? (
+            <FormHelperText>adicione seu email de cadastro</FormHelperText>
+          ) : (
+            <FormErrorMessage>email obrigatório</FormErrorMessage>
+          )}
         </FormControl>
-        <FormControl>
+        <FormControl isRequired isInvalid={isErrorPassword}>
           <FormLabel>Senha:</FormLabel>
-          <Input placeholder={"coloque sua senha"} type="password" />
+          <Input
+            placeholder={"coloque sua senha"}
+            type="password"
+            {...register("password")}
+            value={inputPassword}
+            onChange={handleInputChangePassword}
+          />
+          {isErrorPassword ? (
+            <FormHelperText>coloque sua senha de cadastro </FormHelperText>
+          ) : (
+            <FormErrorMessage>senha obrigatória</FormErrorMessage>
+          )}
         </FormControl>
         <Button
           w={"350px"}
@@ -48,15 +123,15 @@ export const LoginForm = () => {
           borderColor={"theme.grafit"}
           boxShadow={"md"}
           type={"submit"}
+          onClick={handleSubmit(handleLogin as any)}
         >
           Entrar
         </Button>
 
         <VStack>
           <Text>Novo por aqui ?</Text>
-          <Link>
+          <Link to={"/signup"}>
             <Text fontSize={15} color={"theme.red"}>
-              {" "}
               Clique aqui para se cadastrar
             </Text>
           </Link>

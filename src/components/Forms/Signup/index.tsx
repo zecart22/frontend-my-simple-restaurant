@@ -2,14 +2,39 @@ import {
   Flex,
   VStack,
   Text,
-  Link,
   FormLabel,
   FormControl,
   Button,
   Select,
+  Input,
 } from "@chakra-ui/react";
 
-import { Input } from "../../Input";
+import { Link } from "react-router-dom";
+
+import { useAuth } from "../../../contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+
+interface SignUpDataProps {
+  name: string;
+  email: string;
+  password: string;
+  type: string;
+  adress: string;
+}
+
+const signupSchema = yup.object().shape({
+  name: yup.string().required("Nome obrigatório"),
+  email: yup
+    .string()
+    .required("Email obrigatório")
+    .email("Digite um email válido"),
+  password: yup.string().required("Senha obrigatória"),
+  type: yup.string().required("Tipo de usuário obrigatório"),
+  adress: yup.string().required("Endereço obrigatório"),
+});
 
 export const SignupForm = () => {
   return (
@@ -81,9 +106,8 @@ export const SignupForm = () => {
 
         <VStack>
           <Text>Já tem cadastro ?</Text>
-          <Link>
+          <Link to={"/"}>
             <Text fontSize={15} color={"theme.red"}>
-              {" "}
               Clique aqui para logar
             </Text>
           </Link>

@@ -14,13 +14,13 @@ import {
 
 import { FaUserCircle } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
-/* import { useAuth } from "../../contexts/AuthContext"; */
+import { useAuth } from "../../contexts/AuthContext";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { BiLogOut } from "react-icons/bi";
 
 export const Header = () => {
-  /* const { signOut } = useAuth(); */
+  const { signOut } = useAuth();
 
   const AppearFromRight = keyframes`
   from {opacity: 0;}
@@ -93,7 +93,7 @@ export const Header = () => {
                   <Button
                     variant={"ghost"}
                     color={"theme.red"}
-                    /*  onClick={signOut} */
+                    onClick={signOut}
                   >
                     Log Out
                   </Button>
