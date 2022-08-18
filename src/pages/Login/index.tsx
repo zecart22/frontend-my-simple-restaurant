@@ -15,7 +15,7 @@ import { LoginForm } from "../../components/Forms/Login";
 export const Login = () => {
   const AppearFromRight = keyframes`
   from {opacity: 0;}
-  to {transform: translateX(-5px)}
+  to {transform: translateX(0px)}
   `;
   const [isLargerThan769] = useMediaQuery("(min-width: 1050px)");
 
@@ -53,7 +53,7 @@ export const Login = () => {
         <>
           <VStack spacing={50}>
             <VStack animation={`${AppearFromRight} 3s`}>
-              <Text fontSize={100} fontFamily={"Rock Salt, cursive"}>
+              <Text fontSize={80} fontFamily={"Rock Salt, cursive"}>
                 TEXAS
               </Text>
               <VStack bg={"theme.red"} h={"80px"} w={"250px"}>

@@ -17,18 +17,19 @@ export const LoginForm = () => {
         transform: "translateY(-2px)",
       }}
       transition="border 0.2s, ease 0s, transform 0.2s"
-      w={"400px"}
+      w={["370px", "400px"]}
       h={"600px"}
       border={"1px"}
       borderColor={"theme.grafit"}
       boxShadow={"dark-lg"}
       bg={"theme.white"}
-      alignItems={"center"}
       justifyContent={"center"}
       color={"theme.grafit"}
     >
       <VStack spacing={10}>
-        <Text fontSize={30}>Login</Text>
+        <Text fontSize={30} mt={10}>
+          Login
+        </Text>
         <FormControl>
           <FormLabel>Email:</FormLabel>
           <Input placeholder={"adicione seu email"} />

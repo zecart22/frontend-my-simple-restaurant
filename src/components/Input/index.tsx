@@ -8,7 +8,7 @@ import {
 export const Input = ({ ...rest }: InputProps) => {
   return (
     <CkakraInput
-      w={"350px"}
+      w={["340px", "350px"]}
       h={"50px"}
       border={"2px"}
       borderColor={"theme.grafit"}
