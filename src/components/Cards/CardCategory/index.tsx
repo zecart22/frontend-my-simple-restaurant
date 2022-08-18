@@ -29,3 +29,32 @@ export const CardCategory = () => {
     </Flex>
   );
 };
+
+interface CardCategoryProps {
+  title: string;
+}
+
+export const CardCategoryName = ({ title }: CardCategoryProps) => {
+  return (
+    <Flex
+      w={["270px", "380px", "400px", "600px"]}
+      h={"50px"}
+      border={"1px"}
+      borderColor={"theme.gray50"}
+      bg={"theme.white"}
+      boxShadow={"md"}
+      _hover={{
+        transform: "translateY(-2px)",
+        border: "2px",
+        borderColor: "#f0f00c",
+      }}
+      transition="border 0.2s, ease 0s, transform 0.2s"
+    >
+      <HStack>
+        <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
+
+        <Text fontSize={20}>{title}</Text>
+      </HStack>
+    </Flex>
+  );
+};
