@@ -1,5 +1,6 @@
 import { VStack, Text, Input, Button } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
+import { Link } from "react-router-dom";
 
 export const CreateCategory = () => {
   return (
@@ -22,9 +23,11 @@ export const CreateCategory = () => {
           children={"Criar Categoria"}
           bg={"theme.yellow"}
         />
-        <Text fontSize={20} color={"theme.red"}>
-          Ver todas categorias
-        </Text>
+        <Link to={"/listcategory"}>
+          <Text fontSize={20} color={"theme.red"}>
+            Ver todas categorias
+          </Text>
+        </Link>
       </VStack>
     </>
   );

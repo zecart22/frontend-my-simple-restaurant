@@ -13,6 +13,7 @@ import {
 import { RiImageAddFill } from "react-icons/ri";
 import { TextArea } from "../../components/Input";
 import { Header } from "../../components/Header";
+import { Link } from "react-router-dom";
 
 export const CreateProduct = () => {
   return (
@@ -22,9 +23,11 @@ export const CreateProduct = () => {
       <VStack mt={50} spacing={6} justifyContent={"center"}>
         <HStack spacing={[70, 100]}>
           <Text fontSize={[20, 30]}>Novo produto</Text>
-          <Text fontSize={[15, 20]} color={"theme.red"}>
-            Ver todos pedidos
-          </Text>
+          <Link to={"/listproducts"}>
+            <Text fontSize={[15, 20]} color={"theme.red"}>
+              Ver todos produtos
+            </Text>
+          </Link>
         </HStack>
         <VStack>
           <RiImageAddFill size={70} />

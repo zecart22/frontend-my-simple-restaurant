@@ -1,5 +1,6 @@
 import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import { ModalListItensInOrder } from "../../modal";
+import { Link } from "react-router-dom";
 
 export const CardOrders = () => {
   return (
@@ -22,8 +23,12 @@ export const CardOrders = () => {
         <VStack spacing={5}>
           <Text fontSize={30}>Produtos</Text>
           <VStack spacing={2} w={"200px"} textAlign={"center"}>
-            <Text color={"gray.300"}>Ver produtos</Text>
-            <Text color={"gray.300"}>Criar produtos</Text>
+            <Link to={"/listproducts"}>
+              <Text color={"gray.300"}>Ver produtos</Text>
+            </Link>
+            <Link to={"/createproduct"}>
+              <Text color={"gray.300"}>Criar produtos</Text>
+            </Link>
           </VStack>
         </VStack>
       </HStack>

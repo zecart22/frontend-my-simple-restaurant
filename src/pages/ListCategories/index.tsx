@@ -2,6 +2,7 @@ import { VStack, Text, HStack } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardCategoryName } from "../../components/Cards/CardCategory";
+import { Link } from "react-router-dom";
 
 export const ListCategory = () => {
   return (
@@ -14,12 +15,12 @@ export const ListCategory = () => {
         <CardCategoryName title={"Porção"} />
         <CardCategoryName title={"Combo"} />
         <CardCategoryName title={"Bebidas"} />
-        <HStack>
-          <MdOutlineAddBox size={50} color={"theme.gray100"} />
-          <Text fontSize={20} color={"theme.red"}>
-            Adicionar categorias
-          </Text>
-        </HStack>
+        <Link to={"/createcategory"}>
+          <HStack>
+            <MdOutlineAddBox size={50} color={"theme.gray100"} />
+            <Text>Adicionar categorias</Text>
+          </HStack>
+        </Link>
       </VStack>
     </>
   );

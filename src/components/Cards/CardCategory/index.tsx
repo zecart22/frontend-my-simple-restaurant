@@ -1,4 +1,5 @@
 import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export const CardCategory = () => {
   return (
@@ -21,8 +22,12 @@ export const CardCategory = () => {
         <VStack spacing={5}>
           <Text fontSize={30}>Categorias</Text>
           <VStack spacing={2} w={"200px"} textAlign={"center"}>
-            <Text color={"gray.300"}>Ver Categorias</Text>
-            <Text color={"gray.300"}>Criar Categorias</Text>
+            <Link to={"/listcategory"}>
+              <Text color={"gray.300"}>Ver Categorias</Text>
+            </Link>
+            <Link to={"/createcategory"}>
+              <Text color={"gray.300"}>Criar Categorias</Text>
+            </Link>
           </VStack>
         </VStack>
       </HStack>

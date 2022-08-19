@@ -2,6 +2,7 @@ import { VStack, Text, HStack } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardProduct } from "../../components/Cards/CardProduct";
+import { Link } from "react-router-dom";
 import img from "../../assets/images/lanche.png";
 
 export const ListProducts = () => {
@@ -24,9 +25,11 @@ export const ListProducts = () => {
         />
         <HStack mt={20}>
           <MdOutlineAddBox size={50} color={"theme.gray100"} />
-          <Text fontSize={20} color={"theme.red"}>
-            Criar novo produto
-          </Text>
+          <Link to={"/createproduct"}>
+            <Text fontSize={20} color={"theme.red"}>
+              Criar novo produto
+            </Text>
+          </Link>
         </HStack>
       </VStack>
     </>

@@ -1,5 +1,6 @@
 import { VStack, Text, Input, Button } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
+import { Link } from "react-router-dom";
 
 export const OpenOrder = () => {
   return (
@@ -30,9 +31,11 @@ export const OpenOrder = () => {
           children={"Abrir pedido"}
           bg={"theme.blue"}
         />
-        <Text fontSize={20} color={"theme.red"}>
-          Ver todos pedidos
-        </Text>
+        <Link to={"/listorders"}>
+          <Text fontSize={20} color={"theme.red"}>
+            Ver todos pedidos
+          </Text>
+        </Link>
       </VStack>
     </>
   );

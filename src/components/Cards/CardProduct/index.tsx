@@ -9,6 +9,7 @@ import {
   Center,
   useMediaQuery,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export const CardProductSection = () => {
   return (
@@ -31,8 +32,12 @@ export const CardProductSection = () => {
         <VStack spacing={5}>
           <Text fontSize={30}>Pedidos</Text>
           <VStack spacing={2} w={"200px"} textAlign={"center"}>
-            <Text color={"gray.300"}>Ver Pedidos</Text>
-            <Text color={"gray.300"}>Criar novo Pedido</Text>
+            <Link to={"/listorders"}>
+              <Text color={"gray.300"}>Ver Pedidos</Text>
+            </Link>
+            <Link to={"/openorder"}>
+              <Text color={"gray.300"}>Criar novo Pedido</Text>
+            </Link>
           </VStack>
         </VStack>
       </HStack>
