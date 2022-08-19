@@ -5,7 +5,6 @@ import {
   VStack,
   Image,
   Box,
-  Link,
   Text,
   Button,
   useMediaQuery,
@@ -14,12 +13,15 @@ import {
 
 import { FaUserCircle } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
+import { MdDashboardCustomize } from "react-icons/md";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
+import { api } from "../../services";
 
 import { BiLogOut } from "react-icons/bi";
 
 export const Header = () => {
+  const email = localStorage.getItem("@AcessUserEmail");
   const { signOut } = useAuth();
 
   const AppearFromRight = keyframes`
@@ -36,10 +38,10 @@ export const Header = () => {
   const [isLargerThan1302] = useMediaQuery("(min-width: 1302px)");
 
   const location = useLocation();
-  let isHome = true;
+  let isDash = true;
 
-  if (location.pathname !== "/") {
-    isHome = false;
+  if (location.pathname !== "/dashboard") {
+    isDash = false;
   }
 
   return (
@@ -75,21 +77,35 @@ export const Header = () => {
             </Flex>
             <Flex alignItems="flex-end" mb={"10px"}>
               <HStack spacing="8" mr={5}>
+                {!isDash ? (
+                  <>
+                    <Link to={"/dashboard"}>
+                      <VStack>
+                        <MdDashboardCustomize size={50} color={"white"} />
+
+                        <Text color={"theme.white"}>Dashboard</Text>
+                      </VStack>
+                    </Link>
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <VStack spacing={2}>
-                  <FaUserCircle size={45} />
+                  <FaUserCircle size={45} color={"white"} />
 
                   <Text
                     textDecoration={"none"}
                     fontWeight={"extrabold"}
                     textAlign={"left"}
-                    color={"gray"}
+                    color={"theme.white"}
                   >
-                    Olá {"usuário"}
+                    Olá {email}
                   </Text>
                 </VStack>
 
                 <VStack>
-                  <BiLogOut size={50} />
+                  <BiLogOut size={50} color={"white"} />
                   <Button
                     variant={"ghost"}
                     color={"theme.red"}
@@ -123,7 +139,7 @@ export const Header = () => {
                   <Button
                     variant={"ghost"}
                     color={"theme.red"}
-                    /* onClick={signOut} */
+                    onClick={signOut}
                   >
                     Log Out
                   </Button>

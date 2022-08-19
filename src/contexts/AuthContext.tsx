@@ -54,6 +54,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const { accessToken } = response.data;
     localStorage.setItem("@MySimpleRestaurant:accessToken", accessToken);
     window.localStorage.setItem("@AcessToken", response.data.token);
+    window.localStorage.setItem("@AcessUserID", response.data.id);
+    window.localStorage.setItem("@AcessUserEmail", response.data.email);
 
     setData({ accessToken });
   }, []);

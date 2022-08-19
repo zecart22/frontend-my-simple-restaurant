@@ -52,12 +52,12 @@ export const CardOrdersList = ({ table }: CardOrderProps) => {
       _hover={{
         transform: "translateY(-2px)",
         border: "2px",
-        borderColor: "#74F80C",
+        borderColor: "#0CBFF8",
       }}
       transition="border 0.2s, ease 0s, transform 0.2s"
     >
       <HStack>
-        <Box w={"20px"} h={"50px"} bg={"theme.green"}></Box>
+        <Box w={"20px"} h={"50px"} bg={"theme.blue"}></Box>
         <HStack spacing={[10, 80]}>
           <Text fontSize={[15, 20]}>Mesa {table}</Text>
           <ModalListItensInOrder />
