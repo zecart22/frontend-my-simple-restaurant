@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useCallback } from "react";
 import { useState, useEffect } from "react";
 import { api } from "../../services";
 
@@ -24,15 +24,19 @@ export const CategoriesProvider = ({ children }: CategoryProviderProps) => {
 
   const token = localStorage.getItem("@AcessToken");
 
-  useEffect(() => {
-    api
-      .get(`/categories_list`, {
+  const loadCategory = useCallback(async () => {
+    try {
+      const response = await api.get(`/categories_list`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        setCategoryData(response.data);
-      })
-      .catch((err) => console.log(err));
+      });
+      setCategoryData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadCategory();
   }, []);
 
   const category = categoryData;

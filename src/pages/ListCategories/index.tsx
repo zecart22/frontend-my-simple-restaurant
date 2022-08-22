@@ -3,11 +3,33 @@ import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardCategoryName } from "../../components/Cards/CardCategory";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { CategoryContext } from "../../contexts/CategoriesContext";
+import { useCallback, useEffect, useState } from "react";
+import { api } from "../../services";
+
+interface Category {
+  name: string;
+  id: string;
+}
 
 export const ListCategory = () => {
-  const { category } = useContext(CategoryContext);
+  const [categoryData, setCategoryData] = useState([]);
+
+  const token = localStorage.getItem("@AcessToken");
+
+  const loadCategory = useCallback(async () => {
+    try {
+      const response = await api.get(`/categories_list`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCategoryData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadCategory();
+  }, []);
 
   return (
     <>
@@ -15,22 +37,15 @@ export const ListCategory = () => {
       <VStack mt={50} spacing={5} justifyContent={"center"}>
         <Text fontSize={30}>Lista de Categorias</Text>
 
-        {category.length > 0 ? (
+        {categoryData.length > 0 ? (
           <>
-            {category &&
-              category.map((category) => (
+            {categoryData &&
+              categoryData.map((category: Category) => (
                 <CardCategoryName title={category.name} />
               ))}
           </>
         ) : (
-          <VStack>
-            <Text fontSize={"5xl"} fontFamily={"Rock Salt, cursive"}>
-              Ops nada por aqui
-            </Text>
-            <Link to={"/createcategory"}>
-              <Text fontSize={10}>Clique aqui para criar uma categoria</Text>
-            </Link>
-          </VStack>
+          <Text>...carregando categorias</Text>
         )}
         <Link to={"/createcategory"}>
           <HStack>
@@ -42,3 +57,4 @@ export const ListCategory = () => {
     </>
   );
 };
+
