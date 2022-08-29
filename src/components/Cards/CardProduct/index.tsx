@@ -8,6 +8,7 @@ import {
   theme,
   Center,
   useMediaQuery,
+  keyframes,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -67,14 +68,22 @@ export const CardProduct = ({
   category,
 }: CardProductsProps) => {
   const [isLargerThan850] = useMediaQuery("(min-width: 850px)");
+  const AppearFromRight = keyframes`
+  from {opacity: 0;}
+  to {transform: translateX(0px)}
+`;
+
+  console.log(image);
 
   return (
     <>
       {isLargerThan850 ? (
         <>
           <Box
+            animation={`${AppearFromRight} 2s`}
+            mt={50}
             w={"800px"}
-            h={"270px"}
+            h={"300px"}
             border={"1px"}
             borderColor={["theme.grafit", "theme.gray50"]}
             bg={"theme.white"}
@@ -97,13 +106,19 @@ export const CardProduct = ({
                 ml={5}
               ></Box>
               <VStack>
-                <Text fontSize={20} fontWeight={"semibold"}>
+                <Text fontSize={20} fontWeight={"semibold"} w={"350px"}>
                   {title}
                 </Text>
                 <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
                   Preço : {price}
                 </Text>
-                <Image src={image} />
+                <Image
+                  maxWidth={"100%"}
+                  w={"220px"}
+                  h={"220px"}
+                  objectFit={"contain"}
+                  src={image}
+                />
               </VStack>
               <VStack spacing={10}>
                 <Text mb={5}>{description}</Text>
@@ -137,18 +152,24 @@ export const CardProduct = ({
                   >
                     {size.toLocaleUpperCase()}
                   </Box>
-                  <Box
-                    mt={[5, 5, 5, 0]}
-                    mb={[5, 5, 5, 0]}
-                    boxShadow={"md"}
-                    h={"25px"}
-                    w={"130px"}
-                    bg={"theme.red"}
-                    borderRadius={[40, 10, 40, 10]}
-                    textAlign={"center"}
-                  >
-                    {protein.toLocaleUpperCase()}
-                  </Box>
+                  {protein === "nenhuma" ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Box
+                        mt={[5, 5, 5, 0]}
+                        mb={[5, 5, 5, 0]}
+                        boxShadow={"md"}
+                        h={"25px"}
+                        w={"130px"}
+                        bg={"theme.red"}
+                        borderRadius={[40, 10, 40, 10]}
+                        textAlign={"center"}
+                      >
+                        {protein.toLocaleUpperCase()}
+                      </Box>
+                    </>
+                  )}
                 </HStack>
               </VStack>
             </HStack>
@@ -157,7 +178,7 @@ export const CardProduct = ({
       ) : (
         <>
           <Box
-            mt={5}
+            mb={10}
             w={"350px"}
             h={"570px"}
             border={"1px"}

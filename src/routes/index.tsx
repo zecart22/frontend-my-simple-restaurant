@@ -8,12 +8,14 @@ import { CreateProduct } from "../pages/CreateProduct";
 import { ListCategory } from "../pages/ListCategories";
 import { ListOrders } from "../pages/ListOrders";
 import { ListProducts } from "../pages/ListProducts";
+
 import { Route } from "./Route";
 
 export const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Login} />
+
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/dashboard" component={Dashboard} isPrivate />
       <Route

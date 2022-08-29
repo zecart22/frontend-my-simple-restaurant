@@ -13,12 +13,24 @@ interface Category {
   id: string;
 }
 
+interface ProductsData {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  hungryLevel: string;
+  protein: string;
+  image: string;
+  category: string;
+}
+
 export const ListProducts = () => {
   const [categoryData, setCategoryData] = useState([]);
 
   const [productByCategory, setProductByCategory] = useState([]);
 
   const [category_id, setCategoryId] = useState("");
+
   console.log(category_id);
 
   const token = localStorage.getItem("@AcessToken");
@@ -42,21 +54,6 @@ export const ListProducts = () => {
     loadCategory();
   }, []);
 
-  /*  const loadProductsByCategory = useCallback(async (category_id: any) => {
-    try {
-      const response = await api.get(
-        `/category/product?category_id=${category_id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log("response : " + response.data);
-      setProductByCategory(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []); */
-
   const TakeProducts = (category_id: any) => {
     console.log(`category :${category_id}`);
     api
@@ -74,18 +71,7 @@ export const ListProducts = () => {
     TakeProducts(category_id);
   }, []);
 
-  console.log(productByCategory);
-
-  interface ProductsData {
-    id: string;
-    name: string;
-    description: string;
-    price: string;
-    hungryLevel: string;
-    protein: string;
-    image: string;
-    category: string;
-  }
+  console.log(productByCategory[0]);
 
   return (
     <>
@@ -107,7 +93,13 @@ export const ListProducts = () => {
                 <option value={category.id}>{category.name}</option>
               ))}
           </Select>
-          <Button onClick={(e) => TakeProducts(category_id)}>Procurar</Button>
+          <Button
+            bg={"theme.green"}
+            h={"50px"}
+            onClick={(e) => TakeProducts(category_id)}
+          >
+            Procurar
+          </Button>
         </HStack>
 
         {productByCategory.length > 0 ? (
