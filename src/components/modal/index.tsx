@@ -60,7 +60,7 @@ export const ModalListItensInOrder = (/* { products }: ListIntesProps */) => {
             <Text color={"theme.red"}>Lista de itens </Text>
           </ModalBody>
           <Box ml={[2, 10]}>
-            <CardProduct
+            {/*  <CardProduct
               category={"Sanduiche"}
               description={
                 "Este vem desde 1957: pão com gergelim, hambúrguer de carne grelhada no fogo, queijo derretido, alface, tomate, cebola, picles, ketchup e a maionese Texas"
@@ -71,7 +71,7 @@ export const ModalListItensInOrder = (/* { products }: ListIntesProps */) => {
               protein={"carne"}
               size={"grande"}
               title={"Super X-Salada"}
-            />
+            /> */}
           </Box>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>

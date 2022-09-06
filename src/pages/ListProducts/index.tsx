@@ -1,10 +1,15 @@
-import { VStack, Text, HStack, Select, Button } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  HStack,
+  Select,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardProduct } from "../../components/Cards/CardProduct";
 import { Link } from "react-router-dom";
-
-import img from "../../assets/images/lanche.png";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "../../services";
 
@@ -71,36 +76,51 @@ export const ListProducts = () => {
     TakeProducts(category_id);
   }, []);
 
-  console.log(productByCategory[0]);
-
   return (
     <>
       <Header />
       <VStack mt={50} spacing={5} justifyContent={"center"}>
         <Text fontSize={30}>Lista de Produtos</Text>
-        <HStack>
-          <Select
-            w={["270px", "380px", "400px", "800px"]}
-            h={"50px"}
-            placeholder={"Selecione uma categoria"}
-            border={"1px"}
-            borderColor={"theme.gray50"}
-            boxShadow={"md"}
-            onChange={(e) => handleCategoryId(e.target.value)}
-          >
-            {categoryData &&
-              categoryData.map((category: Category) => (
-                <option value={category.id}>{category.name}</option>
-              ))}
-          </Select>
-          <Button
-            bg={"theme.green"}
-            h={"50px"}
-            onClick={(e) => TakeProducts(category_id)}
-          >
-            Procurar
-          </Button>
-        </HStack>
+        <VStack>
+          <HStack>
+            <MdOutlineAddBox size={50} color={"theme.gray100"} />
+            <Link to={"/createproduct"}>
+              <Text fontSize={20} color={"theme.red"}>
+                Criar novo produto
+              </Text>
+            </Link>
+          </HStack>
+          <HStack>
+            <Select
+              w={["270px", "380px", "400px", "800px"]}
+              h={"50px"}
+              placeholder={"Selecione uma categoria"}
+              border={"1px"}
+              borderColor={"theme.gray50"}
+              boxShadow={"md"}
+              onChange={(e) => handleCategoryId(e.target.value)}
+            >
+              {categoryData &&
+                categoryData.map((category: Category) => (
+                  <option value={category.id}>{category.name}</option>
+                ))}
+            </Select>
+            <Button
+              color={"theme.white"}
+              bg={"theme.red"}
+              h={"50px"}
+              onClick={(e) => TakeProducts(category_id)}
+              _hover={{
+                color: "black",
+                bg: "white",
+                border: "1px",
+                borderColor: "black",
+              }}
+            >
+              Procurar
+            </Button>
+          </HStack>
+        </VStack>
 
         {productByCategory.length > 0 ? (
           <>
@@ -115,6 +135,8 @@ export const ListProducts = () => {
                   protein={product.protein}
                   size={product.hungryLevel}
                   title={product.name}
+                  productByCategory={productByCategory}
+                  setProductByCategory={setProductByCategory}
                 />
               ))}
           </>
@@ -123,15 +145,6 @@ export const ListProducts = () => {
             <Text>Opss...nenhum produto nessa categoria .</Text>
           </>
         )}
-
-        <HStack mt={20}>
-          <MdOutlineAddBox size={50} color={"theme.gray100"} />
-          <Link to={"/createproduct"}>
-            <Text fontSize={20} color={"theme.red"}>
-              Criar novo produto
-            </Text>
-          </Link>
-        </HStack>
       </VStack>
     </>
   );

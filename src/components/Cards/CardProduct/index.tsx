@@ -1,51 +1,17 @@
 import {
   Box,
-  Flex,
   HStack,
   Text,
   VStack,
   Image,
-  theme,
-  Center,
+  useToast,
   useMediaQuery,
   keyframes,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 
-export const CardProductSection = () => {
-  return (
-    <Flex
-      w={["270px", "380px", "400px", "600px"]}
-      h={"150px"}
-      border={"1px"}
-      borderColor={"theme.gray50"}
-      bg={"theme.white"}
-      boxShadow={"md"}
-      _hover={{
-        transform: "translateY(-2px)",
-        border: "2px",
-        borderColor: "#0CBFF8",
-      }}
-      transition="border 0.2s, ease 0s, transform 0.2s"
-    >
-      <HStack>
-        <Box w={"80px"} h={"150px"} bg={"theme.blue"}></Box>
-        <VStack spacing={5}>
-          <Text fontSize={30}>Pedidos</Text>
-          <VStack spacing={2} w={"200px"} textAlign={"center"}>
-            <Link to={"/listorders"}>
-              <Text color={"gray.300"}>Ver Pedidos</Text>
-            </Link>
-            <Link to={"/openorder"}>
-              <Text color={"gray.300"}>Criar novo Pedido</Text>
-            </Link>
-          </VStack>
-        </VStack>
-      </HStack>
-    </Flex>
-  );
-};
-
+import { api } from "../../../services";
+import { useState } from "react";
+import { IoIosAlert } from "react-icons/io";
 interface CardProductsProps {
   id: string;
   title: string;
@@ -55,6 +21,8 @@ interface CardProductsProps {
   protein: string;
   image: string;
   category: string;
+  productByCategory: any;
+  setProductByCategory: any;
 }
 
 export const CardProduct = ({
@@ -66,14 +34,63 @@ export const CardProduct = ({
   protein,
   size,
   category,
+  productByCategory,
+  setProductByCategory,
 }: CardProductsProps) => {
   const [isLargerThan850] = useMediaQuery("(min-width: 850px)");
+
+  const [wantDelete, setWantDelete] = useState(false);
+
+  const handleWantDelete = () => {
+    setWantDelete(true);
+  };
+
+  if (wantDelete) {
+    setTimeout(() => {
+      setWantDelete(false);
+    }, 5000);
+  }
+
   const AppearFromRight = keyframes`
   from {opacity: 0;}
   to {transform: translateX(0px)}
 `;
 
-  console.log(image);
+  const token = localStorage.getItem("@AcessToken");
+  const toast = useToast();
+  const handleDelete = async () => {
+    await api
+      .delete("/product?product_id=" + id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        const index = productByCategory.findIndex((e: any) => e.id === id);
+        productByCategory.splice(index, 1);
+        setProductByCategory([...productByCategory]);
+        toast({
+          position: "top",
+          title: "Yes...!",
+          description: "Produto deletado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        toast({
+          position: "top",
+          title: "Opss algo deu errado!",
+          description: err,
+          status: "error",
+          duration: 500,
+          isClosable: true,
+        });
+        console.log(err);
+      });
+  };
+
+  console.log(productByCategory);
 
   return (
     <>
@@ -82,7 +99,7 @@ export const CardProduct = ({
           <Box
             animation={`${AppearFromRight} 2s`}
             mt={50}
-            w={"800px"}
+            w={"1000px"}
             h={"300px"}
             border={"1px"}
             borderColor={["theme.grafit", "theme.gray50"]}
@@ -171,6 +188,34 @@ export const CardProduct = ({
                     </>
                   )}
                 </HStack>
+                <HStack spacing={10} fontSize={20}>
+                  <Text as="button" color={"theme.red"}>
+                    Editar
+                  </Text>
+                  {!wantDelete ? (
+                    <>
+                      <Text
+                        as="button"
+                        color={"theme.red"}
+                        onClick={handleWantDelete as any}
+                      >
+                        Deletar
+                      </Text>
+                    </>
+                  ) : (
+                    <HStack>
+                      <IoIosAlert color={"#ec0909"} size={30} />
+                      <Text
+                        as="button"
+                        color={"theme.red"}
+                        onClick={handleDelete as any}
+                        fontWeight={"extrabold"}
+                      >
+                        Clique para confirmar
+                      </Text>
+                    </HStack>
+                  )}
+                </HStack>
               </VStack>
             </HStack>
           </Box>
@@ -255,6 +300,34 @@ export const CardProduct = ({
                       Proteína: {protein.toLocaleUpperCase()}
                     </Box>
                   </VStack>
+                  <HStack spacing={5} fontSize={20}>
+                    <Text as="button" color={"theme.red"}>
+                      Editar
+                    </Text>
+                    {!wantDelete ? (
+                      <>
+                        <Text
+                          as="button"
+                          color={"theme.red"}
+                          onClick={handleWantDelete as any}
+                        >
+                          Deletar
+                        </Text>
+                      </>
+                    ) : (
+                      <HStack>
+                        <IoIosAlert color={"#ec0909"} size={30} />
+                        <Text
+                          as="button"
+                          color={"theme.red"}
+                          onClick={handleDelete as any}
+                          fontWeight={"extrabold"}
+                        >
+                          Clique para confirmar
+                        </Text>
+                      </HStack>
+                    )}
+                  </HStack>
                 </VStack>
               </VStack>
             </HStack>
