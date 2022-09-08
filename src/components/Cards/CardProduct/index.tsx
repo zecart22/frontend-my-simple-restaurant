@@ -12,6 +12,7 @@ import {
 import { api } from "../../../services";
 import { useState } from "react";
 import { IoIosAlert } from "react-icons/io";
+import { Link } from "react-router-dom";
 interface CardProductsProps {
   id: string;
   title: string;
@@ -189,9 +190,10 @@ export const CardProduct = ({
                   )}
                 </HStack>
                 <HStack spacing={10} fontSize={20}>
-                  <Text as="button" color={"theme.red"}>
+                  <Link to={`/editproduct/${id}`} color={"theme.red"}>
                     Editar
-                  </Text>
+                  </Link>
+
                   {!wantDelete ? (
                     <>
                       <Text
