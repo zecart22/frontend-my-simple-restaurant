@@ -38,7 +38,7 @@ export const CardProduct = ({
   productByCategory,
   setProductByCategory,
 }: CardProductsProps) => {
-  const [isLargerThan850] = useMediaQuery("(min-width: 850px)");
+  const [isLargerThan850] = useMediaQuery("(min-width: 1281px)");
 
   const [wantDelete, setWantDelete] = useState(false);
 
@@ -101,7 +101,6 @@ export const CardProduct = ({
             animation={`${AppearFromRight} 2s`}
             mt={50}
             w={"1000px"}
-            h={"300px"}
             border={"1px"}
             borderColor={["theme.grafit", "theme.gray50"]}
             bg={"theme.white"}
@@ -227,7 +226,6 @@ export const CardProduct = ({
           <Box
             mb={10}
             w={"350px"}
-            h={"570px"}
             border={"1px"}
             borderColor={"theme.gray100"}
             borderLeft={"5px"}
@@ -303,9 +301,10 @@ export const CardProduct = ({
                     </Box>
                   </VStack>
                   <HStack spacing={5} fontSize={20}>
-                    <Text as="button" color={"theme.red"}>
+                    <Link to={`/editproduct/${id}`} color={"theme.red"}>
                       Editar
-                    </Text>
+                    </Link>
+
                     {!wantDelete ? (
                       <>
                         <Text

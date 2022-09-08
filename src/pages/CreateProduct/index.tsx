@@ -236,9 +236,9 @@ export const CreateProduct = () => {
             boxShadow={"md"}
             {...register("hungryLevel")}
           >
-            <option value={"grande"}>{"grande"}</option>
-            <option value={"medio"}>{"medio"}</option>
             <option value={"pequeno"}>{"pequeno"}</option>
+            <option value={"medio"}>{"medio"}</option>
+            <option value={"grande"}>{"grande"}</option>
           </Select>
 
           <Input
