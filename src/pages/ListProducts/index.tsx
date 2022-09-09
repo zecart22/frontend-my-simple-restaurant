@@ -39,6 +39,7 @@ export const ListProducts = () => {
   const [productData, setProductData] = useState([]);
 
   const [category_id, setCategoryId] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [size, setSize] = useState("");
   const [protein, setProtein] = useState("");
 
@@ -51,11 +52,11 @@ export const ListProducts = () => {
   };
 
   const handleSize = (size: any) => {
-    setCategoryId(size);
+    setSize(size);
   };
 
   const handleProtein = (protein: any) => {
-    setCategoryId(protein);
+    setProtein(protein);
   };
 
   const loadCategory = useCallback(async () => {
@@ -112,7 +113,7 @@ export const ListProducts = () => {
 
   const TakeProductsByProtein = (protein: any) => {
     api
-      .get(`/product/size?protein=${protein}`, {
+      .get(`/product/protein?protein=${protein}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -125,6 +126,8 @@ export const ListProducts = () => {
   useEffect(() => {
     TakeProductsByCategory(category_id);
   }, []);
+
+  console.log();
 
   return (
     <>
@@ -191,7 +194,7 @@ export const ListProducts = () => {
                   onChange={(e) => handleSize(e.target.value)}
                 >
                   <option value={"pequeno"}>Pequeno</option>
-                  <option value={"médio"}>Médio</option>
+                  <option value={"medio"}>Médio</option>
                   <option value={"grande"}>Grande</option>
                 </Select>
                 <Button
@@ -254,7 +257,7 @@ export const ListProducts = () => {
                 </Link>
               </HStack>
 
-              {productData.length > 0 ? (
+              {productData.length > 0 && categoryData.length > 0 ? (
                 <>
                   {productData &&
                     productData.map((product: ProductsData) => (
@@ -289,7 +292,7 @@ export const ListProducts = () => {
                 h={"50px"}
                 color={"theme.white"}
                 bg={"theme.red"}
-                /* onClick={(e) => TakeProducts(category_id)} */
+                onClick={TakeAllProducts}
                 _hover={{
                   color: "black",
                   bg: "white",
