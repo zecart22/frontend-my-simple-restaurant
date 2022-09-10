@@ -100,7 +100,7 @@ export const CardProduct = ({
           <Box
             animation={`${AppearFromRight} 2s`}
             mt={50}
-            w={"1000px"}
+            w={"900px"}
             border={"1px"}
             borderColor={["theme.grafit", "theme.gray50"]}
             bg={"theme.white"}
@@ -115,7 +115,7 @@ export const CardProduct = ({
           >
             <HStack>
               <Box
-                w={"40px"}
+                w={"20px"}
                 h="250px"
                 bg={"theme.wine"}
                 borderRadius={20}
@@ -138,7 +138,9 @@ export const CardProduct = ({
                 />
               </VStack>
               <VStack spacing={10}>
-                <Text mb={5}>{description}</Text>
+                <Text mb={5} w={"300px"} textAlign={"justify"}>
+                  {description}
+                </Text>
                 <HStack
                   color={"theme.white"}
                   fontWeight={"extrabold"}

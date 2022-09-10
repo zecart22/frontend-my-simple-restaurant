@@ -1,5 +1,16 @@
-import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { ModalEditCategory } from "../../modalEditCategory";
+import { api } from "../../../services";
+import { useState } from "react";
 
 export const CardCategory = () => {
   return (
@@ -37,29 +48,48 @@ export const CardCategory = () => {
 
 interface CardCategoryProps {
   title: string;
+  category_id: string;
 }
 
-export const CardCategoryName = ({ title }: CardCategoryProps) => {
+export const CardCategoryName = ({ title, category_id }: CardCategoryProps) => {
   return (
-    <Flex
-      w={["270px", "380px", "400px", "600px"]}
-      h={"50px"}
-      border={"1px"}
-      borderColor={"theme.gray50"}
-      bg={"theme.white"}
-      boxShadow={"md"}
-      _hover={{
-        transform: "translateY(-2px)",
-        border: "2px",
-        borderColor: "#f0f00c",
-      }}
-      transition="border 0.2s, ease 0s, transform 0.2s"
-    >
-      <HStack>
-        <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
+    <HStack>
+      <Flex
+        w={["150px", "200px", "300px", "600px"]}
+        h={"50px"}
+        border={"1px"}
+        borderColor={"theme.gray50"}
+        bg={"theme.white"}
+        boxShadow={"md"}
+        _hover={{
+          transform: "translateY(-2px)",
+          border: "2px",
+          borderColor: "#f0f00c",
+        }}
+        transition="border 0.2s, ease 0s, transform 0.2s"
+      >
+        <HStack spacing={[5, 10]}>
+          <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
 
-        <Text fontSize={20}>{title}</Text>
+          <Text fontSize={["15px", "18px", "20px"]}>{title}</Text>
+        </HStack>
+      </Flex>
+      <HStack color={"theme.red"} spacing={2}>
+        <ModalEditCategory category_id={category_id} oldName={title} />
+        <Button
+          fontSize={["10px", "15px", "18px", "20px"]}
+          h={"50px"}
+          bg={"theme.white"}
+          _hover={{
+            color: "white",
+            bg: "red",
+            border: "1px",
+            borderColor: "gray",
+          }}
+        >
+          Deletar
+        </Button>
       </HStack>
-    </Flex>
+    </HStack>
   );
 };

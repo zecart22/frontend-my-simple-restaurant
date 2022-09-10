@@ -41,7 +41,10 @@ export const ListCategory = () => {
           <>
             {categoryData &&
               categoryData.map((category: Category) => (
-                <CardCategoryName title={category.name} />
+                <CardCategoryName
+                  title={category.name}
+                  category_id={category.id}
+                />
               ))}
           </>
         ) : (
@@ -57,4 +60,3 @@ export const ListCategory = () => {
     </>
   );
 };
-
