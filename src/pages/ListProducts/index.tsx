@@ -14,6 +14,9 @@ import { CardProduct } from "../../components/Cards/CardProduct";
 import { Link } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "../../services";
+import { GiHamburger } from "react-icons/gi";
+import { BiCategory } from "react-icons/bi";
+import { TbMeat } from "react-icons/tb";
 
 interface Category {
   name: string;
@@ -134,8 +137,8 @@ export const ListProducts = () => {
       <Header />
       {isLargerThan850 ? (
         <>
-          <HStack spacing={20} mt={10}>
-            <VStack ml={10}>
+          <VStack spacing={20} mt={5}>
+            <HStack ml={10}>
               <Button
                 w={["378px"]}
                 h={"50px"}
@@ -179,7 +182,7 @@ export const ListProducts = () => {
                     borderColor: "black",
                   }}
                 >
-                  Procurar
+                  <BiCategory size={30} />
                 </Button>
               </HStack>
               <HStack>
@@ -209,7 +212,7 @@ export const ListProducts = () => {
                     borderColor: "black",
                   }}
                 >
-                  Procurar
+                  <GiHamburger size={30} />
                 </Button>
               </HStack>
               <HStack>
@@ -239,10 +242,10 @@ export const ListProducts = () => {
                     borderColor: "black",
                   }}
                 >
-                  Procurar
+                  <TbMeat size={30} />
                 </Button>
               </HStack>
-            </VStack>
+            </HStack>
             <VStack spacing={8} justifyContent={"center"}>
               <HStack spacing={10}>
                 <Text fontSize={30}>Lista de Produtos</Text>
@@ -281,7 +284,7 @@ export const ListProducts = () => {
                 </>
               )}
             </VStack>
-          </HStack>
+          </VStack>
         </>
       ) : (
         <>
@@ -304,7 +307,7 @@ export const ListProducts = () => {
 
               <HStack>
                 <Select
-                  w={["200px"]}
+                  w={["250px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por categoria"}
                   fontWeight={"extrabold"}
@@ -330,12 +333,12 @@ export const ListProducts = () => {
                     borderColor: "black",
                   }}
                 >
-                  Procurar
+                  <BiCategory size={20} />
                 </Button>
               </HStack>
               <HStack>
                 <Select
-                  w={["200px"]}
+                  w={["250px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por tamanho"}
                   fontWeight={"extrabold"}
@@ -344,28 +347,28 @@ export const ListProducts = () => {
                   boxShadow={"md"}
                   onChange={(e) => handleSize(e.target.value)}
                 >
-                  <option value={"Pequeno"}>Pequeno</option>
-                  <option value={"Médio"}>Médio</option>
-                  <option value={"Grande"}>Grande</option>
+                  <option value={"pequeno"}>Pequeno</option>
+                  <option value={"medio"}>Médio</option>
+                  <option value={"grande"}>Grande</option>
                 </Select>
                 <Button
                   color={"theme.white"}
                   bg={"theme.red"}
                   h={"50px"}
-                  /* onClick={(e) => TakeProducts(category_id)} */
                   _hover={{
                     color: "black",
                     bg: "white",
                     border: "1px",
                     borderColor: "black",
                   }}
+                  onClick={(e) => TakeProductsBySize(size)}
                 >
-                  Procurar
+                  <GiHamburger size={20} />
                 </Button>
               </HStack>
               <HStack>
                 <Select
-                  w={["200px"]}
+                  w={["250px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por proteina"}
                   fontWeight={"extrabold"}
@@ -382,7 +385,7 @@ export const ListProducts = () => {
                   color={"theme.white"}
                   bg={"theme.red"}
                   h={"50px"}
-                  onClick={(e) => TakeProductsByCategory(category_id)}
+                  onClick={(e) => TakeProductsByProtein(protein)}
                   _hover={{
                     color: "black",
                     bg: "white",
@@ -390,7 +393,7 @@ export const ListProducts = () => {
                     borderColor: "black",
                   }}
                 >
-                  Procurar
+                  <TbMeat size={20} />
                 </Button>
               </HStack>
             </VStack>
