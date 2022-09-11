@@ -90,9 +90,9 @@ export const CardCategoryName = ({
         setCategoryData([...categoryData]);
         setWantDelete(false);
         toast({
-          position: "top",
+          position: "bottom",
           title: "Yes...!",
-          description: "Produto deletado",
+          description: "Categoria deletada",
           status: "success",
           duration: 1000,
           isClosable: true,
@@ -110,7 +110,7 @@ export const CardCategoryName = ({
         title: "Não é possível deletar categoria!",
         description: "Essa categoria não está vazia",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     }

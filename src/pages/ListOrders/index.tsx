@@ -1,4 +1,4 @@
-import { VStack, Text, HStack } from "@chakra-ui/react";
+import { VStack, Text, HStack, Button } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardOrdersList } from "../../components/Cards/CardOrders";
@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../contexts/OrdersContext";
 import { api } from "../../services";
+import { RiDraftLine } from "react-icons/ri";
+import { GiCampCookingPot } from "react-icons/gi";
+import { MdDeliveryDining } from "react-icons/md";
 
 interface Order {
   id: string;
@@ -21,31 +24,127 @@ interface Order {
 export const ListOrders = () => {
   const { order } = useContext(OrderContext);
 
-  const [orderData, setCategoryData] = useState([]);
+  const [orderData, setOrderData] = useState([]);
 
   const token = localStorage.getItem("@AcessToken");
 
-  const loadCategory = useCallback(async () => {
+  const loadOpenOrder = useCallback(async () => {
     try {
       const response = await api.get(`/orders/list`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCategoryData(response.data);
+      setOrderData(response.data);
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-  useEffect(() => {
-    loadCategory();
+  const loadDraftOrder = useCallback(async () => {
+    try {
+      const response = await api.get(`/orders/draft`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOrderData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
+
+  const loadAllOrder = useCallback(async () => {
+    try {
+      const response = await api.get(`/orders/all`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOrderData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const loadDeliveryOrder = useCallback(async () => {
+    try {
+      const response = await api.get(`/orders/delivery`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOrderData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  console.log(orderData);
 
   return (
     <>
       <Header />
       <VStack mt={50} spacing={5} justifyContent={"center"}>
-        <Text fontSize={30}>Lista de Pedidos</Text>
+        <HStack>
+          <Button
+            children={"todos pedidos"}
+            color={"theme.white"}
+            bg={"theme.blue"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            onClick={loadAllOrder as any}
+          />
+          <Button
+            leftIcon={<RiDraftLine size={30} />}
+            bg={"theme.blue"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            onClick={loadDraftOrder as any}
+            children={"pedidos em rascunho"}
+          />
 
+          <Button
+            leftIcon={<GiCampCookingPot size={30} />}
+            children={"pedidos abertos"}
+            bg={"theme.blue"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            onClick={loadOpenOrder as any}
+          />
+          <Button
+            leftIcon={<MdDeliveryDining size={30} />}
+            children={" pedidos delivery"}
+            bg={"theme.blue"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            onClick={loadDeliveryOrder}
+          />
+        </HStack>
+        <HStack spacing={10}>
+          <Text fontSize={30}>Lista de Pedidos</Text>
+
+          <Link to={"/openorder"}>
+            <HStack spacing={2}>
+              <MdOutlineAddBox size={50} color={"theme.gray100"} />
+              <Text fontSize={20} color={"theme.red"}>
+                Abrir novo pedido
+              </Text>
+            </HStack>
+          </Link>
+        </HStack>
         {orderData.length > 0 ? (
           <>
             {orderData &&
@@ -54,17 +153,8 @@ export const ListOrders = () => {
               ))}
           </>
         ) : (
-          <Text fontFamily={"Rock Salt, cursive"}>...carregando pedidos</Text>
+          <></>
         )}
-
-        <HStack>
-          <MdOutlineAddBox size={50} color={"theme.gray100"} />
-          <Link to={"/openorder"}>
-            <Text fontSize={20} color={"theme.red"}>
-              Abrir novo pedido
-            </Text>
-          </Link>
-        </HStack>
       </VStack>
     </>
   );
