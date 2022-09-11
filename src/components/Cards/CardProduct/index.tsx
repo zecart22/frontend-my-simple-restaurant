@@ -22,8 +22,8 @@ interface CardProductsProps {
   protein: string;
   image: string;
   category: string;
-  productByCategory: any;
-  setProductByCategory: any;
+  productData: any;
+  setProductData: any;
 }
 
 export const CardProduct = ({
@@ -35,8 +35,8 @@ export const CardProduct = ({
   protein,
   size,
   category,
-  productByCategory,
-  setProductByCategory,
+  productData,
+  setProductData,
 }: CardProductsProps) => {
   const [isLargerThan850] = useMediaQuery("(min-width: 1281px)");
 
@@ -49,7 +49,7 @@ export const CardProduct = ({
   if (wantDelete) {
     setTimeout(() => {
       setWantDelete(false);
-    }, 5000);
+    }, 3000);
   }
 
   const AppearFromRight = keyframes`
@@ -66,9 +66,10 @@ export const CardProduct = ({
       })
       .then((response) => {
         console.log(response);
-        const index = productByCategory.findIndex((e: any) => e.id === id);
-        productByCategory.splice(index, 1);
-        setProductByCategory([...productByCategory]);
+        const index = productData.findIndex((e: any) => e.id === id);
+        productData.splice(index, 1);
+        setProductData([...productData]);
+        setWantDelete(false);
         toast({
           position: "top",
           title: "Yes...!",
@@ -90,8 +91,6 @@ export const CardProduct = ({
         console.log(err);
       });
   };
-
-  console.log(productByCategory);
 
   return (
     <>

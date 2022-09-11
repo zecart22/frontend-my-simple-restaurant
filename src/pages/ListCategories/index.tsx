@@ -44,6 +44,9 @@ export const ListCategory = () => {
                 <CardCategoryName
                   title={category.name}
                   category_id={category.id}
+                  loadCategory={loadCategory}
+                  categoryData={categoryData}
+                  setCategoryData={setCategoryData}
                 />
               ))}
           </>

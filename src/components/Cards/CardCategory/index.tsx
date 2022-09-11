@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { ModalEditCategory } from "../../modalEditCategory";
 import { api } from "../../../services";
 import { useState } from "react";
+import { IoIosAlert } from "react-icons/io";
 
 export const CardCategory = () => {
   return (
@@ -49,9 +50,72 @@ export const CardCategory = () => {
 interface CardCategoryProps {
   title: string;
   category_id: string;
+  loadCategory: any;
+  categoryData: any;
+  setCategoryData: any;
 }
 
-export const CardCategoryName = ({ title, category_id }: CardCategoryProps) => {
+export const CardCategoryName = ({
+  title,
+  category_id,
+  loadCategory,
+  categoryData,
+  setCategoryData,
+}: CardCategoryProps) => {
+  const [wantDelete, setWantDelete] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleWantDelete = () => {
+    setWantDelete(true);
+  };
+
+  if (wantDelete) {
+    setTimeout(() => {
+      setWantDelete(false);
+    }, 3000);
+  }
+
+  const token = localStorage.getItem("@AcessToken");
+  const toast = useToast();
+
+  const handleDelete = async () => {
+    await api
+      .delete("/category?category_id=" + category_id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        const index = categoryData.findIndex((e: any) => e.id === category_id);
+        categoryData.splice(index, 1);
+        setCategoryData([...categoryData]);
+        setWantDelete(false);
+        toast({
+          position: "top",
+          title: "Yes...!",
+          description: "Produto deletado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((response) => {
+        setError(true);
+      });
+    if (error) {
+      toast({
+        position: "top",
+        title: "Não é possível deletar categoria!",
+        description: "Essa categoria não está vazia",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <HStack>
       <Flex
@@ -75,20 +139,41 @@ export const CardCategoryName = ({ title, category_id }: CardCategoryProps) => {
         </HStack>
       </Flex>
       <HStack color={"theme.red"} spacing={2}>
-        <ModalEditCategory category_id={category_id} oldName={title} />
-        <Button
-          fontSize={["10px", "15px", "18px", "20px"]}
-          h={"50px"}
-          bg={"theme.white"}
-          _hover={{
-            color: "white",
-            bg: "red",
-            border: "1px",
-            borderColor: "gray",
-          }}
-        >
-          Deletar
-        </Button>
+        <ModalEditCategory
+          category_id={category_id}
+          oldName={title}
+          loadCategory={loadCategory}
+        />
+        {!wantDelete ? (
+          <>
+            <Button
+              fontSize={["10px", "15px", "18px", "20px"]}
+              h={"50px"}
+              bg={"theme.white"}
+              _hover={{
+                color: "white",
+                bg: "red",
+                border: "1px",
+                borderColor: "gray",
+              }}
+              onClick={handleWantDelete as any}
+            >
+              Deletar
+            </Button>
+          </>
+        ) : (
+          <HStack>
+            <IoIosAlert color={"#ec0909"} size={30} />
+            <Text
+              as="button"
+              color={"theme.red"}
+              onClick={handleDelete as any}
+              fontWeight={"extrabold"}
+            >
+              Clique para confirmar
+            </Text>
+          </HStack>
+        )}
       </HStack>
     </HStack>
   );

@@ -67,6 +67,7 @@ export const CreateProduct = () => {
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
 
+  const [error, setError] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const [categoryData, setCategoryData] = useState([]);
 
@@ -113,15 +114,20 @@ export const CreateProduct = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast({
-          position: "top",
-          title: "Opss algo deu errado!! ",
-          description: err,
-          status: "warning",
-          duration: 2000,
-          isClosable: true,
-        });
+      })
+      .then((response) => {
+        setError(true);
       });
+    if (error) {
+      toast({
+        position: "bottom",
+        title: "Não foi possivel criar produto ",
+        description: "Nome do produto indisponível",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

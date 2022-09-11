@@ -273,8 +273,8 @@ export const ListProducts = () => {
                         protein={product.protein}
                         size={product.hungryLevel}
                         title={product.name}
-                        productByCategory={productData}
-                        setProductByCategory={setProductData}
+                        productData={productData}
+                        setProductData={setProductData}
                       />
                     ))}
                 </>
@@ -421,8 +421,8 @@ export const ListProducts = () => {
                         protein={product.protein}
                         size={product.hungryLevel}
                         title={product.name}
-                        productByCategory={productData}
-                        setProductByCategory={setProductData}
+                        productData={productData}
+                        setProductData={setProductData}
                       />
                     ))}
                 </>

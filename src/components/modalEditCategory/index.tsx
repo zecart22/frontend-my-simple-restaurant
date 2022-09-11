@@ -15,12 +15,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+
 import { api } from "../../services";
 
 interface EditCategoryProps {
   category_id: string;
   oldName: string;
+  loadCategory: any;
 }
 
 interface EditCategory {
@@ -30,11 +31,8 @@ interface EditCategory {
 export const ModalEditCategory = ({
   category_id,
   oldName,
+  loadCategory,
 }: EditCategoryProps) => {
-  const history = useHistory();
-  const handleNavigation = (path: any) => {
-    return history.push(path);
-  };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
@@ -62,8 +60,8 @@ export const ModalEditCategory = ({
           duration: 1000,
           isClosable: true,
         });
+        loadCategory();
         onClose();
-        handleNavigation("/dashboard");
       })
       .catch((err) => {
         toast({
