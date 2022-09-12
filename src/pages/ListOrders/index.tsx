@@ -1,4 +1,4 @@
-import { VStack, Text, HStack, Button } from "@chakra-ui/react";
+import { VStack, Text, HStack, Button, useMediaQuery } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardOrdersList } from "../../components/Cards/CardOrders";
@@ -23,6 +23,8 @@ interface Order {
 
 export const ListOrders = () => {
   const { order } = useContext(OrderContext);
+
+  const [isLargerThan1281] = useMediaQuery("(min-width: 1281px)");
 
   const [orderData, setOrderData] = useState([]);
 
@@ -77,85 +79,177 @@ export const ListOrders = () => {
   return (
     <>
       <Header />
-      <VStack mt={50} spacing={5} justifyContent={"center"}>
-        <HStack>
-          <Button
-            children={"todos pedidos"}
-            color={"theme.white"}
-            bg={"theme.blue"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            onClick={loadAllOrder as any}
-          />
-          <Button
-            leftIcon={<RiDraftLine size={30} />}
-            bg={"theme.blue"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            onClick={loadDraftOrder as any}
-            children={"pedidos em rascunho"}
-          />
+      {isLargerThan1281 ? (
+        <>
+          <VStack mt={50} spacing={5} justifyContent={"center"}>
+            <HStack>
+              <Button
+                children={"todos pedidos"}
+                color={"theme.white"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadAllOrder as any}
+              />
+              <Button
+                leftIcon={<RiDraftLine size={30} />}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadDraftOrder as any}
+                children={"pedidos em rascunho"}
+              />
 
-          <Button
-            leftIcon={<GiCampCookingPot size={30} />}
-            children={"pedidos abertos"}
-            bg={"theme.blue"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            onClick={loadOpenOrder as any}
-          />
-          <Button
-            leftIcon={<MdDeliveryDining size={30} />}
-            children={" pedidos delivery"}
-            bg={"theme.blue"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            onClick={loadDeliveryOrder}
-          />
-        </HStack>
-        <HStack spacing={10}>
-          <Text fontSize={30}>Lista de Pedidos</Text>
-
-          <Link to={"/openorder"}>
-            <HStack spacing={2}>
-              <MdOutlineAddBox size={50} color={"theme.gray100"} />
-              <Text fontSize={20} color={"theme.red"}>
-                Abrir novo pedido
-              </Text>
+              <Button
+                leftIcon={<GiCampCookingPot size={30} />}
+                children={"pedidos abertos"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadOpenOrder as any}
+              />
+              <Button
+                leftIcon={<MdDeliveryDining size={30} />}
+                children={" pedidos delivery"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadDeliveryOrder}
+              />
             </HStack>
-          </Link>
-        </HStack>
-        {orderData.length > 0 ? (
-          <>
-            {orderData &&
-              orderData.map((order: Order) => (
-                <CardOrdersList table={order.table} />
-              ))}
-          </>
-        ) : (
-          <></>
-        )}
-      </VStack>
+            <HStack spacing={10}>
+              <Text fontSize={30}>Lista de Pedidos</Text>
+
+              <Link to={"/openorder"}>
+                <HStack spacing={2}>
+                  <MdOutlineAddBox size={50} color={"theme.gray100"} />
+                  <Text fontSize={20} color={"theme.red"}>
+                    Abrir novo pedido
+                  </Text>
+                </HStack>
+              </Link>
+            </HStack>
+            {orderData.length > 0 ? (
+              <>
+                {orderData &&
+                  orderData.map((order: Order) => (
+                    <CardOrdersList table={order.table} />
+                  ))}
+              </>
+            ) : (
+              <></>
+            )}
+          </VStack>
+        </>
+      ) : (
+        <>
+          {/* mobile */}
+
+          <VStack mt={50} spacing={5} justifyContent={"center"}>
+            <VStack>
+              <Button
+                w="280px"
+                children={"todos pedidos"}
+                color={"theme.white"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadAllOrder as any}
+              />
+              <Button
+                w="280px"
+                leftIcon={<RiDraftLine size={30} />}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadDraftOrder as any}
+                children={"pedidos em rascunho"}
+              />
+
+              <Button
+                w="280px"
+                leftIcon={<GiCampCookingPot size={30} />}
+                children={"pedidos abertos"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadOpenOrder as any}
+              />
+              <Button
+                w="280px"
+                leftIcon={<MdDeliveryDining size={30} />}
+                children={" pedidos delivery"}
+                bg={"theme.blue"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadDeliveryOrder}
+              />
+            </VStack>
+            <HStack spacing={10}>
+              <Text fontSize={15}>Lista de Pedidos</Text>
+
+              <Link to={"/openorder"}>
+                <HStack spacing={2}>
+                  <MdOutlineAddBox size={50} color={"theme.gray100"} />
+                  <Text fontSize={15} color={"theme.red"}>
+                    Abrir novo pedido
+                  </Text>
+                </HStack>
+              </Link>
+            </HStack>
+            {orderData.length > 0 ? (
+              <>
+                {orderData &&
+                  orderData.map((order: Order) => (
+                    <CardOrdersList table={order.table} />
+                  ))}
+              </>
+            ) : (
+              <></>
+            )}
+          </VStack>
+        </>
+      )}
     </>
   );
 };
