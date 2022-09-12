@@ -1,6 +1,7 @@
-import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/react";
-import { ModalListItensInOrder } from "../../modal";
+import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import { ModalOrder } from "../../modal";
 import { Link } from "react-router-dom";
+import { GiRoundTable } from "react-icons/gi";
 
 export const CardOrders = () => {
   return (
@@ -38,31 +39,94 @@ export const CardOrders = () => {
 
 interface CardOrderProps {
   table: number;
+  id: string;
+  status: boolean;
+  draft: boolean;
+  isDelivery: boolean;
+  name: string;
+  created_at: string;
+  updated_at: string;
 }
 
-export const CardOrdersList = ({ table }: CardOrderProps) => {
+export const CardOrdersList = ({
+  table,
+  id,
+  status,
+  draft,
+  isDelivery,
+  name,
+  created_at,
+  updated_at,
+}: CardOrderProps) => {
   return (
-    <Flex
-      w={["270px", "380px", "400px", "600px"]}
-      h={"50px"}
-      border={"1px"}
-      borderColor={"theme.gray50"}
-      bg={"theme.white"}
-      boxShadow={"md"}
-      _hover={{
-        transform: "translateY(-2px)",
-        border: "2px",
-        borderColor: "#0CBFF8",
-      }}
-      transition="border 0.2s, ease 0s, transform 0.2s"
-    >
-      <HStack>
-        <Box w={"20px"} h={"50px"} bg={"theme.blue"}></Box>
-        <HStack spacing={[10, 80]}>
+    <HStack>
+      <Flex
+        w={["250px", "300px", "350px", "400px"]}
+        h={"50px"}
+        border={"1px"}
+        borderColor={"theme.gray50"}
+        bg={"theme.white"}
+        boxShadow={"md"}
+        _hover={{
+          transform: "translateY(-2px)",
+          border: "2px",
+          borderColor: "#0CBFF8",
+        }}
+        transition="border 0.2s, ease 0s, transform 0.2s"
+      >
+        <HStack>
+          <Box w={"60px"} h={"50px"} bg={"theme.blue"}>
+            <GiRoundTable size={55} />
+          </Box>
+
           <Text fontSize={[15, 20]}>Mesa {table}</Text>
-          <ModalListItensInOrder />
         </HStack>
-      </HStack>
-    </Flex>
+      </Flex>
+      <ModalOrder
+        table={table}
+        created_at={created_at}
+        updated_at={updated_at}
+        draft={draft}
+        id={id}
+        isDelivery={isDelivery}
+        name={name}
+        status={status}
+      />
+      {draft ? (
+        <>
+          <Button
+            fontWeight={"extrabold"}
+            children={"Produzir"}
+            color={"theme.white"}
+            bg={"theme.green"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            /*  onClick={loadAllOrder as any} */
+          />
+        </>
+      ) : (
+        <>
+          <Button
+            fontWeight={"extrabold"}
+            children={"Finalizar"}
+            color={"theme.black"}
+            bg={"theme.yellow"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+              border: "1px",
+              borderColor: "black",
+            }}
+            /*  onClick={loadAllOrder as any} */
+          />
+        </>
+      )}
+    </HStack>
   );
 };

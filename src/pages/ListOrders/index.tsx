@@ -76,6 +76,17 @@ export const ListOrders = () => {
 
   console.log(orderData);
 
+  /*  puxar detalhes do pedido para enviar pro modal */
+  /*  rota detalhes do order precisa do orderId */
+
+  /* fechar pedido todo (mesa) */
+  /* remover pedido */
+  /*  apresentar valor total de consumo da mesa até o momento */
+  /* apresentar total de produtos pedidos pela mesa */
+  /* apresentar total de produtos entregues a mesa */
+  /*  apresentar total de produtos cancelados pela mesa */
+  /* apresentar valor total de produtos pedidos a mesa */
+
   return (
     <>
       <Header />
@@ -153,7 +164,16 @@ export const ListOrders = () => {
               <>
                 {orderData &&
                   orderData.map((order: Order) => (
-                    <CardOrdersList table={order.table} />
+                    <CardOrdersList
+                      table={order.table}
+                      created_at={order.created_at}
+                      updated_at={order.updated_at}
+                      draft={order.draft}
+                      id={order.id}
+                      isDelivery={order.isDelivery}
+                      name={order.name}
+                      status={order.status}
+                    />
                   ))}
               </>
             ) : (
@@ -241,7 +261,16 @@ export const ListOrders = () => {
               <>
                 {orderData &&
                   orderData.map((order: Order) => (
-                    <CardOrdersList table={order.table} />
+                    <CardOrdersList
+                      table={order.table}
+                      created_at={order.created_at}
+                      updated_at={order.updated_at}
+                      draft={order.draft}
+                      id={order.id}
+                      isDelivery={order.isDelivery}
+                      name={order.name}
+                      status={order.status}
+                    />
                   ))}
               </>
             ) : (
