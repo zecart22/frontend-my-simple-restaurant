@@ -105,13 +105,20 @@ export const ModalOrder = ({
         blockScrollOnMount={false}
         isOpen={isOpen}
         onClose={onClose}
-        size={"2xl"}
+        size={"md"}
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Pedido número {id}</ModalHeader>
+          <ModalHeader>
+            <VStack>
+              <Text>Detalhes do Pedido</Text>
+              <Text fontSize={12} color={"gray"}>
+                ID: {id}
+              </Text>
+            </VStack>
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody justifyContent={"center"}>
             {draft ? (
               <>
                 <VStack>
@@ -194,6 +201,8 @@ export const ModalOrder = ({
             ) : (
               <>
                 <Button
+                  ml={"45px"}
+                  mb={"15px"}
                   w={"300px"}
                   children={"Ver todos itens"}
                   color={"theme.white"}
@@ -209,28 +218,30 @@ export const ModalOrder = ({
                 />
               </>
             )}
+
+            <Box ml={[5]}>
+              {orderData.length > 0 ? (
+                <>
+                  {orderData &&
+                    orderData.map((order: any) => (
+                      <CardProductMobile
+                        category={order.product.category_id}
+                        description={order.product.description}
+                        image={order.product.image}
+                        id={order.product.id}
+                        price={order.product.price}
+                        protein={order.product.protein}
+                        size={order.product.hungryLevel}
+                        title={order.product.name}
+                        amount={order.amount}
+                      />
+                    ))}
+                </>
+              ) : (
+                <></>
+              )}
+            </Box>
           </ModalBody>
-          <Box ml={[2, 10]}>
-            {orderData.length > 0 ? (
-              <>
-                {orderData &&
-                  orderData.map((order: any) => (
-                    <CardProductMobile
-                      category={order.product.category_id}
-                      description={order.product.description}
-                      image={order.product.image}
-                      id={order.product.id}
-                      price={order.product.price}
-                      protein={order.product.protein}
-                      size={order.product.hungryLevel}
-                      title={order.product.name}
-                    />
-                  ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </Box>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Fechar mesa

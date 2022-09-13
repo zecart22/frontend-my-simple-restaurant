@@ -22,6 +22,7 @@ interface CardProductsProps {
   protein: string;
   image: string;
   category: string;
+  amount: number;
 }
 
 export const CardProductMobile = ({
@@ -33,6 +34,7 @@ export const CardProductMobile = ({
   protein,
   size,
   category,
+  amount,
 }: CardProductsProps) => {
   const [isLargerThan850] = useMediaQuery("(min-width: 1281px)");
 
@@ -43,6 +45,7 @@ export const CardProductMobile = ({
 
   const token = localStorage.getItem("@AcessToken");
   const toast = useToast();
+  const subTotal = Number(price) * amount;
 
   return (
     <>
@@ -51,8 +54,6 @@ export const CardProductMobile = ({
         w={"350px"}
         border={"1px"}
         borderColor={"theme.gray100"}
-        borderLeft={"5px"}
-        borderLeftColor={"theme.white"}
         bg={"theme.white"}
         boxShadow={"lg"}
         _hover={{
@@ -62,70 +63,28 @@ export const CardProductMobile = ({
         }}
         transition="border 0.2s, ease 0s, transform 0.2s"
         borderRadius={20}
+        justifyContent={"center"}
       >
-        <HStack>
-          <Box
-            w={"5px"}
-            h="520px"
-            bg={"theme.wine"}
-            borderRadius={20}
-            mt={4}
-            ml={1}
-          ></Box>
+        <VStack>
+          <Text fontSize={20} fontWeight={"semibold"} mt={3}>
+            {title}
+          </Text>
           <VStack>
-            <VStack>
-              <Text fontSize={20} fontWeight={"semibold"} mt={3}>
-                {title}
-              </Text>
-              <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
-                Preço : {price}
-              </Text>
-              <Image src={image} />
-            </VStack>
-            <VStack spacing={10}>
-              <Text mb={5} w={"300px"} textAlign={"justify"}>
-                {description}
-              </Text>
-              <VStack
-                color={"theme.white"}
-                fontWeight={"extrabold"}
-                flexWrap={"wrap"}
-                justifyContent={"center"}
-              >
-                <Box
-                  boxShadow={"md"}
-                  h={"25px"}
-                  w={"320px"}
-                  bg={"#ffa909"}
-                  borderRadius={[40, 10, 40, 10]}
-                  textAlign={"center"}
-                >
-                  Categoria: {category.toLocaleUpperCase()}
-                </Box>
-                <Box
-                  boxShadow={"md"}
-                  h={"25px"}
-                  w={"320px"}
-                  bg={"theme.orange"}
-                  borderRadius={[40, 10, 40, 10]}
-                  textAlign={"center"}
-                >
-                  Tamanho: {size.toLocaleUpperCase()}
-                </Box>
-                <Box
-                  boxShadow={"md"}
-                  h={"25px"}
-                  w={"320px"}
-                  bg={"theme.red"}
-                  borderRadius={[40, 10, 40, 10]}
-                  textAlign={"center"}
-                >
-                  Proteína: {protein.toLocaleUpperCase()}
-                </Box>
-              </VStack>
-            </VStack>
+            <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
+              Preço : R${price} ,00(unid)
+            </Text>
+            <Text color={"theme.red"}>Quantidade : {amount}</Text>
+            <Text color={"theme.red"}>Subtotal : R${subTotal},00</Text>
           </VStack>
-        </HStack>
+
+          <Image
+            maxWidth={"100%"}
+            w={"220px"}
+            h={"220px"}
+            objectFit={"contain"}
+            src={image}
+          />
+        </VStack>
       </Box>
     </>
   );
