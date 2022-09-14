@@ -12,6 +12,8 @@ import {
   Box,
   HStack,
   VStack,
+  Toast,
+  useToast,
 } from "@chakra-ui/react";
 
 import { CardProduct } from "../../components/Cards/CardProduct";
@@ -56,6 +58,10 @@ interface Order {
 /* ver produtos em produção */
 /* mostrar quanto o produto está em produção */
 
+interface Data {
+  order_id: string;
+}
+
 export const ModalOrder = ({
   id,
   table,
@@ -69,6 +75,8 @@ export const ModalOrder = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [orderData, setOrderData] = useState([]);
+
+  const [error, setError] = useState(false);
 
   const token = localStorage.getItem("@AcessToken");
 
@@ -84,8 +92,85 @@ export const ModalOrder = ({
     }
   }, []);
 
+  const toast = useToast();
+
+  const handleSetToProdution = async (data: Data) => {
+    data = { order_id: id };
+    console.log(data);
+    api
+      .put(`/order/send`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+
+        toast({
+          position: "top",
+          title: "Tudo certo",
+          description: "Produto editado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
+    if (error) {
+      toast({
+        position: "top",
+        title: "Algo deu errado!! ",
+        description: "Tente novamente",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleSetToConcluids = async (data: Data) => {
+    data = { order_id: id };
+    console.log(data);
+    api
+      .put(`/order/conclud`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+
+        toast({
+          position: "top",
+          title: "Tudo certo",
+          description: "Produto editado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
+    if (error) {
+      toast({
+        position: "top",
+        title: "Algo deu errado!! ",
+        description: "Tente novamente",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   console.log(id);
   console.log(orderData);
+
+  const Close = () => {
+    setOrderData([]);
+    onClose();
+  };
 
   return (
     <>
@@ -123,12 +208,43 @@ export const ModalOrder = ({
               <>
                 <VStack>
                   <Button
+                    fontSize={30}
+                    fontWeight={"extrabold"}
+                    w={"300px"}
+                    children={"Produzir"}
+                    color={"theme.white"}
+                    bg={"theme.green"}
+                    h={"50px"}
+                    _hover={{
+                      color: "black",
+                      bg: "white",
+                      border: "1px",
+                      borderColor: "black",
+                    }}
+                    onClick={handleSetToProdution as any}
+                  />
+                  <Button
                     fontWeight={"extrabold"}
                     w={"300px"}
                     leftIcon={<RiAddLine size={40} />}
                     children={"Adicionar itens"}
                     color={"theme.white"}
                     bg={"theme.green"}
+                    h={"50px"}
+                    _hover={{
+                      color: "black",
+                      bg: "white",
+                      border: "1px",
+                      borderColor: "black",
+                    }}
+                    /*  onClick={loadAllOrder as any} */
+                  />
+                  <Button
+                    w={"300px"}
+                    leftIcon={<RiDraftLine size={30} />}
+                    children={"Ver itens em rascunho"}
+                    color={"theme.white"}
+                    bg={"theme.red"}
                     h={"50px"}
                     _hover={{
                       color: "black",
@@ -151,21 +267,6 @@ export const ModalOrder = ({
                       borderColor: "black",
                     }}
                     onClick={loadOrderDetails as any}
-                  />
-                  <Button
-                    w={"300px"}
-                    leftIcon={<RiDraftLine size={30} />}
-                    children={"Ver itens em rascunho"}
-                    color={"theme.white"}
-                    bg={"theme.red"}
-                    h={"50px"}
-                    _hover={{
-                      color: "black",
-                      bg: "white",
-                      border: "1px",
-                      borderColor: "black",
-                    }}
-                    /*  onClick={loadAllOrder as any} */
                   />
 
                   <Button
@@ -199,13 +300,29 @@ export const ModalOrder = ({
                 </VStack>
               </>
             ) : (
-              <>
+              <VStack>
+                <Button
+                  fontSize={30}
+                  fontWeight={"extrabold"}
+                  w={"300px"}
+                  children={"Finalizar"}
+                  color={"theme.black"}
+                  bg={"theme.yellow"}
+                  h={"50px"}
+                  _hover={{
+                    color: "black",
+                    bg: "white",
+                    border: "1px",
+                    borderColor: "black",
+                  }}
+                  onClick={handleSetToConcluids as any}
+                />
                 <Button
                   ml={"45px"}
                   mb={"15px"}
                   w={"300px"}
                   children={"Ver todos itens"}
-                  color={"theme.white"}
+                  color={"theme.black"}
                   bg={"theme.orange"}
                   h={"50px"}
                   _hover={{
@@ -216,10 +333,10 @@ export const ModalOrder = ({
                   }}
                   onClick={loadOrderDetails as any}
                 />
-              </>
+              </VStack>
             )}
 
-            <Box ml={[5]}>
+            <Box ml={[5]} mt={7}>
               {orderData.length > 0 ? (
                 <>
                   {orderData &&
@@ -243,8 +360,8 @@ export const ModalOrder = ({
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Fechar mesa
+            <Button colorScheme="blue" mr={3} onClick={Close as any}>
+              Fechar
             </Button>
           </ModalFooter>
         </ModalContent>

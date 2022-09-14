@@ -92,41 +92,6 @@ export const CardOrdersList = ({
         name={name}
         status={status}
       />
-      {draft ? (
-        <>
-          <Button
-            fontWeight={"extrabold"}
-            children={"Produzir"}
-            color={"theme.white"}
-            bg={"theme.green"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            /*  onClick={loadAllOrder as any} */
-          />
-        </>
-      ) : (
-        <>
-          <Button
-            fontWeight={"extrabold"}
-            children={"Finalizar"}
-            color={"theme.black"}
-            bg={"theme.yellow"}
-            h={"50px"}
-            _hover={{
-              color: "black",
-              bg: "white",
-              border: "1px",
-              borderColor: "black",
-            }}
-            /*  onClick={loadAllOrder as any} */
-          />
-        </>
-      )}
     </HStack>
   );
 };

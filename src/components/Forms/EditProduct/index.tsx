@@ -75,6 +75,8 @@ export const EditProductForm = ({
 
   const [categoryData, setCategoryData] = useState([]);
 
+  const [error, setError] = useState(false);
+
   const handleInputChangeImage = (e: any) => setImageURL(e.target.value);
 
   const loadCategory = useCallback(async () => {
@@ -116,17 +118,21 @@ export const EditProductForm = ({
         handleNavigation("/listproducts");
       })
       .catch((err) => {
-        toast({
-          position: "top",
-          title: "Algo deu errado!! ",
-          description: err,
-          status: "warning",
-          duration: 3000,
-          isClosable: true,
-        });
-
         console.log(err);
+      })
+      .then((response) => {
+        setError(true);
       });
+    if (error) {
+      toast({
+        position: "top",
+        title: "Não foi possivel editar produto!! ",
+        description: "Nome já em uso",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   useEffect(() => {
