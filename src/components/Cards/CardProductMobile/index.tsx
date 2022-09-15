@@ -51,7 +51,7 @@ export const CardProductMobile = ({
     <>
       <Box
         mb={10}
-        w={"350px"}
+        w={"300px"}
         border={"1px"}
         borderColor={"theme.gray100"}
         bg={"theme.white"}

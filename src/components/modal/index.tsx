@@ -80,7 +80,7 @@ export const ModalOrder = ({
 
   const token = localStorage.getItem("@AcessToken");
 
-  const loadOrderDetails = useCallback(async () => {
+  /*  const loadOrderDetails = useCallback(async (id: any) => {
     try {
       const response = await api.get(`order/detail?order_id=${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -90,7 +90,19 @@ export const ModalOrder = ({
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, []); */
+
+  const loadOrderDetails = () => {
+    api
+      .get(`order/detail?order_id=${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        setOrderData(response.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const toast = useToast();
 
@@ -190,7 +202,7 @@ export const ModalOrder = ({
         blockScrollOnMount={false}
         isOpen={isOpen}
         onClose={onClose}
-        size={"md"}
+        size={"sm"}
       >
         <ModalOverlay />
         <ModalContent>
