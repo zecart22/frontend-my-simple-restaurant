@@ -23,6 +23,7 @@ import { CardProductMobile } from "../Cards/CardProductMobile";
 import { RiDraftLine } from "react-icons/ri";
 import { api } from "../../services";
 import { useCallback, useState } from "react";
+import { ModalAddItem } from "../modalAddItem";
 
 interface Products {
   id: string;
@@ -79,18 +80,6 @@ export const ModalOrder = ({
   const [error, setError] = useState(false);
 
   const token = localStorage.getItem("@AcessToken");
-
-  /*  const loadOrderDetails = useCallback(async (id: any) => {
-    try {
-      const response = await api.get(`order/detail?order_id=${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(response);
-      setOrderData(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }, []); */
 
   const loadOrderDetails = () => {
     api
@@ -203,6 +192,7 @@ export const ModalOrder = ({
         isOpen={isOpen}
         onClose={onClose}
         size={"sm"}
+        closeOnOverlayClick={false}
       >
         <ModalOverlay />
         <ModalContent>
@@ -214,7 +204,7 @@ export const ModalOrder = ({
               </Text>
             </VStack>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={Close} />
           <ModalBody justifyContent={"center"}>
             {draft ? (
               <>
@@ -235,22 +225,7 @@ export const ModalOrder = ({
                     }}
                     onClick={handleSetToProdution as any}
                   />
-                  <Button
-                    fontWeight={"extrabold"}
-                    w={"300px"}
-                    leftIcon={<RiAddLine size={40} />}
-                    children={"Adicionar itens"}
-                    color={"theme.white"}
-                    bg={"theme.green"}
-                    h={"50px"}
-                    _hover={{
-                      color: "black",
-                      bg: "white",
-                      border: "1px",
-                      borderColor: "black",
-                    }}
-                    /*  onClick={loadAllOrder as any} */
-                  />
+                  <ModalAddItem order_id={id} />
                   <Button
                     w={"300px"}
                     leftIcon={<RiDraftLine size={30} />}
