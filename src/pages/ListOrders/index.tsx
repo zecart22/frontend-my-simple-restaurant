@@ -173,6 +173,7 @@ export const ListOrders = () => {
                       isDelivery={order.isDelivery}
                       name={order.name}
                       status={order.status}
+                      loadDraftOrder={loadDraftOrder}
                     />
                   ))}
               </>
@@ -270,6 +271,7 @@ export const ListOrders = () => {
                       isDelivery={order.isDelivery}
                       name={order.name}
                       status={order.status}
+                      loadDraftOrder={loadDraftOrder}
                     />
                   ))}
               </>

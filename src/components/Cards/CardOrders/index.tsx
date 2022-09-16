@@ -46,6 +46,7 @@ interface CardOrderProps {
   name: string;
   created_at: string;
   updated_at: string;
+  loadDraftOrder: () => void;
 }
 
 export const CardOrdersList = ({
@@ -57,6 +58,7 @@ export const CardOrdersList = ({
   name,
   created_at,
   updated_at,
+  loadDraftOrder,
 }: CardOrderProps) => {
   return (
     <HStack>
@@ -91,6 +93,7 @@ export const CardOrdersList = ({
         isDelivery={isDelivery}
         name={name}
         status={status}
+        loadDraftOrder={loadDraftOrder}
       />
     </HStack>
   );

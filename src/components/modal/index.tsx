@@ -20,10 +20,12 @@ import { CardProduct } from "../../components/Cards/CardProduct";
 import img from "../../assets/images/lanche.png";
 import { RiAddLine } from "react-icons/ri";
 import { CardProductMobile } from "../Cards/CardProductMobile";
+import { IoIosAlert } from "react-icons/io";
 import { RiDraftLine } from "react-icons/ri";
 import { api } from "../../services";
 import { useCallback, useState } from "react";
 import { ModalAddItem } from "../modalAddItem";
+import { MdDeleteSweep } from "react-icons/md";
 
 interface Products {
   id: string;
@@ -49,6 +51,7 @@ interface Order {
   name: string;
   created_at: string;
   updated_at: string;
+  loadDraftOrder: () => void;
 }
 
 /* listar os produtos que estão no pedido */
@@ -72,6 +75,7 @@ export const ModalOrder = ({
   isDelivery,
   name,
   status,
+  loadDraftOrder,
 }: Order) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -80,6 +84,55 @@ export const ModalOrder = ({
   const [error, setError] = useState(false);
 
   const token = localStorage.getItem("@AcessToken");
+
+  const [wantDelete, setWantDelete] = useState(false);
+  const handleWantDelete = () => {
+    setWantDelete(true);
+  };
+
+  if (wantDelete) {
+    setTimeout(() => {
+      setWantDelete(false);
+    }, 3000);
+  }
+
+  const handleDelete = async () => {
+    await api
+      .delete(`/order?order_id=${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        setWantDelete(false);
+        loadDraftOrder();
+        Close();
+        toast({
+          position: "top",
+          title: "Yes...!",
+          description: "Produto deletado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then(() => {
+        setError(true);
+      });
+    if (error) {
+      toast({
+        position: "top",
+        title: "Não foi possível deletar pedido!",
+        description:
+          "Esse pedido ainda tem produtos, exclua todos e tente novamente",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   const loadOrderDetails = () => {
     api
@@ -226,22 +279,9 @@ export const ModalOrder = ({
                     onClick={handleSetToProdution as any}
                   />
                   <ModalAddItem order_id={id} />
+
                   <Button
-                    w={"300px"}
                     leftIcon={<RiDraftLine size={30} />}
-                    children={"Ver itens em rascunho"}
-                    color={"theme.white"}
-                    bg={"theme.red"}
-                    h={"50px"}
-                    _hover={{
-                      color: "black",
-                      bg: "white",
-                      border: "1px",
-                      borderColor: "black",
-                    }}
-                    /*  onClick={loadAllOrder as any} */
-                  />
-                  <Button
                     w={"300px"}
                     children={"Ver todos itens"}
                     color={"theme.white"}
@@ -255,35 +295,43 @@ export const ModalOrder = ({
                     }}
                     onClick={loadOrderDetails as any}
                   />
-
-                  <Button
-                    w={"300px"}
-                    children={"Ver itens em produção"}
-                    color={"theme.white"}
-                    bg={"theme.orange"}
-                    h={"50px"}
-                    _hover={{
-                      color: "black",
-                      bg: "white",
-                      border: "1px",
-                      borderColor: "black",
-                    }}
-                    /*  onClick={loadAllOrder as any} */
-                  />
-                  <Button
-                    w={"300px"}
-                    children={"Ver itens entregues"}
-                    color={"theme.white"}
-                    bg={"theme.orange"}
-                    h={"50px"}
-                    _hover={{
-                      color: "black",
-                      bg: "white",
-                      border: "1px",
-                      borderColor: "black",
-                    }}
-                    /*  onClick={loadAllOrder as any} */
-                  />
+                  {wantDelete ? (
+                    <>
+                      <Button
+                        leftIcon={<IoIosAlert size={30} />}
+                        w={"300px"}
+                        children={"Confirmar"}
+                        color={"theme.white"}
+                        bg={"theme.red"}
+                        h={"50px"}
+                        _hover={{
+                          color: "black",
+                          bg: "white",
+                          border: "4px",
+                          borderColor: "red",
+                        }}
+                        onClick={handleDelete as any}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        leftIcon={<MdDeleteSweep size={30} />}
+                        w={"300px"}
+                        children={"Excluir pedido"}
+                        color={"theme.white"}
+                        bg={"theme.red"}
+                        h={"50px"}
+                        _hover={{
+                          color: "black",
+                          bg: "white",
+                          border: "1px",
+                          borderColor: "black",
+                        }}
+                        onClick={handleWantDelete as any}
+                      />
+                    </>
+                  )}
                 </VStack>
               </>
             ) : (
