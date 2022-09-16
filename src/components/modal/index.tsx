@@ -329,6 +329,7 @@ export const ModalOrder = ({
                   {orderData &&
                     orderData.map((order: any) => (
                       <CardProductMobile
+                        item_id={order.id}
                         category={order.product.category_id}
                         description={order.product.description}
                         image={order.product.image}
@@ -338,6 +339,7 @@ export const ModalOrder = ({
                         size={order.product.hungryLevel}
                         title={order.product.name}
                         amount={order.amount}
+                        loadOrderDetails={loadOrderDetails}
                       />
                     ))}
                 </>

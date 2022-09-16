@@ -46,7 +46,6 @@ export const ModalAddItem = ({ order_id }: OrderProps) => {
           borderColor: "black",
         }}
         onClick={onOpen}
-        /*  onClick={loadAllOrder as any} */
       />
 
       <Modal

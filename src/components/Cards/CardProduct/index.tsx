@@ -80,14 +80,6 @@ export const CardProduct = ({
         });
       })
       .catch((err) => {
-        toast({
-          position: "top",
-          title: "Opss algo deu errado!",
-          description: err,
-          status: "error",
-          duration: 500,
-          isClosable: true,
-        });
         console.log(err);
       });
   };

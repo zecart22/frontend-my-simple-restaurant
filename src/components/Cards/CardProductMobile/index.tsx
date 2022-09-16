@@ -13,6 +13,7 @@ import { api } from "../../../services";
 import { useState } from "react";
 import { IoIosAlert } from "react-icons/io";
 import { Link } from "react-router-dom";
+
 interface CardProductsProps {
   id: string;
   title: string;
@@ -23,6 +24,8 @@ interface CardProductsProps {
   image: string;
   category: string;
   amount: number;
+  item_id: string;
+  loadOrderDetails: () => void;
 }
 
 export const CardProductMobile = ({
@@ -35,17 +38,47 @@ export const CardProductMobile = ({
   size,
   category,
   amount,
+  item_id,
+  loadOrderDetails,
 }: CardProductsProps) => {
-  const [isLargerThan850] = useMediaQuery("(min-width: 1281px)");
+  const [wantDelete, setWantDelete] = useState(false);
+  const handleWantDelete = () => {
+    setWantDelete(true);
+  };
 
-  const AppearFromRight = keyframes`
-    from {opacity: 0;}
-    to {transform: translateX(0px)}
-  `;
+  if (wantDelete) {
+    setTimeout(() => {
+      setWantDelete(false);
+    }, 3000);
+  }
 
   const token = localStorage.getItem("@AcessToken");
   const toast = useToast();
   const subTotal = Number(price) * amount;
+  console.log(item_id);
+
+  const handleDelete = async () => {
+    await api
+      .delete("/order/remove_item?item_id=" + item_id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        loadOrderDetails();
+        setWantDelete(false);
+        toast({
+          position: "top",
+          title: "Yes...!",
+          description: "Produto deletado",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -84,6 +117,33 @@ export const CardProductMobile = ({
             objectFit={"contain"}
             src={image}
           />
+
+          {wantDelete ? (
+            <>
+              <HStack>
+                <IoIosAlert color={"red"} size={30} />
+                <Text
+                  as="button"
+                  color={"theme.red"}
+                  mb={5}
+                  onClick={handleDelete as any}
+                >
+                  confirmar
+                </Text>
+              </HStack>
+            </>
+          ) : (
+            <>
+              <Text
+                as="button"
+                color={"theme.red"}
+                mb={5}
+                onClick={handleWantDelete as any}
+              >
+                Excluir
+              </Text>
+            </>
+          )}
         </VStack>
       </Box>
     </>
