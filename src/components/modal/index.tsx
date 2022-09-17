@@ -54,14 +54,6 @@ interface Order {
   loadDraftOrder: () => void;
 }
 
-/* listar os produtos que estão no pedido */
-/* adicionar produtos no pedido */
-/* remover produtos que estão no pedido */
-/* ver produtos já entregues */
-/* mostrar quanto tempo demorou para entregar produto */
-/* ver produtos em produção */
-/* mostrar quanto o produto está em produção */
-
 interface Data {
   order_id: string;
 }
@@ -95,6 +87,11 @@ export const ModalOrder = ({
       setWantDelete(false);
     }, 3000);
   }
+
+  const Close = () => {
+    setOrderData([]);
+    onClose();
+  };
 
   const handleDelete = async () => {
     await api
@@ -161,11 +158,12 @@ export const ModalOrder = ({
         toast({
           position: "top",
           title: "Tudo certo",
-          description: "Produto editado",
+          description: "Produto em produção",
           status: "success",
           duration: 1000,
           isClosable: true,
         });
+        Close();
       })
       .catch((err) => {
         console.log(err);
@@ -221,24 +219,37 @@ export const ModalOrder = ({
   console.log(id);
   console.log(orderData);
 
-  const Close = () => {
-    setOrderData([]);
-    onClose();
-  };
-
   return (
     <>
-      <Button
-        onClick={onOpen}
-        bg={"theme.blue"}
-        border={"1px"}
-        borderColor={"theme.gray50"}
-        color={"red"}
-        fontWeight={"bold"}
-        h={"50px"}
-      >
-        Ver
-      </Button>
+      {draft ? (
+        <>
+          <Button
+            onClick={onOpen}
+            bg={"theme.blue"}
+            border={"1px"}
+            borderColor={"theme.gray50"}
+            color={"red"}
+            fontWeight={"bold"}
+            h={"50px"}
+          >
+            Ver
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button
+            onClick={onOpen}
+            bg={"theme.orange"}
+            border={"2px"}
+            borderColor={"theme.gray50"}
+            color={"black"}
+            fontWeight={"bold"}
+            h={"50px"}
+          >
+            Ver
+          </Button>
+        </>
+      )}
 
       <Modal
         blockScrollOnMount={false}
@@ -388,6 +399,7 @@ export const ModalOrder = ({
                         title={order.product.name}
                         amount={order.amount}
                         loadOrderDetails={loadOrderDetails}
+                        draft={draft}
                       />
                     ))}
                 </>

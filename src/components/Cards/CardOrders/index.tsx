@@ -2,6 +2,7 @@ import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import { ModalOrder } from "../../modal";
 import { Link } from "react-router-dom";
 import { GiRoundTable } from "react-icons/gi";
+import { useState } from "react";
 
 export const CardOrders = () => {
   return (
@@ -62,28 +63,60 @@ export const CardOrdersList = ({
 }: CardOrderProps) => {
   return (
     <HStack>
-      <Flex
-        w={["250px", "300px", "350px", "400px"]}
-        h={"50px"}
-        border={"1px"}
-        borderColor={"theme.gray50"}
-        bg={"theme.white"}
-        boxShadow={"md"}
-        _hover={{
-          transform: "translateY(-2px)",
-          border: "2px",
-          borderColor: "#0CBFF8",
-        }}
-        transition="border 0.2s, ease 0s, transform 0.2s"
-      >
-        <HStack>
-          <Box w={"60px"} h={"50px"} bg={"theme.blue"}>
-            <GiRoundTable size={55} />
-          </Box>
+      {draft ? (
+        <>
+          <Flex
+            w={["250px", "300px", "350px", "400px"]}
+            h={"50px"}
+            border={"1px"}
+            borderColor={"theme.gray50"}
+            bg={"theme.white"}
+            boxShadow={"md"}
+            _hover={{
+              transform: "translateY(-2px)",
+              border: "2px",
 
-          <Text fontSize={[15, 20]}>Mesa {table}</Text>
-        </HStack>
-      </Flex>
+              borderColor: "#0CBFF8",
+            }}
+            transition="border 0.2s, ease 0s, transform 0.2s"
+          >
+            <HStack>
+              <Box w={"60px"} h={"50px"} bg={"theme.blue"}>
+                <GiRoundTable size={55} />
+              </Box>
+
+              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+            </HStack>
+          </Flex>
+        </>
+      ) : (
+        <>
+          <Flex
+            w={["250px", "300px", "350px", "400px"]}
+            h={"50px"}
+            border={"1px"}
+            borderColor={"theme.gray50"}
+            bg={"theme.white"}
+            boxShadow={"md"}
+            _hover={{
+              transform: "translateY(-2px)",
+              border: "2px",
+
+              borderColor: "#F69420",
+            }}
+            transition="border 0.2s, ease 0s, transform 0.2s"
+          >
+            <HStack>
+              <Box w={"60px"} h={"50px"} bg={"theme.orange"}>
+                <GiRoundTable size={55} />
+              </Box>
+
+              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+            </HStack>
+          </Flex>
+        </>
+      )}
+
       <ModalOrder
         table={table}
         created_at={created_at}

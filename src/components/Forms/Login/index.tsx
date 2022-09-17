@@ -55,7 +55,6 @@ export const LoginForm = () => {
   });
 
   const handleLogin = (data: LoginDataProps) => {
-    console.log(data);
     signIn(data)
       .then((response) => {
         console.log(response);

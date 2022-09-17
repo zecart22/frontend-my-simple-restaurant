@@ -1,4 +1,11 @@
-import { VStack, Text, HStack, Button, useMediaQuery } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  HStack,
+  Button,
+  useMediaQuery,
+  Box,
+} from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardOrdersList } from "../../components/Cards/CardOrders";
@@ -76,17 +83,6 @@ export const ListOrders = () => {
 
   console.log(orderData);
 
-  /*  puxar detalhes do pedido para enviar pro modal */
-  /*  rota detalhes do order precisa do orderId */
-
-  /* fechar pedido todo (mesa) */
-  /* remover pedido */
-  /*  apresentar valor total de consumo da mesa até o momento */
-  /* apresentar total de produtos pedidos pela mesa */
-  /* apresentar total de produtos entregues a mesa */
-  /*  apresentar total de produtos cancelados pela mesa */
-  /* apresentar valor total de produtos pedidos a mesa */
-
   return (
     <>
       <Header />
@@ -159,6 +155,18 @@ export const ListOrders = () => {
                   </Text>
                 </HStack>
               </Link>
+            </HStack>
+            <HStack>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
+              </HStack>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+              </HStack>
             </HStack>
             {orderData.length > 0 ? (
               <>

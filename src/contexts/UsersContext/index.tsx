@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useCallback } from "react";
 import { useState, useEffect } from "react";
 import { api } from "../../services";
 
@@ -18,28 +18,44 @@ interface UserProviderData {
   user: User[];
 }
 
-export const EventsContext = createContext<UserProviderData>(
+export const UserContext = createContext<UserProviderData>(
   {} as UserProviderData
 );
 
-export const EventsProvider = ({ children }: UserProviderProps) => {
+export const UserProvider = ({ children }: UserProviderProps) => {
+  const [userName, setUserName] = useState([]);
+  const [userEmail, setUserEmail] = useState([]);
+  const [userType, setUserType] = useState([]);
   const [userData, setUserData] = useState([]);
 
   const user_id = localStorage.getItem("@AcessUserID");
   const token = localStorage.getItem("@AcessToken");
 
-  useEffect(() => {
-    api
-      .get(`/user_details/${user_id}`, {
+  const loadUserDetails = useCallback(async () => {
+    try {
+      const response = await api.get(`/user_details?user_id=${user_id}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .catch((err) => console.log(err));
+      });
+      const { name, email, type } = response.data;
+      setUserEmail(email);
+      setUserName(name);
+      setUserType(type);
+      setUserData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
+
+  useEffect(() => {
+    loadUserDetails();
+  }, []);
+
+  const name = userName;
+  const email = userEmail;
+  const type = userType;
   const user = userData;
+
   return (
-    <EventsContext.Provider value={{ user }}>{children}</EventsContext.Provider>
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );
 };

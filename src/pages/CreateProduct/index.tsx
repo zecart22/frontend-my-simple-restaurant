@@ -30,8 +30,6 @@ import {
   FormEvent,
 } from "react";
 
-import { AppUploadImg } from "./ImageUpload";
-
 interface CreatCategoryData {
   name: string;
   id: string;

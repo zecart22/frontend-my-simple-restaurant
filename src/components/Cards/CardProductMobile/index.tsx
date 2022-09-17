@@ -25,6 +25,7 @@ interface CardProductsProps {
   category: string;
   amount: number;
   item_id: string;
+  draft: boolean;
   loadOrderDetails: () => void;
 }
 
@@ -39,6 +40,7 @@ export const CardProductMobile = ({
   category,
   amount,
   item_id,
+  draft,
   loadOrderDetails,
 }: CardProductsProps) => {
   const [wantDelete, setWantDelete] = useState(false);
@@ -117,32 +119,37 @@ export const CardProductMobile = ({
             objectFit={"contain"}
             src={image}
           />
-
-          {wantDelete ? (
+          {draft ? (
             <>
-              <HStack>
-                <IoIosAlert color={"red"} size={30} />
-                <Text
-                  as="button"
-                  color={"theme.red"}
-                  mb={5}
-                  onClick={handleDelete as any}
-                >
-                  confirmar
-                </Text>
-              </HStack>
+              {wantDelete ? (
+                <>
+                  <HStack>
+                    <IoIosAlert color={"red"} size={30} />
+                    <Text
+                      as="button"
+                      color={"theme.red"}
+                      mb={5}
+                      onClick={handleDelete as any}
+                    >
+                      Confirmar
+                    </Text>
+                  </HStack>
+                </>
+              ) : (
+                <>
+                  <Text
+                    as="button"
+                    color={"theme.red"}
+                    mb={5}
+                    onClick={handleWantDelete as any}
+                  >
+                    Excluir
+                  </Text>
+                </>
+              )}
             </>
           ) : (
-            <>
-              <Text
-                as="button"
-                color={"theme.red"}
-                mb={5}
-                onClick={handleWantDelete as any}
-              >
-                Excluir
-              </Text>
-            </>
+            <></>
           )}
         </VStack>
       </Box>

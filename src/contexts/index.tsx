@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { AuthProvider } from "./AuthContext";
 import { CategoriesProvider } from "./CategoriesContext";
 import { OrdersProvider } from "./OrdersContext";
+import { UserProvider } from "./UsersContext";
 
 import theme from "../style/theme";
 
@@ -14,7 +15,9 @@ export const AppProvider = ({ children }: IAppProviderProps) => (
   <AuthProvider>
     <CategoriesProvider>
       <OrdersProvider>
-        <ChakraProvider theme={theme}>{children}</ChakraProvider>
+        <UserProvider>
+          <ChakraProvider theme={theme}>{children}</ChakraProvider>
+        </UserProvider>
       </OrdersProvider>
     </CategoriesProvider>
   </AuthProvider>

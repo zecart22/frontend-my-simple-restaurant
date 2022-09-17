@@ -1,10 +1,7 @@
 import {
-  Center,
   Flex,
   HStack,
   VStack,
-  Image,
-  Box,
   Text,
   Button,
   useMediaQuery,
@@ -12,17 +9,54 @@ import {
 } from "@chakra-ui/react";
 
 import { FaUserCircle } from "react-icons/fa";
-import { CgAddR } from "react-icons/cg";
 import { MdDashboardCustomize } from "react-icons/md";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory, useLocation, Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+
 import { api } from "../../services";
 
 import { BiLogOut } from "react-icons/bi";
 
 export const Header = () => {
-  const email = localStorage.getItem("@AcessUserEmail");
   const { signOut } = useAuth();
+
+  const [userName, setUserName] = useState([]);
+  const [userEmail, setUserEmail] = useState([]);
+  const [userType, setUserType] = useState([]);
+  const [userData, setUserData] = useState([]);
+
+  const user_id = localStorage.getItem("@AcessUserID");
+  const token = localStorage.getItem("@AcessToken");
+
+  const loadUserDetails = useCallback(async () => {
+    try {
+      const response = await api.get(`/user_details?user_id=${user_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const { name, email, type } = response.data;
+      setUserEmail(email);
+      setUserName(name);
+      setUserType(type);
+      setUserData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUserDetails();
+  }, []);
+
+  const name = userName;
+  const email = userEmail;
+  const type = userType;
+  const user = userData;
+
+  console.log(`user: ${user}`);
+  console.log(`user: ${name}`);
+  console.log(`user: ${email}`);
+  console.log(`user: ${type}`);
 
   const AppearFromRight = keyframes`
   from {opacity: 0;}
@@ -93,15 +127,25 @@ export const Header = () => {
 
                 <VStack spacing={2}>
                   <FaUserCircle size={45} color={"white"} />
-
-                  <Text
-                    textDecoration={"none"}
-                    fontWeight={"extrabold"}
-                    textAlign={"left"}
-                    color={"theme.white"}
-                  >
-                    Olá {email}
-                  </Text>
+                  <HStack>
+                    <Text
+                      textDecoration={"none"}
+                      fontWeight={"extrabold"}
+                      textAlign={"left"}
+                      color={"theme.white"}
+                    >
+                      Olá, {name} |
+                    </Text>
+                    <Text
+                      fontFamily={"Rock Salt, cursive"}
+                      textDecoration={"none"}
+                      fontWeight={"extrabold"}
+                      textAlign={"left"}
+                      color={"theme.green"}
+                    >
+                      {type}
+                    </Text>
+                  </HStack>
                 </VStack>
 
                 <VStack>
@@ -119,27 +163,56 @@ export const Header = () => {
           </>
         ) : (
           <>
-            <Flex alignItems="flex-end">
-              <HStack>
-                <HStack animation={`${AppearFromRight} 3s`}>
+            <Flex alignItems="center">
+              <HStack spacing={[10, 39, 60]}>
+                <VStack animation={`${AppearFromRight} 3s`}>
                   <Text
-                    fontSize={30}
+                    fontSize={[20, 30]}
                     fontFamily={"Rock Salt, cursive"}
                     color={"theme.red"}
                   >
                     TEXAS
                   </Text>
 
-                  <Text fontSize={20} color={"theme.white"} fontWeight={"bold"}>
+                  <Text
+                    fontSize={[10, 20]}
+                    color={"theme.white"}
+                    fontWeight={"bold"}
+                  >
                     {"Burguers"}
                   </Text>
-                </HStack>{" "}
+                </VStack>
+                <VStack spacing={2}>
+                  <FaUserCircle size={25} color={"white"} />
+                  <VStack>
+                    <Text
+                      fontSize={12}
+                      textDecoration={"none"}
+                      fontWeight={"extrabold"}
+                      textAlign={"center"}
+                      color={"theme.white"}
+                    >
+                      {name}
+                    </Text>
+                    <Text
+                      fontSize={8}
+                      fontFamily={"Rock Salt, cursive"}
+                      textDecoration={"none"}
+                      fontWeight={"extrabold"}
+                      textAlign={"left"}
+                      color={"theme.green"}
+                    >
+                      {type}
+                    </Text>
+                  </VStack>
+                </VStack>
                 <VStack>
-                  <BiLogOut size={45} />
+                  <BiLogOut size={30} />
                   <Button
                     variant={"ghost"}
                     color={"theme.red"}
                     onClick={signOut}
+                    fontSize={[10, 20]}
                   >
                     Log Out
                   </Button>
