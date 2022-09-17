@@ -48,16 +48,6 @@ export const Header = () => {
     loadUserDetails();
   }, []);
 
-  const name = userName;
-  const email = userEmail;
-  const type = userType;
-  const user = userData;
-
-  console.log(`user: ${user}`);
-  console.log(`user: ${name}`);
-  console.log(`user: ${email}`);
-  console.log(`user: ${type}`);
-
   const AppearFromRight = keyframes`
   from {opacity: 0;}
   to {transform: translateX(0px)}
@@ -134,7 +124,7 @@ export const Header = () => {
                       textAlign={"left"}
                       color={"theme.white"}
                     >
-                      Olá, {name} |
+                      Olá, {userName} |
                     </Text>
                     <Text
                       fontFamily={"Rock Salt, cursive"}
@@ -143,7 +133,7 @@ export const Header = () => {
                       textAlign={"left"}
                       color={"theme.green"}
                     >
-                      {type}
+                      {userType}
                     </Text>
                   </HStack>
                 </VStack>
@@ -192,7 +182,7 @@ export const Header = () => {
                       textAlign={"center"}
                       color={"theme.white"}
                     >
-                      {name}
+                      {userName}
                     </Text>
                     <Text
                       fontSize={8}
@@ -202,7 +192,7 @@ export const Header = () => {
                       textAlign={"left"}
                       color={"theme.green"}
                     >
-                      {type}
+                      {userType}
                     </Text>
                   </VStack>
                 </VStack>

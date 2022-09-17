@@ -217,12 +217,9 @@ export const CardProduct = ({
       ) : (
         <>
           <Box
-            mb={10}
             w={"350px"}
             border={"1px"}
             borderColor={"theme.gray100"}
-            borderLeft={"5px"}
-            borderLeftColor={"theme.white"}
             bg={"theme.white"}
             boxShadow={"lg"}
             _hover={{
@@ -233,98 +230,94 @@ export const CardProduct = ({
             transition="border 0.2s, ease 0s, transform 0.2s"
             borderRadius={20}
           >
-            <HStack>
-              <Box
-                w={"5px"}
-                h="520px"
-                bg={"theme.wine"}
-                borderRadius={20}
-                mt={4}
-                ml={1}
-              ></Box>
+            <VStack>
               <VStack>
-                <VStack>
-                  <Text fontSize={20} fontWeight={"semibold"} mt={3}>
-                    {title}
-                  </Text>
-                  <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
-                    Preço : {price}
-                  </Text>
-                  <Image src={image} />
-                </VStack>
-                <VStack spacing={10}>
-                  <Text mb={5} w={"300px"} textAlign={"justify"}>
-                    {description}
-                  </Text>
-                  <VStack
-                    color={"theme.white"}
-                    fontWeight={"extrabold"}
-                    flexWrap={"wrap"}
-                    justifyContent={"center"}
-                  >
-                    <Box
-                      boxShadow={"md"}
-                      h={"25px"}
-                      w={"320px"}
-                      bg={"#ffa909"}
-                      borderRadius={[40, 10, 40, 10]}
-                      textAlign={"center"}
-                    >
-                      Categoria: {category.toLocaleUpperCase()}
-                    </Box>
-                    <Box
-                      boxShadow={"md"}
-                      h={"25px"}
-                      w={"320px"}
-                      bg={"theme.orange"}
-                      borderRadius={[40, 10, 40, 10]}
-                      textAlign={"center"}
-                    >
-                      Tamanho: {size.toLocaleUpperCase()}
-                    </Box>
-                    <Box
-                      boxShadow={"md"}
-                      h={"25px"}
-                      w={"320px"}
-                      bg={"theme.red"}
-                      borderRadius={[40, 10, 40, 10]}
-                      textAlign={"center"}
-                    >
-                      Proteína: {protein.toLocaleUpperCase()}
-                    </Box>
-                  </VStack>
-                  <HStack spacing={5} fontSize={20}>
-                    <Link to={`/editproduct/${id}`} color={"theme.red"}>
-                      Editar
-                    </Link>
-
-                    {!wantDelete ? (
-                      <>
-                        <Text
-                          as="button"
-                          color={"theme.red"}
-                          onClick={handleWantDelete as any}
-                        >
-                          Deletar
-                        </Text>
-                      </>
-                    ) : (
-                      <HStack>
-                        <IoIosAlert color={"#ec0909"} size={30} />
-                        <Text
-                          as="button"
-                          color={"theme.red"}
-                          onClick={handleDelete as any}
-                          fontWeight={"extrabold"}
-                        >
-                          Clique para confirmar
-                        </Text>
-                      </HStack>
-                    )}
-                  </HStack>
-                </VStack>
+                <Text fontSize={20} fontWeight={"semibold"} mt={3}>
+                  {title}
+                </Text>
+                <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
+                  Preço : {price}
+                </Text>
+                <Image
+                  maxWidth={"100%"}
+                  w={"220px"}
+                  h={"220px"}
+                  objectFit={"contain"}
+                  src={image}
+                />
               </VStack>
-            </HStack>
+              <VStack spacing={5}>
+                <Text mb={5} w={"300px"} textAlign={"justify"}>
+                  {description}
+                </Text>
+                <VStack
+                  color={"theme.white"}
+                  fontWeight={"extrabold"}
+                  flexWrap={"wrap"}
+                  justifyContent={"center"}
+                >
+                  <Box
+                    boxShadow={"md"}
+                    h={"25px"}
+                    w={"320px"}
+                    bg={"#ffa909"}
+                    borderRadius={[40, 10, 40, 10]}
+                    textAlign={"center"}
+                  >
+                    Categoria: {category.toLocaleUpperCase()}
+                  </Box>
+                  <Box
+                    boxShadow={"md"}
+                    h={"25px"}
+                    w={"320px"}
+                    bg={"theme.orange"}
+                    borderRadius={[40, 10, 40, 10]}
+                    textAlign={"center"}
+                  >
+                    Tamanho: {size.toLocaleUpperCase()}
+                  </Box>
+                  <Box
+                    boxShadow={"md"}
+                    h={"25px"}
+                    w={"320px"}
+                    bg={"theme.red"}
+                    borderRadius={[40, 10, 40, 10]}
+                    textAlign={"center"}
+                  >
+                    Proteína: {protein.toLocaleUpperCase()}
+                  </Box>
+                </VStack>
+                <HStack spacing={5} fontSize={20}>
+                  <Link to={`/editproduct/${id}`} color={"theme.red"}>
+                    Editar
+                  </Link>
+
+                  {!wantDelete ? (
+                    <>
+                      <Text
+                        as="button"
+                        color={"theme.red"}
+                        onClick={handleWantDelete as any}
+                      >
+                        Deletar
+                      </Text>
+                    </>
+                  ) : (
+                    <HStack>
+                      <IoIosAlert color={"#ec0909"} size={30} />
+                      <Text
+                        as="button"
+                        color={"theme.red"}
+                        onClick={handleDelete as any}
+                        fontWeight={"extrabold"}
+                      >
+                        Clique para confirmar
+                      </Text>
+                    </HStack>
+                  )}
+                </HStack>
+              </VStack>
+            </VStack>
           </Box>
         </>
       )}
