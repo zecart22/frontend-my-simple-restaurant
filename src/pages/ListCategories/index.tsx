@@ -34,7 +34,7 @@ export const ListCategory = () => {
   return (
     <>
       <Header />
-      <VStack mt={50} spacing={5} justifyContent={"center"}>
+      <VStack mt={50} spacing={8} justifyContent={"center"}>
         <Text fontSize={30}>Lista de Categorias</Text>
 
         {categoryData.length > 0 ? (
@@ -55,7 +55,7 @@ export const ListCategory = () => {
         )}
         <Link to={"/createcategory"}>
           <HStack>
-            <MdOutlineAddBox size={50} color={"theme.gray100"} />
+            <MdOutlineAddBox size={30} color={"theme.gray100"} />
             <Text>Adicionar categorias</Text>
           </HStack>
         </Link>

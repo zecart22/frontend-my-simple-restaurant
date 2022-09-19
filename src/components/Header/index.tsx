@@ -154,7 +154,7 @@ export const Header = () => {
         ) : (
           <>
             <Flex alignItems="center">
-              <HStack spacing={[10, 39, 60]}>
+              <HStack spacing={[10, 39, 50]}>
                 <VStack animation={`${AppearFromRight} 3s`}>
                   <Text
                     fontSize={[20, 30]}

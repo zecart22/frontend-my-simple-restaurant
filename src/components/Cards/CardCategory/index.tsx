@@ -119,7 +119,7 @@ export const CardCategoryName = ({
   return (
     <HStack>
       <Flex
-        w={["150px", "200px", "300px", "600px"]}
+        w={["120px", "200px", "300px", "600px"]}
         h={"50px"}
         border={"1px"}
         borderColor={"theme.gray50"}
@@ -135,10 +135,10 @@ export const CardCategoryName = ({
         <HStack spacing={[5, 10]}>
           <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
 
-          <Text fontSize={["15px", "18px", "20px"]}>{title}</Text>
+          <Text fontSize={["11px", "18px", "20px"]}>{title}</Text>
         </HStack>
       </Flex>
-      <HStack color={"theme.red"} spacing={2}>
+      <HStack color={"theme.red"} spacing={[0, 2]}>
         <ModalEditCategory
           category_id={category_id}
           oldName={title}
@@ -163,8 +163,9 @@ export const CardCategoryName = ({
           </>
         ) : (
           <HStack>
-            <IoIosAlert color={"#ec0909"} size={30} />
+            <IoIosAlert color={"#ec0909"} size={20} />
             <Text
+              fontSize={["10px", "15px", "18px", "20px"]}
               as="button"
               color={"theme.red"}
               onClick={handleDelete as any}
