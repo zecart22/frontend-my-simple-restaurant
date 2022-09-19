@@ -100,8 +100,8 @@ export const LoginForm = () => {
           transform: "translateY(-2px)",
         }}
         transition="border 0.2s, ease 0s, transform 0.2s"
-        w={["370px", "400px"]}
-        h={"600px"}
+        w={["230px", "420px"]}
+        h={"520px"}
         border={"1px"}
         borderColor={"theme.grafit"}
         boxShadow={"dark-lg"}
@@ -110,12 +110,13 @@ export const LoginForm = () => {
         color={"theme.grafit"}
       >
         <VStack spacing={10}>
-          <Text fontSize={30} mt={10}>
+          <Text fontSize={30} mt={5}>
             Login
           </Text>
           <FormControl isInvalid={isErrorEmail} isRequired>
             <FormLabel>Email:</FormLabel>
             <Input
+              w={["200px", "380px"]}
               placeholder={"adicione seu email"}
               {...register("email")}
               value={inputEmail}
@@ -131,6 +132,7 @@ export const LoginForm = () => {
           <FormControl isInvalid={isErrorPassword} isRequired>
             <FormLabel>Senha:</FormLabel>
             <Input
+              w={["200px", "380px"]}
               placeholder={"coloque sua senha"}
               type="password"
               {...register("password")}
@@ -147,7 +149,7 @@ export const LoginForm = () => {
           {isInvalid ? (
             <>
               <Button
-                w={"350px"}
+                w={["200px", "320px"]}
                 color={"theme.white"}
                 bg={"theme.red"}
                 fontWeight={"bold"}
@@ -164,7 +166,7 @@ export const LoginForm = () => {
           ) : (
             <>
               <Button
-                w={"350px"}
+                w={["200px", "320px"]}
                 color={"theme.white"}
                 bg={"#7d7a7a"}
                 fontWeight={"bold"}
