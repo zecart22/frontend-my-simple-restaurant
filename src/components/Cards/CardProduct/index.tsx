@@ -13,6 +13,7 @@ import { api } from "../../../services";
 import { useState } from "react";
 import { IoIosAlert } from "react-icons/io";
 import { Link } from "react-router-dom";
+
 interface CardProductsProps {
   id: string;
   title: string;
@@ -24,6 +25,7 @@ interface CardProductsProps {
   category: string;
   productData: any;
   setProductData: any;
+  categoryData: any;
 }
 
 export const CardProduct = ({
@@ -37,6 +39,7 @@ export const CardProduct = ({
   category,
   productData,
   setProductData,
+  categoryData,
 }: CardProductsProps) => {
   const [isLargerThan850] = useMediaQuery("(min-width: 1281px)");
 

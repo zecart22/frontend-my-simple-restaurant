@@ -68,17 +68,23 @@ export const ListProducts = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCategoryData(response.data);
+
+      for (let i = 0; i <= response.data.length; i++) {
+        const name = response.data[i].name;
+        setCategoryName(name);
+      }
     } catch (err) {
       console.log(err);
     }
   }, []);
+
+  console.log(categoryName);
 
   useEffect(() => {
     loadCategory();
   }, []);
 
   const TakeProductsByCategory = (category_id: any) => {
-    console.log(`category :${category_id}`);
     api
       .get(`/category/product?category_id=${category_id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -129,8 +135,6 @@ export const ListProducts = () => {
   useEffect(() => {
     TakeProductsByCategory(category_id);
   }, []);
-
-  console.log();
 
   return (
     <>
@@ -265,7 +269,7 @@ export const ListProducts = () => {
                   {productData &&
                     productData.map((product: ProductsData) => (
                       <CardProduct
-                        category={"Sanduiche"}
+                        category={categoryName}
                         description={product.description}
                         id={product.id}
                         image={product.image}
@@ -275,6 +279,7 @@ export const ListProducts = () => {
                         title={product.name}
                         productData={productData}
                         setProductData={setProductData}
+                        categoryData={categoryData}
                       />
                     ))}
                 </>
@@ -423,6 +428,7 @@ export const ListProducts = () => {
                         title={product.name}
                         productData={productData}
                         setProductData={setProductData}
+                        categoryData={categoryData}
                       />
                     ))}
                 </>
