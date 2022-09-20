@@ -1,4 +1,4 @@
-import { VStack, Text, HStack } from "@chakra-ui/react";
+import { VStack, Text, HStack, Button } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardCategoryName } from "../../components/Cards/CardCategory";
@@ -51,7 +51,16 @@ export const ListCategory = () => {
               ))}
           </>
         ) : (
-          <Text>...carregando categorias</Text>
+          <Button
+            isLoading
+            loadingText="Carregando categorias..."
+            colorScheme="teal"
+            variant="outline"
+            spinnerPlacement="start"
+            borderColor={"white"}
+          >
+            Submit
+          </Button>
         )}
         <Link to={"/createcategory"}>
           <HStack>
