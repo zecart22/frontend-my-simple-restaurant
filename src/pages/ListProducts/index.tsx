@@ -296,7 +296,7 @@ export const ListProducts = () => {
           <VStack mt={10}>
             <VStack>
               <Button
-                w={["308px"]}
+                w={["275px"]}
                 h={"50px"}
                 color={"theme.white"}
                 bg={"theme.red"}
@@ -312,7 +312,7 @@ export const ListProducts = () => {
 
               <HStack>
                 <Select
-                  w={["250px"]}
+                  w={["210px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por categoria"}
                   fontWeight={"extrabold"}
@@ -343,7 +343,7 @@ export const ListProducts = () => {
               </HStack>
               <HStack>
                 <Select
-                  w={["250px"]}
+                  w={["210px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por tamanho"}
                   fontWeight={"extrabold"}
@@ -373,7 +373,7 @@ export const ListProducts = () => {
               </HStack>
               <HStack>
                 <Select
-                  w={["250px"]}
+                  w={["210px"]}
                   h={"50px"}
                   placeholder={"Ver produtos por proteina"}
                   fontWeight={"extrabold"}

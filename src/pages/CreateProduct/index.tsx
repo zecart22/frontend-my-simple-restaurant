@@ -181,6 +181,17 @@ export const CreateProduct = () => {
     }
   };
 
+  const handleShowError = () => {
+    toast({
+      position: "bottom",
+      title: "Atenção",
+      description: "Preencha todos os campos corretamente",
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   return (
     <>
       <Header />
@@ -355,6 +366,7 @@ export const CreateProduct = () => {
                 children={"Criar produto"}
                 bg={"gray.200"}
                 _hover={{ color: "white", bg: "gray.200" }}
+                onClick={handleShowError}
               />
             </>
           ) : (

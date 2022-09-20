@@ -220,7 +220,7 @@ export const CardProduct = ({
       ) : (
         <>
           <Box
-            w={"350px"}
+            w={"275px"}
             border={"1px"}
             borderColor={"theme.gray100"}
             bg={"theme.white"}
@@ -235,7 +235,7 @@ export const CardProduct = ({
           >
             <VStack>
               <VStack>
-                <Text fontSize={20} fontWeight={"semibold"} mt={3}>
+                <Text fontSize={15} fontWeight={"semibold"} mt={3}>
                   {title}
                 </Text>
                 <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
@@ -250,7 +250,7 @@ export const CardProduct = ({
                 />
               </VStack>
               <VStack spacing={5}>
-                <Text mb={5} w={"300px"} textAlign={"justify"}>
+                <Text mb={5} w={"250px"} textAlign={"justify"}>
                   {description}
                 </Text>
                 <VStack
@@ -262,7 +262,7 @@ export const CardProduct = ({
                   <Box
                     boxShadow={"md"}
                     h={"25px"}
-                    w={"320px"}
+                    w={"250px"}
                     bg={"#ffa909"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
@@ -272,7 +272,7 @@ export const CardProduct = ({
                   <Box
                     boxShadow={"md"}
                     h={"25px"}
-                    w={"320px"}
+                    w={"250px"}
                     bg={"theme.orange"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
@@ -282,7 +282,7 @@ export const CardProduct = ({
                   <Box
                     boxShadow={"md"}
                     h={"25px"}
-                    w={"320px"}
+                    w={"250px"}
                     bg={"theme.red"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
