@@ -13,14 +13,14 @@ export const Signup = () => {
     from {opacity: 0;}
     to {transform: translateX(0px)}
     `;
-  const [isLargerThan769] = useMediaQuery("(min-width: 1050px)");
+  const [isLargerThan1050] = useMediaQuery("(min-width: 1023px)");
 
   return (
     <Flex
       padding={["10px 15px", "10 15px", "0px", "0px"]}
       alignItems="center"
       justifyContent="center"
-      height={["auto", "auto", "100vh", "100vh"]}
+      height={["125vh"]}
       bgGradient={[
         "linear(to-b, #262526 65%, #ECE7E7 35%)",
         "linear(to-b, #262526 65%, #ECE7E7 35%)",
@@ -29,15 +29,19 @@ export const Signup = () => {
       ]}
       color="white"
     >
-      {isLargerThan769 ? (
+      {isLargerThan1050 ? (
         <>
-          <HStack spacing={250}>
+          <HStack spacing={120}>
             <VStack spacing={10} animation={`${AppearFromRight} 3s`}>
-              <Text fontSize={100} fontFamily={"Rock Salt, cursive"}>
+              <Text fontSize={[60, 100]} fontFamily={"Rock Salt, cursive"}>
                 TEXAS
               </Text>
-              <VStack bg={"theme.red"} h={"80px"} w={"250px"}>
-                <Text fontSize={50} color={"theme.white"} fontWeight={"bold"}>
+              <VStack
+                bg={"theme.red"}
+                h={["60px", "80px"]}
+                w={["150px", "250px"]}
+              >
+                <Text fontSize={30} color={"theme.white"} fontWeight={"bold"}>
                   {"Burguers"}
                 </Text>
               </VStack>
@@ -47,13 +51,13 @@ export const Signup = () => {
         </>
       ) : (
         <>
-          <VStack spacing={50}>
+          <VStack>
             <VStack animation={`${AppearFromRight} 3s`}>
-              <Text fontSize={80} fontFamily={"Rock Salt, cursive"}>
+              <Text fontSize={30} fontFamily={"Rock Salt, cursive"} mt={5}>
                 TEXAS
               </Text>
-              <VStack bg={"theme.red"} h={"80px"} w={"250px"}>
-                <Text fontSize={50} color={"theme.white"} fontWeight={"bold"}>
+              <VStack bg={"theme.red"} h={"30px"} w={"100px"}>
+                <Text fontSize={20} color={"theme.white"} fontWeight={"bold"}>
                   {"Burguers"}
                 </Text>
               </VStack>

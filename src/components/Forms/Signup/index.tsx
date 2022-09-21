@@ -78,8 +78,8 @@ export const SignupForm = () => {
         transform: "translateY(-2px)",
       }}
       transition="border 0.2s, ease 0s, transform 0.2s"
-      w={["370px", "450px"]}
-      h={"900px"}
+      w={["230px", "450px"]}
+      h={"700px"}
       border={"1px"}
       borderColor={"theme.grafit"}
       boxShadow={"dark-lg"}
@@ -87,17 +87,22 @@ export const SignupForm = () => {
       justifyContent={"center"}
       color={"theme.grafit"}
     >
-      <VStack spacing={5}>
+      <VStack spacing={2}>
         <Text fontSize={30} mt={10}>
           Cadastro
         </Text>
         <FormControl>
           <FormLabel>Nome:</FormLabel>
-          <Input placeholder={"nome completo"} {...register("name")} />
+          <Input
+            w={["200px", "420px"]}
+            placeholder={"nome completo"}
+            {...register("name")}
+          />
         </FormControl>
         <FormControl>
           <FormLabel>Email:</FormLabel>
           <Input
+            w={["200px", "420px"]}
             placeholder={"adicione seu email"}
             {...register("email")}
             type={"email"}
@@ -106,8 +111,8 @@ export const SignupForm = () => {
         <FormControl>
           <FormLabel>Escolha seu perfil:</FormLabel>
           <Select
+            w={["200px", "420px"]}
             placeholder="Escolha uma opção"
-            w={["340px", "350px"]}
             h={"50px"}
             border={"2px"}
             borderColor={"theme.grafit"}
@@ -121,6 +126,7 @@ export const SignupForm = () => {
         <FormControl>
           <FormLabel>Endereço:</FormLabel>
           <Input
+            w={["200px", "420px"]}
             placeholder={"ex: Av. Monteiro , n 52 - Santos/SP"}
             {...register("adress")}
           />
@@ -128,6 +134,7 @@ export const SignupForm = () => {
         <FormControl>
           <FormLabel>Senha:</FormLabel>
           <Input
+            w={["200px", "420px"]}
             placeholder={"escolha uma senha forte"}
             type="password"
             {...register("password")}
@@ -135,10 +142,14 @@ export const SignupForm = () => {
         </FormControl>
         <FormControl>
           <FormLabel>Confirme a senha:</FormLabel>
-          <Input placeholder={"confirme a senha"} type="password" />
+          <Input
+            w={["200px", "420px"]}
+            placeholder={"confirme a senha"}
+            type="password"
+          />
         </FormControl>
         <Button
-          w={"350px"}
+          w={["200px", "350px"]}
           color={"theme.white"}
           bg={"theme.red"}
           fontWeight={"bold"}
