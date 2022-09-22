@@ -122,6 +122,7 @@ export const LoginForm = () => {
               value={inputEmail}
               onChange={handleInputChangeEmail}
               onClick={handleFirstClickEmail as any}
+              boxShadow={"md"}
             />
             {isErrorEmail ? (
               <FormErrorMessage>E-mail obrigatório</FormErrorMessage>
@@ -139,6 +140,7 @@ export const LoginForm = () => {
               value={inputPassword}
               onChange={handleInputChangePassword}
               onClick={handleFirstClickPassWord as any}
+              boxShadow={"md"}
             />
             {isErrorPassword ? (
               <FormErrorMessage>Senha obrigatória</FormErrorMessage>
@@ -168,13 +170,14 @@ export const LoginForm = () => {
               <Button
                 w={["200px", "320px"]}
                 color={"theme.white"}
-                bg={"#7d7a7a"}
+                bg={"gray.200"}
                 fontWeight={"bold"}
                 h={"50px"}
                 border={"2px"}
                 borderColor={"theme.grafit"}
                 boxShadow={"md"}
                 type={"submit"}
+                _hover={{ color: "white", bg: "gray.200" }}
               >
                 Entrar
               </Button>

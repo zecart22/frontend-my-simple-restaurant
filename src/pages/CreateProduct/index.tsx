@@ -14,10 +14,11 @@ import {
   Flex,
   color,
   useToast,
+  Textarea,
   Center,
 } from "@chakra-ui/react";
 import { RiImageAddFill } from "react-icons/ri";
-import { TextArea } from "../../components/Input";
+
 import { Header } from "../../components/Header";
 import { Link, useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";

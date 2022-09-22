@@ -6,6 +6,7 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { SignupForm } from "../../components/Forms/Signup";
 
 export const Signup = () => {
@@ -13,14 +14,26 @@ export const Signup = () => {
     from {opacity: 0;}
     to {transform: translateX(0px)}
     `;
-  const [isLargerThan1050] = useMediaQuery("(min-width: 1023px)");
+  const [isLargerThan1023] = useMediaQuery("(min-width: 1023px)");
+
+  const [height, setHeight] = useState("100vh");
+
+  const changeHeight = () => {
+    let height = "";
+    if (isLargerThan1023) {
+      height = "100vh";
+    } else {
+      height = "140vh";
+    }
+    return height;
+  };
 
   return (
     <Flex
       padding={["10px 15px", "10 15px", "0px", "0px"]}
       alignItems="center"
       justifyContent="center"
-      height={["125vh"]}
+      height={changeHeight()}
       bgGradient={[
         "linear(to-b, #262526 65%, #ECE7E7 35%)",
         "linear(to-b, #262526 65%, #ECE7E7 35%)",
@@ -29,7 +42,7 @@ export const Signup = () => {
       ]}
       color="white"
     >
-      {isLargerThan1050 ? (
+      {isLargerThan1023 ? (
         <>
           <HStack spacing={120}>
             <VStack spacing={10} animation={`${AppearFromRight} 3s`}>
@@ -38,8 +51,8 @@ export const Signup = () => {
               </Text>
               <VStack
                 bg={"theme.red"}
-                h={["60px", "80px"]}
-                w={["150px", "250px"]}
+                h={["40px", "60px"]}
+                w={["150px", "200px"]}
               >
                 <Text fontSize={30} color={"theme.white"} fontWeight={"bold"}>
                   {"Burguers"}
