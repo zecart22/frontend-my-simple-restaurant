@@ -7,12 +7,12 @@ import {
   Button,
   FormHelperText,
   FormErrorMessage,
-  Input,
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
 
 import { useAuth } from "../../../contexts/AuthContext";
+import { Input } from "../../Input";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -67,7 +67,7 @@ export const LoginForm = () => {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm({
+  } = useForm<LoginDataProps>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -100,7 +100,7 @@ export const LoginForm = () => {
           transform: "translateY(-2px)",
         }}
         transition="border 0.2s, ease 0s, transform 0.2s"
-        w={["230px", "420px"]}
+        w={["230px", "450px"]}
         h={"520px"}
         border={"1px"}
         borderColor={"theme.grafit"}
@@ -113,76 +113,37 @@ export const LoginForm = () => {
           <Text fontSize={30} mt={5}>
             Login
           </Text>
-          <FormControl isInvalid={isErrorEmail} isRequired>
-            <FormLabel>Email:</FormLabel>
-            <Input
-              w={["200px", "380px"]}
-              placeholder={"adicione seu email"}
-              {...register("email")}
-              value={inputEmail}
-              onChange={handleInputChangeEmail}
-              onClick={handleFirstClickEmail as any}
-              boxShadow={"md"}
-            />
-            {isErrorEmail ? (
-              <FormErrorMessage>E-mail obrigatório</FormErrorMessage>
-            ) : (
-              <FormHelperText></FormHelperText>
-            )}
-          </FormControl>
-          <FormControl isInvalid={isErrorPassword} isRequired>
-            <FormLabel>Senha:</FormLabel>
-            <Input
-              w={["200px", "380px"]}
-              placeholder={"coloque sua senha"}
-              type="password"
-              {...register("password")}
-              value={inputPassword}
-              onChange={handleInputChangePassword}
-              onClick={handleFirstClickPassWord as any}
-              boxShadow={"md"}
-            />
-            {isErrorPassword ? (
-              <FormErrorMessage>Senha obrigatória</FormErrorMessage>
-            ) : (
-              <FormHelperText></FormHelperText>
-            )}
-          </FormControl>
-          {isInvalid ? (
-            <>
-              <Button
-                w={["200px", "320px"]}
-                color={"theme.white"}
-                bg={"theme.red"}
-                fontWeight={"bold"}
-                h={"50px"}
-                border={"2px"}
-                borderColor={"theme.grafit"}
-                boxShadow={"md"}
-                type={"submit"}
-                onClick={handleSubmit(handleLogin as any)}
-              >
-                Entrar
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                w={["200px", "320px"]}
-                color={"theme.white"}
-                bg={"gray.200"}
-                fontWeight={"bold"}
-                h={"50px"}
-                border={"2px"}
-                borderColor={"theme.grafit"}
-                boxShadow={"md"}
-                type={"submit"}
-                _hover={{ color: "white", bg: "gray.200" }}
-              >
-                Entrar
-              </Button>
-            </>
-          )}
+
+          <Input
+            placeholder={"adicione seu email"}
+            {...register("email")}
+            label="Email"
+            error={errors.email}
+          />
+
+          <Input
+            placeholder={"coloque sua senha"}
+            type="password"
+            {...register("password")}
+            label="Senha"
+            error={errors.password}
+          />
+
+          <Button
+            w={["200px", "320px"]}
+            color={"theme.white"}
+            bg={"theme.red"}
+            fontWeight={"bold"}
+            h={"50px"}
+            border={"2px"}
+            borderColor={"theme.grafit"}
+            boxShadow={"md"}
+            type={"submit"}
+            _hover={{ color: "white", bg: "gray.200" }}
+            onClick={handleSubmit(handleLogin as any)}
+          >
+            Entrar
+          </Button>
 
           <VStack>
             <Text>Novo por aqui ?</Text>
