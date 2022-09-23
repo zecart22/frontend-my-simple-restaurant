@@ -5,7 +5,6 @@ import {
   FormLabel,
   FormControl,
   Button,
-  Select,
   useToast,
   Center,
   Grid,
@@ -13,6 +12,7 @@ import {
 
 import { Link } from "react-router-dom";
 import { Input } from "../../Input";
+import { Select } from "../../Select";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -41,19 +41,6 @@ const signupSchema = yup.object().shape({
 
 export const SignupForm = () => {
   const history = useHistory();
-  const [type, setType] = useState("");
-
-  const [isInvalid, setIsInvalid] = useState(false);
-
-  const handleType = (e: any) => {
-    setType(e.target.value);
-  };
-
-  const handleTypeError = () => {
-    if (type === "") {
-      setIsInvalid(true);
-    }
-  };
 
   const {
     formState: { errors },
@@ -100,7 +87,7 @@ export const SignupForm = () => {
       justifyContent={"center"}
       color={"theme.grafit"}
     >
-      <VStack spacing={3}>
+      <VStack spacing={6}>
         <Text fontSize={30}>Cadastro</Text>
 
         <Input
@@ -119,23 +106,15 @@ export const SignupForm = () => {
           error={errors.email}
         />
 
-        <FormControl isRequired isInvalid={isInvalid}>
-          <FormLabel>Escolha seu perfil</FormLabel>
-          <Select
-            w={["200px", "420px"]}
-            placeholder="Escolha uma opção"
-            _placeholder={{ color: "gray" }}
-            h={"40px"}
-            border={"1px"}
-            boxShadow={"md"}
-            {...register("type")}
-            value={type}
-            onChange={handleType}
-          >
-            <option value="administrador">administrador</option>
-            <option value="colaborador">colaborador</option>
-          </Select>
-        </FormControl>
+        <Select
+          placeholder="Escolha uma opção"
+          {...register("type")}
+          label="Escolha seu perfil"
+          error={errors.type}
+        >
+          <option value="administrador">administrador</option>
+          <option value="colaborador">colaborador</option>
+        </Select>
 
         <Input
           placeholder={"ex: Av. Monteiro , n 52 - Santos/SP"}
