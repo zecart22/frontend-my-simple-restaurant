@@ -1,29 +1,23 @@
 import {
   VStack,
   Text,
-  Input,
   Button,
   HStack,
   Image,
-  Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Select,
-  Flex,
-  color,
   useToast,
-  Textarea,
   Center,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { RiImageAddFill } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
+import { Select } from "../../components/Select";
 import { Link, useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { api, apiImageUpload } from "../../services";
+import { api } from "../../services";
 import * as yup from "yup";
 import { setLocale } from "yup";
 import {
@@ -46,6 +40,7 @@ interface CreatProductData {
   price: string;
   protein: string;
   file: string;
+  image: string;
 }
 
 setLocale({
@@ -55,13 +50,13 @@ setLocale({
 });
 
 const createProductSchema = yup.object().shape({
-  name: yup.string().required(" obrigatório"),
-  description: yup.string().required(" obrigatório"),
-  category_id: yup.string().required(" obrigatório"),
-  hungryLevel: yup.string().required(" obrigatório"),
-  price: yup.string().required(" obrigatório"),
-  protein: yup.string().required(" obrigatório"),
-  image: yup.string().required("obrigatório"),
+  name: yup.string().required(" nome obrigatório"),
+  description: yup.string().required(" descrição obrigatória"),
+  category_id: yup.string().required(" categoria  obrigatório"),
+  hungryLevel: yup.string().required(" tamanho obrigatório"),
+  price: yup.string().required("preço obrigatório"),
+  protein: yup.string().required("proteína obrigatório"),
+  image: yup.string().required("url da imagem obrigatório"),
 });
 
 export const CreateProduct = () => {
@@ -71,57 +66,7 @@ export const CreateProduct = () => {
 
   const [error, setError] = useState(false);
   const [imageURL, setImageURL] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [protein, setProtein] = useState("");
-  const [size, setSize] = useState("");
-  const [description, setDescription] = useState("");
   const [categoryData, setCategoryData] = useState([]);
-
-  const invalidName = name === "";
-  const invalidImageUrl = imageURL === "";
-  const invalidPrice = price === "";
-  const invalidCategory = category === "";
-  const invalidProtein = protein === "";
-  const invalidSize = size === "";
-  const invalidDescription = description === "";
-
-  const arrayForm = [
-    invalidName,
-    invalidImageUrl,
-    invalidCategory,
-    invalidDescription,
-    invalidProtein,
-    invalidSize,
-    invalidPrice,
-  ];
-
-  const isInvalid = arrayForm.some((item) => item === true);
-
-  const handleName = (e: any) => {
-    setName(e.target.value);
-  };
-
-  const handlePrice = (e: any) => {
-    setPrice(e.target.value);
-  };
-
-  const handleCategory = (e: any) => {
-    setCategory(e.target.value);
-  };
-
-  const handleProtein = (e: any) => {
-    setProtein(e.target.value);
-  };
-
-  const handleSize = (e: any) => {
-    setSize(e.target.value);
-  };
-
-  const handleDescription = (e: any) => {
-    setDescription(e.target.value);
-  };
 
   const handleInputChangeImage = (e: any) => setImageURL(e.target.value);
 
@@ -141,10 +86,10 @@ export const CreateProduct = () => {
   }, []);
 
   const {
-    formState: { errors: string },
+    formState: { errors },
     register,
     handleSubmit,
-  } = useForm({
+  } = useForm<CreatProductData>({
     resolver: yupResolver(createProductSchema),
   });
 
@@ -182,22 +127,17 @@ export const CreateProduct = () => {
     }
   };
 
-  const handleShowError = () => {
-    toast({
-      position: "bottom",
-      title: "Atenção",
-      description: "Preencha todos os campos corretamente",
-      status: "warning",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
-
   return (
-    <>
+    <Center flexDirection={"column"}>
       <Header />
-      <Center mb={10} color={"gray"}>
-        <VStack mt={30} spacing={5} justifyContent={"center"}>
+      <Box
+        w={["230px", "450px"]}
+        bg={"theme.white"}
+        color={"theme.grafit"}
+        mt={10}
+        mb={10}
+      >
+        <VStack spacing={5}>
           <HStack spacing={[70, 100]}>
             <Text fontSize={[20, 30]}>Novo produto</Text>
             <Link to={"/listproducts"}>
@@ -227,166 +167,89 @@ export const CreateProduct = () => {
                 />
               </>
             )}
-            <FormControl isRequired isInvalid={invalidImageUrl}>
-              <FormLabel fontSize={10}>Imagem URL</FormLabel>
-              <Input
-                w={["270px", "380px", "400px", "600px"]}
-                h={"50px"}
-                placeholder={"coloque aqui a url da imagem escolhida"}
-                _placeholder={{ color: "gray" }}
-                border={"none"}
-                boxShadow={"md"}
-                type={"text"}
-                {...register("image")}
-                value={imageURL}
-                onChange={handleInputChangeImage}
-              />
-            </FormControl>
           </VStack>
-          <FormControl isRequired isInvalid={invalidName}>
-            <FormLabel fontSize={10}>Nome do produto</FormLabel>
-            <Input
-              w={["270px", "380px", "400px", "600px"]}
-              h={"50px"}
-              placeholder={"adicione um nome para o produto"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("name")}
-              value={name}
-              onChange={handleName as any}
-            />
-          </FormControl>
+          <Input
+            placeholder={"coloque aqui a url da imagem escolhida"}
+            {...register("image")}
+            onChange={handleInputChangeImage}
+            label={"URL da Imagem"}
+            error={errors.image}
+          />
+          <Input
+            placeholder={"adicione um nome para o produto"}
+            {...register("name")}
+            label={"Nome do produto"}
+            error={errors.name}
+          />
 
-          <FormControl isRequired isInvalid={invalidPrice}>
-            <FormLabel fontSize={10}>Preço do produto</FormLabel>
-            <Input
-              w={["270px", "380px", "400px", "600px"]}
-              h={"50px"}
-              placeholder={"adicione o preço do produto"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("price")}
-              value={price}
-              onChange={handlePrice as any}
-            />
-          </FormControl>
+          <Input
+            placeholder={"adicione o preço do produto"}
+            {...register("price")}
+            label={"Preço"}
+            error={errors.price}
+          />
 
-          <FormControl isRequired isInvalid={invalidCategory}>
-            <FormLabel fontSize={10}>Escolha a categoria</FormLabel>
-            <Select
-              w={["270px", "380px", "400px", "600px"]}
-              h={"50px"}
-              placeholder={"Selecione uma categoria"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("category_id")}
-              value={category}
-              onChange={handleCategory as any}
-            >
-              {categoryData.length > 0 ? (
-                <>
-                  {categoryData &&
-                    categoryData.map((category: CreatCategoryData) => (
-                      <option value={category.id}>{category.name}</option>
-                    ))}
-                </>
-              ) : (
-                <></>
-              )}
-            </Select>
-          </FormControl>
+          <Select
+            placeholder={"Selecione uma categoria"}
+            {...register("category_id")}
+            label={"Categoria"}
+            error={errors.category_id}
+          >
+            {categoryData.length > 0 ? (
+              <>
+                {categoryData &&
+                  categoryData.map((category: CreatCategoryData) => (
+                    <option value={category.id}>{category.name}</option>
+                  ))}
+              </>
+            ) : (
+              <></>
+            )}
+          </Select>
 
-          <FormControl isRequired isInvalid={invalidProtein}>
-            <FormLabel fontSize={10}>Escolha uma proteína</FormLabel>
-            <Select
-              w={["270px", "380px", "400px", "600px"]}
-              h={"50px"}
-              placeholder={"Selecione uma proteína"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("protein")}
-              value={protein}
-              onChange={handleProtein as any}
-            >
-              <option value={"carne"}>{"carne"}</option>
-              <option value={"frango"}>{"frango"}</option>
-              <option value={"nenhuma"}>{"nenhuma"}</option>
-            </Select>
-          </FormControl>
+          <Select
+            placeholder={"Selecione uma proteína"}
+            {...register("protein")}
+            label={"Proteína"}
+            error={errors.protein}
+          >
+            <option value={"carne"}>{"carne"}</option>
+            <option value={"frango"}>{"frango"}</option>
+            <option value={"nenhuma"}>{"nenhuma"}</option>
+          </Select>
 
-          <FormControl isRequired isInvalid={invalidSize}>
-            <FormLabel fontSize={10}>Escolha o tamanho</FormLabel>
-            <Select
-              w={["270px", "380px", "400px", "600px"]}
-              h={"50px"}
-              placeholder={"Selecione o tamanho"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("hungryLevel")}
-              value={size}
-              onChange={handleSize as any}
-            >
-              <option value={"pequeno"}>{"pequeno"}</option>
-              <option value={"medio"}>{"medio"}</option>
-              <option value={"grande"}>{"grande"}</option>
-            </Select>
-          </FormControl>
+          <Select
+            placeholder={"Selecione o tamanho"}
+            {...register("hungryLevel")}
+            label={"Tamanho"}
+            error={errors.hungryLevel}
+          >
+            <option value={"pequeno"}>{"pequeno"}</option>
+            <option value={"medio"}>{"medio"}</option>
+            <option value={"grande"}>{"grande"}</option>
+          </Select>
 
-          <FormControl isRequired isInvalid={invalidDescription}>
-            <FormLabel fontSize={10}>Faça a descrição do produto</FormLabel>
-            <Input
-              w={["270px", "380px", "400px", "600px"]}
-              h={"80px"}
-              placeholder={"descrição do produto"}
-              _placeholder={{ color: "gray" }}
-              border={"1px"}
-              borderColor={"theme.gray50"}
-              boxShadow={"md"}
-              {...register("description")}
-              value={description}
-              onChange={handleDescription as any}
-            />
-          </FormControl>
-          {isInvalid ? (
-            <>
-              {" "}
-              <Button
-                w={["270px", "380px", "400px", "600px"]}
-                h={"50px"}
-                color={"theme.white"}
-                children={"Criar produto"}
-                bg={"gray.200"}
-                _hover={{ color: "white", bg: "gray.200" }}
-                onClick={handleShowError}
-              />
-            </>
-          ) : (
-            <>
-              {" "}
-              <Button
-                w={["270px", "380px", "400px", "600px"]}
-                h={"50px"}
-                color={"theme.white"}
-                children={"Criar produto"}
-                bg={"theme.red"}
-                _hover={{ color: "black", bg: "white", border: "2px" }}
-                type={"submit"}
-                onClick={handleSubmit(handleCreate as any)}
-              />
-            </>
-          )}
+          <Input
+            as="textarea"
+            placeholder={"descrição do produto"}
+            {...register("description")}
+            label={"Descrição"}
+            error={errors.description}
+            h={"100px"}
+          />
+
+          <Button
+            w={["200px", "400px"]}
+            h={"50px"}
+            color={"theme.white"}
+            children={"Criar produto"}
+            bg={"theme.red"}
+            _hover={{ color: "black", bg: "white", border: "2px" }}
+            type={"submit"}
+            onClick={handleSubmit(handleCreate as any)}
+          />
         </VStack>
-      </Center>
-    </>
+      </Box>
+    </Center>
   );
 };

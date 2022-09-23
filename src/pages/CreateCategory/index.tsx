@@ -32,19 +32,6 @@ export const CreateCategory = () => {
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
   const [error, setError] = useState(false);
-  const [noClick, setNoClick] = useState(true);
-  const [categoryName, setCategoryName] = useState("");
-
-  const handleCategoryName = (e: any) => {
-    setCategoryName(e.target.value);
-  };
-
-  const handleNoClick = () => {
-    setNoClick(false);
-  };
-
-  const isErrorCategoryName = categoryName === "";
-  const isInvalid = isErrorCategoryName;
 
   const {
     formState: { errors },
