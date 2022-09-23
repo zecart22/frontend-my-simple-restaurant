@@ -3,7 +3,7 @@ import { VStack, Text, HStack, Box } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { EditProductForm } from "../../components/Forms/EditProduct";
 import { Link, useParams } from "react-router-dom";
-
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { api } from "../../services";
 
 import { useCallback, useEffect, useState } from "react";
@@ -37,16 +37,19 @@ export const EditProduct = () => {
   return (
     <>
       <Header />
-      <Box h={"1070px"}>
+      <Box mb={5}>
         <VStack className={""} mt={30} spacing={6} justifyContent={"center"}>
-          <HStack spacing={[70, 100]}>
-            <Text fontSize={[20, 30]}>Editar produto</Text>
+          <VStack spacing={[10]}>
             <Link to={"/listproducts"}>
-              <Text fontSize={[15, 20]} color={"theme.red"}>
-                Voltar para produtos
-              </Text>
+              <HStack>
+                <AiOutlineArrowLeft />
+                <Text fontSize={[15]} color={"theme.red"}>
+                  Voltar para produtos
+                </Text>
+              </HStack>
             </Link>
-          </HStack>
+            <Text fontSize={[30]}>Editar produto</Text>
+          </VStack>
           {productData.length === 0 ? (
             <></>
           ) : (
