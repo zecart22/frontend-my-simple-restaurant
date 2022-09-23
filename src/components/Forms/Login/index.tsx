@@ -101,7 +101,7 @@ export const LoginForm = () => {
         }}
         transition="border 0.2s, ease 0s, transform 0.2s"
         w={["230px", "450px"]}
-        h={"520px"}
+        h={"550px"}
         border={"1px"}
         borderColor={"theme.grafit"}
         boxShadow={"dark-lg"}
