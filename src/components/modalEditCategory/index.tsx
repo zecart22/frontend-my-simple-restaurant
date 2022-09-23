@@ -10,12 +10,14 @@ import {
   ModalOverlay,
   useDisclosure,
   Box,
-  Input,
   HStack,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "../Input";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { api } from "../../services";
 
 interface EditCategoryProps {
@@ -28,6 +30,10 @@ interface EditCategory {
   name: string;
 }
 
+const editCategorySchema = yup.object().shape({
+  name: yup.string().required(" nome da categoria é obrigatório"),
+});
+
 export const ModalEditCategory = ({
   category_id,
   oldName,
@@ -36,15 +42,16 @@ export const ModalEditCategory = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
-  const [newName, setNewName] = useState("");
 
-  const handleNewName = (e: any) => {
-    setNewName(e.target.value);
-  };
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm<EditCategory>({
+    resolver: yupResolver(editCategorySchema),
+  });
 
   const handleEdit = async (data: EditCategory) => {
-    data = { name: newName };
-    console.log(data);
     api
       .put(`/category?category_id=${category_id}`, data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -107,15 +114,20 @@ export const ModalEditCategory = ({
           <ModalCloseButton />
           <ModalBody>
             <Input
-              placeholder="escolha um novo nome"
-              value={newName}
-              onChange={handleNewName}
+              placeholder={"digite o nome da categoria"}
+              {...register("name")}
+              label={"Nome"}
+              error={errors.name}
             />
           </ModalBody>
           <Box ml={[2, 10]}></Box>
           <ModalFooter>
             <HStack>
-              <Button colorScheme="orange" mr={3} onClick={handleEdit as any}>
+              <Button
+                colorScheme="orange"
+                mr={3}
+                onClick={handleSubmit(handleEdit as any)}
+              >
                 Confirmar
               </Button>
               <Button colorScheme="red" mr={3} onClick={onClose}>

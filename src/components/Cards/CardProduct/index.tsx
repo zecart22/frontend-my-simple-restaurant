@@ -147,18 +147,6 @@ export const CardProduct = ({
                     boxShadow={"md"}
                     h={"25px"}
                     w={"130px"}
-                    bg={"#ffa909"}
-                    borderRadius={[40, 10, 40, 10]}
-                    textAlign={"center"}
-                  >
-                    {category.toLocaleUpperCase()}
-                  </Box>
-                  <Box
-                    mt={[5, 5, 5, 0]}
-                    mb={[5, 5, 5, 0]}
-                    boxShadow={"md"}
-                    h={"25px"}
-                    w={"130px"}
                     bg={"theme.orange"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
@@ -259,16 +247,6 @@ export const CardProduct = ({
                   flexWrap={"wrap"}
                   justifyContent={"center"}
                 >
-                  <Box
-                    boxShadow={"md"}
-                    h={"25px"}
-                    w={"250px"}
-                    bg={"#ffa909"}
-                    borderRadius={[40, 10, 40, 10]}
-                    textAlign={"center"}
-                  >
-                    Categoria: {category.toLocaleUpperCase()}
-                  </Box>
                   <Box
                     boxShadow={"md"}
                     h={"25px"}

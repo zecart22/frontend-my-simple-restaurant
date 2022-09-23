@@ -134,6 +134,7 @@ export const ListProducts = () => {
 
   useEffect(() => {
     TakeProductsByCategory(category_id);
+    TakeAllProducts();
   }, []);
 
   return (
@@ -141,7 +142,7 @@ export const ListProducts = () => {
       <Header />
       {isLargerThan850 ? (
         <>
-          <VStack spacing={20} mt={5}>
+          <VStack spacing={20} mt={5} mb={10}>
             <HStack ml={10}>
               <Button
                 w={["378px"]}
@@ -293,7 +294,7 @@ export const ListProducts = () => {
         </>
       ) : (
         <>
-          <VStack mt={10}>
+          <VStack mt={10} mb={10}>
             <VStack>
               <Button
                 w={["275px"]}
