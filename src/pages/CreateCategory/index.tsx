@@ -1,22 +1,11 @@
-import {
-  VStack,
-  Text,
-  useToast,
-  FormLabel,
-  FormControl,
-  Button,
-  FormHelperText,
-  FormErrorMessage,
-  useFormErrorStyles,
-  Center,
-} from "@chakra-ui/react";
+import { VStack, Text, useToast, Button, Center } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Link, useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { api } from "../../services";
 import * as yup from "yup";
+import { api } from "../../services";
 
 import { useState } from "react";
 interface CreatCategoryData {

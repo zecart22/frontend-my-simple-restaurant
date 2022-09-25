@@ -188,8 +188,8 @@ export const EditProductForm = ({
             placeholder={"preço do produto"}
             {...register("price")}
             defaultValue={price}
-            label={"Nome"}
-            error={errors.name}
+            label={"Preço"}
+            error={errors.price}
           />
 
           <Select
