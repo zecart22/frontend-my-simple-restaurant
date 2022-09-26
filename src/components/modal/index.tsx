@@ -23,9 +23,10 @@ import { CardProductMobile } from "../Cards/CardProductMobile";
 import { IoIosAlert } from "react-icons/io";
 import { RiDraftLine } from "react-icons/ri";
 import { api } from "../../services";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ModalAddItem } from "../modalAddItem";
 import { MdDeleteSweep } from "react-icons/md";
+import moment, { Moment } from "moment";
 
 interface Products {
   id: string;
@@ -75,6 +76,8 @@ export const ModalOrder = ({
 
   const [error, setError] = useState(false);
 
+  const [total, setTotal] = useState();
+
   const token = localStorage.getItem("@AcessToken");
 
   const [wantDelete, setWantDelete] = useState(false);
@@ -89,7 +92,6 @@ export const ModalOrder = ({
   }
 
   const Close = () => {
-    setOrderData([]);
     onClose();
   };
 
@@ -216,7 +218,16 @@ export const ModalOrder = ({
     }
   };
 
-  console.log(id);
+  useEffect(() => {
+    loadOrderDetails();
+  }, []);
+
+  let createdAt = moment(created_at).format("DD/MM/YYYY hh:mm");
+  let createdAtHour = moment(created_at).format("hh:mm");
+
+  let updatedAt = moment(updated_at).format("DD/MM/YYYY hh:mm");
+  let updatedAtHour = moment(updated_at).format("hh:mm");
+
   console.log(orderData);
 
   return (
@@ -228,14 +239,14 @@ export const ModalOrder = ({
             bg={"theme.blue"}
             border={"1px"}
             borderColor={"theme.gray50"}
-            color={"red"}
+            color={"theme.black"}
             fontWeight={"bold"}
             h={"50px"}
           >
             Ver
           </Button>
         </>
-      ) : (
+      ) : !draft && !status ? (
         <>
           <Button
             onClick={onOpen}
@@ -249,6 +260,26 @@ export const ModalOrder = ({
             Ver
           </Button>
         </>
+      ) : !draft && status ? (
+        <>
+          <Button
+            onClick={onOpen}
+            bg={"#089605"}
+            border={"2px"}
+            borderColor={"theme.gray50"}
+            color={"theme.black"}
+            fontWeight={"bold"}
+            h={"50px"}
+            _hover={{
+              color: "black",
+              bg: "white",
+            }}
+          >
+            Ver
+          </Button>
+        </>
+      ) : (
+        <></>
       )}
 
       <Modal
@@ -261,10 +292,35 @@ export const ModalOrder = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <VStack>
+            <VStack textAlign={"left"}>
               <Text>Detalhes do Pedido</Text>
-              <Text fontSize={12} color={"gray"}>
+              <HStack>
+                <Text fontSize={12}>MESA: {table}</Text>
+                <Text fontSize={12}>CLIENTE: {name.toUpperCase()}</Text>
+              </HStack>
+              <HStack>
+                <Text fontSize={10} color={"theme.wine"}>
+                  ABERTO EM: {createdAt}
+                </Text>
+                <Text fontSize={10} color={"theme.wine"}>
+                  ÁS: {createdAtHour} horas
+                </Text>
+              </HStack>
+              <HStack color={"theme.rad"}>
+                <Text fontSize={10} color={"theme.wine"}>
+                  ATUALIZADO EM: {updatedAt}
+                </Text>
+                <Text fontSize={10} color={"theme.wine"}>
+                  ÁS: {updatedAtHour} horas
+                </Text>
+              </HStack>
+
+              <Text fontSize={13} color={"gray"}>
                 ID: {id}
+              </Text>
+
+              <Text fontSize={20} color={"red"}>
+                TOTAL EM PEDIDOS: R${total},00
               </Text>
             </VStack>
           </ModalHeader>
@@ -345,7 +401,7 @@ export const ModalOrder = ({
                   )}
                 </VStack>
               </>
-            ) : (
+            ) : !draft && !status ? (
               <VStack>
                 <Button
                   fontSize={30}
@@ -380,6 +436,27 @@ export const ModalOrder = ({
                   onClick={loadOrderDetails as any}
                 />
               </VStack>
+            ) : !draft && status ? (
+              <>
+                <Button
+                  ml={"25px"}
+                  mb={"15px"}
+                  w={"300px"}
+                  children={"Ver todos itens"}
+                  color={"theme.black"}
+                  bg={"theme.orange"}
+                  h={"50px"}
+                  _hover={{
+                    color: "black",
+                    bg: "white",
+                    border: "1px",
+                    borderColor: "black",
+                  }}
+                  onClick={loadOrderDetails as any}
+                />
+              </>
+            ) : (
+              <></>
             )}
 
             <Box ml={[5]} mt={7}>
@@ -400,6 +477,8 @@ export const ModalOrder = ({
                         amount={order.amount}
                         loadOrderDetails={loadOrderDetails}
                         draft={draft}
+                        orderData={orderData}
+                        setTotal={setTotal}
                       />
                     ))}
                 </>

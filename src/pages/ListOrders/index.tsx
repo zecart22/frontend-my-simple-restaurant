@@ -5,6 +5,7 @@ import {
   Button,
   useMediaQuery,
   Box,
+  Center,
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
@@ -16,6 +17,7 @@ import { api } from "../../services";
 import { RiDraftLine } from "react-icons/ri";
 import { GiCampCookingPot } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
+import { GiHistogram } from "react-icons/gi";
 
 interface Order {
   id: string;
@@ -59,6 +61,17 @@ export const ListOrders = () => {
     }
   }, []);
 
+  const loadConcluidOrder = useCallback(async () => {
+    try {
+      const response = await api.get(`/orders/concluid`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setOrderData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   const loadAllOrder = useCallback(async () => {
     try {
       const response = await api.get(`/orders/all`, {
@@ -91,7 +104,7 @@ export const ListOrders = () => {
           <VStack mt={50} spacing={5} justifyContent={"center"}>
             <HStack>
               <Button
-                children={"todos pedidos"}
+                children={"Todos pedidos"}
                 color={"theme.white"}
                 bg={"theme.blue"}
                 h={"50px"}
@@ -114,12 +127,12 @@ export const ListOrders = () => {
                   borderColor: "black",
                 }}
                 onClick={loadDraftOrder as any}
-                children={"pedidos em rascunho"}
+                children={"Pedidos em rascunho"}
               />
 
               <Button
                 leftIcon={<GiCampCookingPot size={30} />}
-                children={"pedidos abertos"}
+                children={"Pedidos abertos"}
                 bg={"theme.blue"}
                 h={"50px"}
                 _hover={{
@@ -132,7 +145,7 @@ export const ListOrders = () => {
               />
               <Button
                 leftIcon={<MdDeliveryDining size={30} />}
-                children={" pedidos delivery"}
+                children={" Pedidos delivery"}
                 bg={"theme.blue"}
                 h={"50px"}
                 _hover={{
@@ -142,6 +155,20 @@ export const ListOrders = () => {
                   borderColor: "black",
                 }}
                 onClick={loadDeliveryOrder}
+              />
+              <Button
+                color={"theme.white"}
+                leftIcon={<GiHistogram size={30} />}
+                children={"Histórico de pedidos"}
+                bg={"#089605"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadConcluidOrder}
               />
             </HStack>
             <HStack spacing={10}>
@@ -166,6 +193,11 @@ export const ListOrders = () => {
                 <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
 
                 <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+              </HStack>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos em concluidos</Text>
               </HStack>
             </HStack>
             {orderData.length > 0 ? (
@@ -197,9 +229,8 @@ export const ListOrders = () => {
           <VStack mt={50} spacing={5} justifyContent={"center"}>
             <VStack>
               <Button
-                w="280px"
-                children={"todos pedidos"}
-                color={"theme.white"}
+                w="230px"
+                children={"Todos pedidos"}
                 bg={"theme.blue"}
                 h={"50px"}
                 _hover={{
@@ -211,7 +242,7 @@ export const ListOrders = () => {
                 onClick={loadAllOrder as any}
               />
               <Button
-                w="280px"
+                w="230px"
                 leftIcon={<RiDraftLine size={30} />}
                 bg={"theme.blue"}
                 h={"50px"}
@@ -222,13 +253,13 @@ export const ListOrders = () => {
                   borderColor: "black",
                 }}
                 onClick={loadDraftOrder as any}
-                children={"pedidos em rascunho"}
+                children={"Pedidos em rascunho"}
               />
 
               <Button
-                w="280px"
+                w="230px"
                 leftIcon={<GiCampCookingPot size={30} />}
-                children={"pedidos abertos"}
+                children={"Pedidos abertos"}
                 bg={"theme.blue"}
                 h={"50px"}
                 _hover={{
@@ -240,9 +271,9 @@ export const ListOrders = () => {
                 onClick={loadOpenOrder as any}
               />
               <Button
-                w="280px"
+                w="230px"
                 leftIcon={<MdDeliveryDining size={30} />}
-                children={" pedidos delivery"}
+                children={" Pedidos delivery"}
                 bg={"theme.blue"}
                 h={"50px"}
                 _hover={{
@@ -253,10 +284,23 @@ export const ListOrders = () => {
                 }}
                 onClick={loadDeliveryOrder}
               />
+              <Button
+                w="230px"
+                color={"theme.white"}
+                leftIcon={<GiHistogram size={30} />}
+                children={"Histórico de pedidos"}
+                bg={"theme.red"}
+                h={"50px"}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
+                onClick={loadConcluidOrder}
+              />
             </VStack>
-            <HStack spacing={10}>
-              <Text fontSize={15}>Lista de Pedidos</Text>
-
+            <VStack spacing={10}>
               <Link to={"/openorder"}>
                 <HStack spacing={2}>
                   <MdOutlineAddBox size={50} color={"theme.gray100"} />
@@ -265,7 +309,27 @@ export const ListOrders = () => {
                   </Text>
                 </HStack>
               </Link>
-            </HStack>
+              <Text fontSize={20}>Lista de Pedidos</Text>
+            </VStack>
+
+            <Center>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
+              </HStack>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+              </HStack>
+              <HStack>
+                <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
+
+                <Text fontSize={[12, 15]}>Pedidos em concluidos</Text>
+              </HStack>
+            </Center>
+
             {orderData.length > 0 ? (
               <>
                 {orderData &&

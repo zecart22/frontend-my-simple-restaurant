@@ -1,7 +1,16 @@
-import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { ModalOrder } from "../../modal";
 import { Link } from "react-router-dom";
 import { GiRoundTable } from "react-icons/gi";
+import { BsCheckCircle } from "react-icons/bs";
 import { useState } from "react";
 
 export const CardOrders = () => {
@@ -66,7 +75,7 @@ export const CardOrdersList = ({
       {draft ? (
         <>
           <Flex
-            w={["250px", "300px", "350px", "400px"]}
+            w={["190px", "300px", "350px", "400px"]}
             h={"50px"}
             border={"1px"}
             borderColor={"theme.gray50"}
@@ -81,18 +90,18 @@ export const CardOrdersList = ({
             transition="border 0.2s, ease 0s, transform 0.2s"
           >
             <HStack>
-              <Box w={"60px"} h={"50px"} bg={"theme.blue"}>
-                <GiRoundTable size={55} />
-              </Box>
+              <Center w={"60px"} h={"50px"} bg={"theme.blue"}>
+                <GiRoundTable size={40} />
+              </Center>
 
               <Text fontSize={[15, 20]}>Mesa {table}</Text>
             </HStack>
           </Flex>
         </>
-      ) : (
+      ) : !draft && !status ? (
         <>
           <Flex
-            w={["250px", "300px", "350px", "400px"]}
+            w={["190px", "300px", "350px", "400px"]}
             h={"50px"}
             border={"1px"}
             borderColor={"theme.gray50"}
@@ -107,14 +116,47 @@ export const CardOrdersList = ({
             transition="border 0.2s, ease 0s, transform 0.2s"
           >
             <HStack>
-              <Box w={"60px"} h={"50px"} bg={"theme.orange"}>
-                <GiRoundTable size={55} />
-              </Box>
+              <Center w={"60px"} h={"50px"} bg={"theme.orange"}>
+                <GiRoundTable size={40} />
+              </Center>
 
               <Text fontSize={[15, 20]}>Mesa {table}</Text>
             </HStack>
           </Flex>
         </>
+      ) : !draft && status ? (
+        <>
+          <Flex
+            w={["190px", "300px", "350px", "400px"]}
+            h={"50px"}
+            border={"1px"}
+            borderColor={"theme.gray50"}
+            bg={"theme.white"}
+            boxShadow={"md"}
+            _hover={{
+              transform: "translateY(-2px)",
+              border: "2px",
+
+              borderColor: "#089605",
+            }}
+            transition="border 0.2s, ease 0s, transform 0.2s"
+          >
+            <HStack>
+              <Center
+                w={"60px"}
+                h={"50px"}
+                bg={"#089605"}
+                justifyContent={"center"}
+              >
+                <BsCheckCircle size={35} color={"white"} />
+              </Center>
+
+              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+            </HStack>
+          </Flex>
+        </>
+      ) : (
+        <></>
       )}
 
       <ModalOrder

@@ -26,6 +26,8 @@ interface CardProductsProps {
   amount: number;
   item_id: string;
   draft: boolean;
+  orderData: any;
+  setTotal: any;
   loadOrderDetails: () => void;
 }
 
@@ -41,6 +43,8 @@ export const CardProductMobile = ({
   amount,
   item_id,
   draft,
+  orderData,
+  setTotal,
   loadOrderDetails,
 }: CardProductsProps) => {
   const [wantDelete, setWantDelete] = useState(false);
@@ -56,8 +60,26 @@ export const CardProductMobile = ({
 
   const token = localStorage.getItem("@AcessToken");
   const toast = useToast();
-  const subTotal = Number(price) * amount;
-  console.log(item_id);
+  let subTotal = Number(price) * amount;
+
+  const arraySubtotal = orderData.map(
+    (order: any) => Number(order.product.price) * order.amount
+  );
+
+  const len = arraySubtotal.length;
+  console.log(len);
+
+  const sumTotal = (len: any) => {
+    let acc = 0;
+    for (let i = 0; i < len; i++) {
+      acc = acc + arraySubtotal[i];
+      console.log(acc);
+    }
+    return acc;
+  };
+
+  const total = sumTotal(len);
+  setTotal(total);
 
   const handleDelete = async () => {
     await api
