@@ -35,31 +35,6 @@ const loginSchema = yup.object().shape({
 
 export const LoginForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [firstClickEmail, setFirstClickEmail] = useState(false);
-  const [firstClickPassWord, setFirstClickPassWord] = useState(false);
-  const [error, setError] = useState(false);
-
-  const handleInputChangeEmail = (e: any) => setInputEmail(e.target.value);
-
-  const handleInputChangePassword = (e: any) =>
-    setInputPassword(e.target.value);
-
-  const handleFirstClickEmail = () => {
-    setFirstClickEmail(true);
-  };
-
-  const handleFirstClickPassWord = () => {
-    setFirstClickPassWord(true);
-  };
-
-  const isErrorEmail = inputEmail === "" && firstClickEmail;
-  const isErrorPassword = inputPassword === "" && firstClickPassWord;
-  const clicks = firstClickEmail && firstClickPassWord;
-  const isInvalid = !isErrorEmail && !isErrorPassword && clicks;
-
   const { signIn } = useAuth();
   const toast = useToast();
 
@@ -87,10 +62,9 @@ export const LoginForm = () => {
       .catch((err) => {
         console.log(err);
         onOpen();
+        setTimeout(onClose, 2000);
       });
   };
-
-  console.log(error);
 
   return (
     <>

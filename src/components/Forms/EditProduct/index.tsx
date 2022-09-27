@@ -10,10 +10,13 @@ import {
   Flex,
   color,
   useToast,
+  Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { useHistory } from "react-router-dom";
 import { Input } from "../../Input";
+import { ModalError } from "../../ModalError";
 import { Select } from "../../Select";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -37,6 +40,7 @@ interface EditProductData {
   file: string;
   id: string;
   image: string;
+  curName: string;
 }
 
 setLocale({
@@ -47,6 +51,7 @@ setLocale({
 
 const editProductSchema = yup.object().shape({
   name: yup.string().required(" nome obrigatório"),
+  curName: yup.string().required(" nome atual obrigatório"),
   description: yup.string().required(" descrição obrigatória"),
   category_id: yup.string().required("categoria obrigatório"),
   hungryLevel: yup.string().required("tamanho obrigatório"),
@@ -68,6 +73,12 @@ export const EditProductForm = ({
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
+
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
 
   const handleNavigation = (path: any) => {
     return history.push(path);
@@ -121,20 +132,9 @@ export const EditProductForm = ({
       })
       .catch((err) => {
         console.log(err);
-      })
-      .then((response) => {
-        setError(true);
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Não foi possivel editar produto!! ",
-        description: "Nome já em uso",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
   };
 
   useEffect(() => {
@@ -145,8 +145,27 @@ export const EditProductForm = ({
 
   return (
     <>
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={"Opss"}
+        message={"Nome indisponível, escolha outro e tente novamente"}
+      />
       <Box>
         <VStack spacing={5}>
+          <Input
+            borderColor={"theme.white"}
+            boxShadow={"none"}
+            placeholder={""}
+            {...register("curName")}
+            defaultValue={name}
+            error={errors.curName}
+            fontSize={[15, 25]}
+            fontFamily={"Rock Salt, cursive"}
+            color={"theme.red"}
+            contentEditable={"false"}
+            label={"Nome atual"}
+          />
           {imageURL.length === 0 ? (
             <>
               <VStack>

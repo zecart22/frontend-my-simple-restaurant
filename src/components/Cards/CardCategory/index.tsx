@@ -110,7 +110,7 @@ export const CardCategoryName = ({
       .catch((err) => {
         console.log(err);
         onModalFailOpen();
-        setTimeout(onModalFailClose, 5000);
+        setTimeout(onModalFailClose, 4000);
       });
   };
 

@@ -77,6 +77,7 @@ export const ModalEditCategory = ({
           isClosable: true,
         });
         loadCategory();
+        onClose();
       })
       .catch((err) => {
         console.log(err);
