@@ -9,6 +9,7 @@ import {
   useMediaQuery,
   keyframes,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 import { LoginForm } from "../../components/Forms/Login";
 
@@ -19,12 +20,24 @@ export const Login = () => {
   `;
   const [isLargerThan1023] = useMediaQuery("(min-width: 1023px)");
 
+  const [height, setHeight] = useState("100vh");
+
+  const changeHeight = () => {
+    let height = "";
+    if (isLargerThan1023) {
+      height = "100vh";
+    } else {
+      height = "105vh";
+    }
+    return height;
+  };
+
   return (
     <Flex
       padding={["10px 15px", "10 15px", "0px", "0px"]}
       alignItems="center"
       justifyContent="center"
-      height={["100vh"]}
+      height={changeHeight()}
       bgGradient={[
         "linear(to-b, #262526 65%, #ECE7E7 35%)",
         "linear(to-b, #262526 65%, #ECE7E7 35%)",

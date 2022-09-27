@@ -14,16 +14,16 @@ export const Signup = () => {
     from {opacity: 0;}
     to {transform: translateX(0px)}
     `;
-  const [isLargerThan1023] = useMediaQuery("(min-width: 1023px)");
+  const [isLargerThan1280] = useMediaQuery("(min-width: 1280px)");
 
   const [height, setHeight] = useState("100vh");
 
   const changeHeight = () => {
     let height = "";
-    if (isLargerThan1023) {
+    if (isLargerThan1280) {
       height = "100vh";
     } else {
-      height = "140vh";
+      height = "155vh";
     }
     return height;
   };
@@ -42,7 +42,7 @@ export const Signup = () => {
       ]}
       color="white"
     >
-      {isLargerThan1023 ? (
+      {isLargerThan1280 ? (
         <>
           <HStack spacing={120}>
             <VStack spacing={10} animation={`${AppearFromRight} 3s`}>

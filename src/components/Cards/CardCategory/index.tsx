@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   Flex,
   HStack,
   Text,
+  useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -12,6 +14,7 @@ import { ModalEditCategory } from "../../modalEditCategory";
 import { api } from "../../../services";
 import { useState } from "react";
 import { IoIosAlert } from "react-icons/io";
+import { ModalError } from "../../ModalError";
 
 export const CardCategory = () => {
   return (
@@ -65,6 +68,12 @@ export const CardCategoryName = ({
   const [wantDelete, setWantDelete] = useState(false);
   const [error, setError] = useState(false);
 
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
+
   const handleWantDelete = () => {
     setWantDelete(true);
   };
@@ -100,82 +109,81 @@ export const CardCategoryName = ({
       })
       .catch((err) => {
         console.log(err);
-      })
-      .then((response) => {
-        setError(true);
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 5000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Não é possível deletar categoria!",
-        description: "Essa categoria não está vazia",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
   };
 
   return (
-    <HStack>
-      <Flex
-        w={["120px", "200px", "300px", "600px"]}
-        h={"50px"}
-        border={"1px"}
-        borderColor={"theme.gray50"}
-        bg={"theme.white"}
-        boxShadow={"md"}
-        _hover={{
-          transform: "translateY(-2px)",
-          border: "2px",
-          borderColor: "#f0f00c",
-        }}
-        transition="border 0.2s, ease 0s, transform 0.2s"
-      >
-        <HStack spacing={[5, 10]}>
-          <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
+    <>
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={"Opss"}
+        message={
+          "Essa categoria contem produtos, exclua os produtos para poder deletar."
+        }
+      />
+      <HStack>
+        <Flex
+          w={["120px", "200px", "300px", "600px"]}
+          h={"50px"}
+          border={"1px"}
+          borderColor={"theme.gray50"}
+          bg={"theme.white"}
+          boxShadow={"md"}
+          _hover={{
+            transform: "translateY(-2px)",
+            border: "2px",
+            borderColor: "#f0f00c",
+          }}
+          transition="border 0.2s, ease 0s, transform 0.2s"
+        >
+          <HStack spacing={[5, 10]}>
+            <Box w={"20px"} h={"50px"} bg={"theme.yellow"}></Box>
 
-          <Text fontSize={["11px", "18px", "20px"]}>{title}</Text>
-        </HStack>
-      </Flex>
-      <HStack color={"theme.red"} spacing={[0, 2]}>
-        <ModalEditCategory
-          category_id={category_id}
-          oldName={title}
-          loadCategory={loadCategory}
-        />
-        {!wantDelete ? (
-          <>
-            <Button
-              fontSize={["10px", "15px", "18px", "20px"]}
-              h={"50px"}
-              bg={"theme.white"}
-              _hover={{
-                color: "white",
-                bg: "red",
-                border: "1px",
-                borderColor: "gray",
-              }}
-              onClick={handleWantDelete as any}
-            >
-              Deletar
-            </Button>
-          </>
-        ) : (
-          <HStack>
-            <IoIosAlert color={"#ec0909"} size={20} />
-            <Text
-              fontSize={["10px", "15px", "18px", "20px"]}
-              as="button"
-              color={"theme.red"}
-              onClick={handleDelete as any}
-              fontWeight={"extrabold"}
-            >
-              Clique para confirmar
-            </Text>
+            <Text fontSize={["11px", "18px", "20px"]}>{title}</Text>
           </HStack>
-        )}
+        </Flex>
+        <HStack color={"theme.red"} spacing={[0, 2]}>
+          <ModalEditCategory
+            category_id={category_id}
+            oldName={title}
+            loadCategory={loadCategory}
+          />
+          {!wantDelete ? (
+            <>
+              <Button
+                fontSize={["10px", "15px", "18px", "20px"]}
+                h={"50px"}
+                bg={"theme.white"}
+                _hover={{
+                  color: "white",
+                  bg: "red",
+                  border: "1px",
+                  borderColor: "gray",
+                }}
+                onClick={handleWantDelete as any}
+              >
+                Deletar
+              </Button>
+            </>
+          ) : (
+            <HStack>
+              <IoIosAlert color={"#ec0909"} size={20} />
+              <Text
+                fontSize={["10px", "15px", "18px", "20px"]}
+                as="button"
+                color={"theme.red"}
+                onClick={handleDelete as any}
+                fontWeight={"extrabold"}
+              >
+                Clique para confirmar
+              </Text>
+            </HStack>
+          )}
+        </HStack>
       </HStack>
-    </HStack>
+    </>
   );
 };

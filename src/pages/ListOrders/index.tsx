@@ -289,7 +289,7 @@ export const ListOrders = () => {
                 color={"theme.white"}
                 leftIcon={<GiHistogram size={30} />}
                 children={"Histórico de pedidos"}
-                bg={"theme.red"}
+                bg={"#089605"}
                 h={"50px"}
                 _hover={{
                   color: "black",

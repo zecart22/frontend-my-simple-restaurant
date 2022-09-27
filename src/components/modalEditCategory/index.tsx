@@ -13,6 +13,9 @@ import {
   HStack,
   useToast,
 } from "@chakra-ui/react";
+
+import { ModalError } from "../ModalError";
+
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "../Input";
@@ -40,6 +43,12 @@ export const ModalEditCategory = ({
   loadCategory,
 }: EditCategoryProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
+
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
 
@@ -68,24 +77,22 @@ export const ModalEditCategory = ({
           isClosable: true,
         });
         loadCategory();
-        onClose();
       })
       .catch((err) => {
-        toast({
-          position: "top",
-          title: "Algo deu errado!! ",
-          description: err,
-          status: "warning",
-          duration: 3000,
-          isClosable: true,
-        });
-
         console.log(err);
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
   };
 
   return (
     <>
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={"Opss"}
+        message={"Nome indisponível, escolha outro e tente novamente"}
+      />
       <Button
         onClick={onOpen}
         fontSize={["10px", "15px", "18px", "20px"]}
