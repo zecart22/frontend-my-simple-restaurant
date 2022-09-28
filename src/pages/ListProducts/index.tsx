@@ -31,7 +31,7 @@ interface ProductsData {
   hungryLevel: string;
   protein: string;
   image: string;
-  category: string;
+  category_id: string;
 }
 
 export const ListProducts = () => {
@@ -270,7 +270,7 @@ export const ListProducts = () => {
                   {productData &&
                     productData.map((product: ProductsData) => (
                       <CardProduct
-                        category={categoryName}
+                        category={product.category_id}
                         description={product.description}
                         id={product.id}
                         image={product.image}
@@ -419,7 +419,7 @@ export const ListProducts = () => {
                   {productData &&
                     productData.map((product: ProductsData) => (
                       <CardProduct
-                        category={"Sanduiche"}
+                        category={product.category_id}
                         description={product.description}
                         id={product.id}
                         image={product.image}

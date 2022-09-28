@@ -45,6 +45,18 @@ export const CardProduct = ({
 
   const [wantDelete, setWantDelete] = useState(false);
 
+  const category_id = category;
+  console.log(categoryData);
+  console.log(category_id);
+
+  const findCategoryName = categoryData.filter(function (category: any) {
+    if (category.id === category_id) {
+      return category;
+    }
+  });
+
+  const categoryName = findCategoryName[0].name;
+
   const handleWantDelete = () => {
     setWantDelete(true);
   };
@@ -153,6 +165,18 @@ export const CardProduct = ({
                   >
                     {size.toLocaleUpperCase()}
                   </Box>
+                  <Box
+                    mt={[5, 5, 5, 0]}
+                    mb={[5, 5, 5, 0]}
+                    boxShadow={"md"}
+                    h={"25px"}
+                    w={"130px"}
+                    bg={"#d2b10c"}
+                    borderRadius={[40, 10, 40, 10]}
+                    textAlign={"center"}
+                  >
+                    {categoryName.toLocaleUpperCase()}
+                  </Box>
                   {protein === "nenhuma" ? (
                     <></>
                   ) : (
@@ -258,15 +282,33 @@ export const CardProduct = ({
                     Tamanho: {size.toLocaleUpperCase()}
                   </Box>
                   <Box
+                    mt={[5, 5, 5, 0]}
+                    mb={[5, 5, 5, 0]}
                     boxShadow={"md"}
                     h={"25px"}
                     w={"250px"}
-                    bg={"theme.red"}
+                    bg={"#d2b10c"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
                   >
-                    Proteína: {protein.toLocaleUpperCase()}
+                    {categoryName.toLocaleUpperCase()}
                   </Box>
+                  {protein === "nenhuma" ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Box
+                        boxShadow={"md"}
+                        h={"25px"}
+                        w={"250px"}
+                        bg={"theme.red"}
+                        borderRadius={[40, 10, 40, 10]}
+                        textAlign={"center"}
+                      >
+                        Proteína: {protein.toLocaleUpperCase()}
+                      </Box>
+                    </>
+                  )}
                 </VStack>
                 <HStack spacing={5} fontSize={20}>
                   <Link to={`/editproduct/${id}`} color={"theme.red"}>
