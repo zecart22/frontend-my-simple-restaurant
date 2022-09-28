@@ -119,7 +119,7 @@ export const CardProduct = ({
             transition="border 0.2s, ease 0s, transform 0.2s"
             borderRadius={20}
           >
-            <HStack>
+            <HStack mb={5} mt={5}>
               <Box
                 w={"20px"}
                 h="250px"
@@ -141,6 +141,7 @@ export const CardProduct = ({
                   h={"220px"}
                   objectFit={"contain"}
                   src={image}
+                  mb={10}
                 />
               </VStack>
               <VStack spacing={10}>
@@ -232,7 +233,7 @@ export const CardProduct = ({
       ) : (
         <>
           <Box
-            w={"275px"}
+            w={"250px"}
             border={"1px"}
             borderColor={"theme.gray100"}
             bg={"theme.white"}
@@ -259,10 +260,11 @@ export const CardProduct = ({
                   h={"220px"}
                   objectFit={"contain"}
                   src={image}
+                  mb={10}
                 />
               </VStack>
               <VStack spacing={5}>
-                <Text mb={5} w={"250px"} textAlign={"justify"}>
+                <Text mb={5} w={"230px"} textAlign={"justify"}>
                   {description}
                 </Text>
                 <VStack
@@ -274,7 +276,7 @@ export const CardProduct = ({
                   <Box
                     boxShadow={"md"}
                     h={"25px"}
-                    w={"250px"}
+                    w={"230px"}
                     bg={"theme.orange"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
@@ -286,7 +288,7 @@ export const CardProduct = ({
                     mb={[5, 5, 5, 0]}
                     boxShadow={"md"}
                     h={"25px"}
-                    w={"250px"}
+                    w={"230px"}
                     bg={"#d2b10c"}
                     borderRadius={[40, 10, 40, 10]}
                     textAlign={"center"}
@@ -300,7 +302,7 @@ export const CardProduct = ({
                       <Box
                         boxShadow={"md"}
                         h={"25px"}
-                        w={"250px"}
+                        w={"230px"}
                         bg={"theme.red"}
                         borderRadius={[40, 10, 40, 10]}
                         textAlign={"center"}

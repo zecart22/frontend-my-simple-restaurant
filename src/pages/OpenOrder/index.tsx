@@ -65,8 +65,8 @@ export const OpenOrder = () => {
 
       .catch((err) => {
         console.log(err);
-        /*     onModalFailOpen();
-        setTimeout(onModalFailClose, 1500); */
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 1500);
       });
   };
 

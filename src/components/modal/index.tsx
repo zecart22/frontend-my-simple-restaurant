@@ -286,26 +286,26 @@ export const ModalOrder = ({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <VStack textAlign={"left"}>
+            <VStack textAlign={"center"}>
               <Text>Detalhes do Pedido</Text>
               <HStack>
                 <Text fontSize={12}>MESA: {table}</Text>
                 <Text fontSize={12}>CLIENTE: {name.toUpperCase()}</Text>
               </HStack>
               <HStack>
-                <Text fontSize={10} color={"theme.wine"}>
-                  ABERTO EM: {createdAt}
+                <Text fontSize={12} color={"theme.wine"}>
+                  OPEN: {createdAt}
                 </Text>
-                <Text fontSize={10} color={"theme.wine"}>
-                  ÁS: {createdAtHour} horas
+                <Text fontSize={12} color={"theme.wine"}>
+                  AT {createdAtHour} h
                 </Text>
               </HStack>
               <HStack color={"theme.rad"}>
-                <Text fontSize={10} color={"theme.wine"}>
-                  ATUALIZADO EM: {updatedAt}
+                <Text fontSize={12} color={"theme.wine"}>
+                  UPDATE: {updatedAt}
                 </Text>
-                <Text fontSize={10} color={"theme.wine"}>
-                  ÁS: {updatedAtHour} horas
+                <Text fontSize={12} color={"theme.wine"}>
+                  AT {updatedAtHour} h
                 </Text>
               </HStack>
 
@@ -326,7 +326,7 @@ export const ModalOrder = ({
                   <Button
                     fontSize={30}
                     fontWeight={"extrabold"}
-                    w={"300px"}
+                    w={["230px", "300px"]}
                     children={"Produzir"}
                     color={"theme.black"}
                     bg={"theme.green"}
@@ -346,7 +346,7 @@ export const ModalOrder = ({
 
                   <Button
                     leftIcon={<RiDraftLine size={30} />}
-                    w={"300px"}
+                    w={["230px", "300px"]}
                     children={"Ver todos itens"}
                     color={"theme.black"}
                     bg={"theme.orange"}
@@ -363,7 +363,7 @@ export const ModalOrder = ({
                     <>
                       <Button
                         leftIcon={<IoIosAlert size={30} />}
-                        w={"300px"}
+                        w={["230px", "300px"]}
                         children={"Confirmar"}
                         color={"theme.white"}
                         bg={"theme.red"}
@@ -381,7 +381,7 @@ export const ModalOrder = ({
                     <>
                       <Button
                         leftIcon={<MdDeleteSweep size={30} />}
-                        w={"300px"}
+                        w={["230px", "300px"]}
                         children={"Excluir pedido"}
                         color={"theme.white"}
                         bg={"theme.red"}
@@ -403,7 +403,7 @@ export const ModalOrder = ({
                 <Button
                   fontSize={30}
                   fontWeight={"extrabold"}
-                  w={"300px"}
+                  w={["230px", "300px"]}
                   children={"Finalizar"}
                   color={"theme.black"}
                   bg={"theme.yellow"}
@@ -419,7 +419,7 @@ export const ModalOrder = ({
                 <Button
                   ml={"45px"}
                   mb={"15px"}
-                  w={"300px"}
+                  w={["230px", "300px"]}
                   children={"Ver todos itens"}
                   color={"theme.black"}
                   bg={"theme.orange"}
@@ -438,7 +438,7 @@ export const ModalOrder = ({
                 <Button
                   ml={"25px"}
                   mb={"15px"}
-                  w={"300px"}
+                  w={["230px", "300px"]}
                   children={"Ver todos itens"}
                   color={"theme.black"}
                   bg={"theme.orange"}
@@ -456,7 +456,7 @@ export const ModalOrder = ({
               <></>
             )}
 
-            <Box ml={[5]} mt={7}>
+            <Box ml={[0, 5]} mt={7}>
               {orderData.length > 0 ? (
                 <>
                   {orderData &&

@@ -108,7 +108,7 @@ export const CardProductMobile = ({
     <>
       <Box
         mb={10}
-        w={"300px"}
+        w={["230px", "300px"]}
         border={"1px"}
         borderColor={"theme.gray100"}
         bg={"theme.white"}
@@ -123,11 +123,15 @@ export const CardProductMobile = ({
         justifyContent={"center"}
       >
         <VStack>
-          <Text fontSize={20} fontWeight={"semibold"} mt={3}>
+          <Text fontSize={[15, 20]} fontWeight={"semibold"} mt={3}>
             {title}
           </Text>
           <VStack>
-            <Text fontFamily={"Rock Salt, cursive"} color={"theme.red"}>
+            <Text
+              fontFamily={"Rock Salt, cursive"}
+              color={"theme.red"}
+              fontSize={[15, 20]}
+            >
               Preço : R${price} ,00(unid)
             </Text>
             <Text color={"theme.red"}>Quantidade : {amount}</Text>

@@ -7,6 +7,7 @@ import {
   useToast,
   Box,
   useMediaQuery,
+  Center,
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { MdOutlineAddBox } from "react-icons/md";
@@ -297,7 +298,7 @@ export const ListProducts = () => {
           <VStack mt={10} mb={10}>
             <VStack>
               <Button
-                w={["275px"]}
+                w={["270px"]}
                 h={"50px"}
                 color={"theme.white"}
                 bg={"theme.red"}
