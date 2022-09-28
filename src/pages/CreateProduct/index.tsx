@@ -71,7 +71,6 @@ export const CreateProduct = () => {
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
 
-  const [error, setError] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const [categoryData, setCategoryData] = useState([]);
 

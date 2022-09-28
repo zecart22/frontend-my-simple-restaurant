@@ -16,15 +16,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { CardProduct } from "../../components/Cards/CardProduct";
-import img from "../../assets/images/lanche.png";
-import { RiAddLine } from "react-icons/ri";
 import { CardProductMobile } from "../Cards/CardProductMobile";
 import { IoIosAlert } from "react-icons/io";
 import { RiDraftLine } from "react-icons/ri";
 import { api } from "../../services";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalAddItem } from "../modalAddItem";
+import { ModalError } from "../ModalError";
 import { MdDeleteSweep } from "react-icons/md";
 import moment, { Moment } from "moment";
 
@@ -53,6 +51,7 @@ interface Order {
   created_at: string;
   updated_at: string;
   loadDraftOrder: () => void;
+  loadOpenOrder: () => void;
 }
 
 interface Data {
@@ -69,14 +68,23 @@ export const ModalOrder = ({
   name,
   status,
   loadDraftOrder,
+  loadOpenOrder,
 }: Order) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
+
   const [orderData, setOrderData] = useState([]);
 
-  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const [total, setTotal] = useState();
+  const [titleMessage, setTitleMessage] = useState("");
+
+  const [total, setTotal] = useState(0);
 
   const token = localStorage.getItem("@AcessToken");
 
@@ -116,21 +124,13 @@ export const ModalOrder = ({
       })
       .catch((err) => {
         console.log(err);
-      })
-      .then(() => {
-        setError(true);
+        setTitleMessage("Não foi possível deletar pedido!");
+        setMessage(
+          "Esse pedido ainda tem produtos, exclua todos e tente novamente"
+        );
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Não foi possível deletar pedido!",
-        description:
-          "Esse pedido ainda tem produtos, exclua todos e tente novamente",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
   };
 
   const loadOrderDetails = () => {
@@ -156,6 +156,8 @@ export const ModalOrder = ({
       })
       .then((response) => {
         console.log(response);
+        loadOpenOrder();
+        loadOrderDetails();
 
         toast({
           position: "top",
@@ -169,18 +171,11 @@ export const ModalOrder = ({
       })
       .catch((err) => {
         console.log(err);
-        setError(true);
+        setTitleMessage("Ops...");
+        setMessage("Pedido vazio, adicione 1 item para e tente novamente.");
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Algo deu errado!! ",
-        description: "Tente novamente",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
   };
 
   const handleSetToConcluids = async (data: Data) => {
@@ -204,18 +199,11 @@ export const ModalOrder = ({
       })
       .catch((err) => {
         console.log(err);
-        setError(true);
+        setTitleMessage("Ops algo deu errado");
+        setMessage("Tente novamente");
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Algo deu errado!! ",
-        description: "Tente novamente",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
   };
 
   useEffect(() => {
@@ -232,6 +220,12 @@ export const ModalOrder = ({
 
   return (
     <>
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={titleMessage}
+        message={message}
+      />
       {draft ? (
         <>
           <Button
@@ -334,7 +328,7 @@ export const ModalOrder = ({
                     fontWeight={"extrabold"}
                     w={"300px"}
                     children={"Produzir"}
-                    color={"theme.white"}
+                    color={"theme.black"}
                     bg={"theme.green"}
                     h={"50px"}
                     _hover={{
@@ -345,13 +339,16 @@ export const ModalOrder = ({
                     }}
                     onClick={handleSetToProdution as any}
                   />
-                  <ModalAddItem order_id={id} />
+                  <ModalAddItem
+                    order_id={id}
+                    loadOrderDetails={loadOrderDetails}
+                  />
 
                   <Button
                     leftIcon={<RiDraftLine size={30} />}
                     w={"300px"}
                     children={"Ver todos itens"}
-                    color={"theme.white"}
+                    color={"theme.black"}
                     bg={"theme.orange"}
                     h={"50px"}
                     _hover={{

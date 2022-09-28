@@ -57,6 +57,7 @@ interface CardOrderProps {
   created_at: string;
   updated_at: string;
   loadDraftOrder: () => void;
+  loadOpenOrder: () => void;
 }
 
 export const CardOrdersList = ({
@@ -69,6 +70,7 @@ export const CardOrdersList = ({
   created_at,
   updated_at,
   loadDraftOrder,
+  loadOpenOrder,
 }: CardOrderProps) => {
   return (
     <HStack>
@@ -94,7 +96,9 @@ export const CardOrdersList = ({
                 <GiRoundTable size={40} />
               </Center>
 
-              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+              <Text fontSize={[15, 20]}>
+                Mesa {table} - {name}
+              </Text>
             </HStack>
           </Flex>
         </>
@@ -120,7 +124,9 @@ export const CardOrdersList = ({
                 <GiRoundTable size={40} />
               </Center>
 
-              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+              <Text fontSize={[15, 20]}>
+                Mesa {table} - {name}
+              </Text>
             </HStack>
           </Flex>
         </>
@@ -151,7 +157,9 @@ export const CardOrdersList = ({
                 <BsCheckCircle size={35} color={"white"} />
               </Center>
 
-              <Text fontSize={[15, 20]}>Mesa {table}</Text>
+              <Text fontSize={[15, 20]}>
+                Mesa {table} - {name}
+              </Text>
             </HStack>
           </Flex>
         </>
@@ -169,6 +177,7 @@ export const CardOrdersList = ({
         name={name}
         status={status}
         loadDraftOrder={loadDraftOrder}
+        loadOpenOrder={loadOpenOrder}
       />
     </HStack>
   );

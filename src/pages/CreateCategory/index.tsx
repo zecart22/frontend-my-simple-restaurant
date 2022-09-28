@@ -1,4 +1,11 @@
-import { VStack, Text, useToast, Button, Center } from "@chakra-ui/react";
+import {
+  VStack,
+  Text,
+  useToast,
+  Button,
+  Center,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Link, useHistory } from "react-router-dom";
@@ -6,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { api } from "../../services";
+import { ModalError } from "../../components/ModalError";
 
 import { useState } from "react";
 interface CreatCategoryData {
@@ -20,7 +28,12 @@ export const CreateCategory = () => {
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
-  const [error, setError] = useState(false);
+
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
 
   const {
     formState: { errors },
@@ -50,23 +63,20 @@ export const CreateCategory = () => {
 
       .catch((err) => {
         console.log(err);
-        setError(true);
+        onModalFailOpen();
+        setTimeout(onModalFailClose, 3000);
       });
-    if (error) {
-      toast({
-        position: "top",
-        title: "Opss algo deu errado!! ",
-        description: "Tente novamente",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
-    }
   };
 
   return (
     <>
       <Header />
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={"Opss"}
+        message={"Nome indisponível, escolha outro e tente novamente"}
+      />
       <Center>
         <VStack mt={50} spacing={5} justifyContent={"center"}>
           <Text fontSize={30}>Nova Categoria</Text>
@@ -74,9 +84,9 @@ export const CreateCategory = () => {
           <Input
             isRequired
             w={["270px", "380px", "400px", "600px"]}
-            placeholder={"digite o nome da nova categoria"}
+            placeholder={"nome da categoria"}
             {...register("name")}
-            label={"Digite um nome para categoria"}
+            label={"Nome"}
             error={errors.name}
           />
 

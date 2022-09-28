@@ -96,6 +96,10 @@ export const ListOrders = () => {
 
   console.log(orderData);
 
+  useEffect(() => {
+    loadDraftOrder();
+  }, []);
+
   return (
     <>
       <Header />
@@ -214,6 +218,7 @@ export const ListOrders = () => {
                       name={order.name}
                       status={order.status}
                       loadDraftOrder={loadDraftOrder}
+                      loadOpenOrder={loadOpenOrder}
                     />
                   ))}
               </>
@@ -344,6 +349,7 @@ export const ListOrders = () => {
                       name={order.name}
                       status={order.status}
                       loadDraftOrder={loadDraftOrder}
+                      loadOpenOrder={loadOpenOrder}
                     />
                   ))}
               </>

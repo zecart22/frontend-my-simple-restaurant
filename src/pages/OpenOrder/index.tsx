@@ -5,6 +5,7 @@ import {
   useToast,
   Select,
   Center,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
@@ -13,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { api } from "../../services";
+import { ModalError } from "../../components/ModalError";
 
 interface CreatOrderData {
   table: number;
@@ -28,6 +30,12 @@ export const OpenOrder = () => {
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
   const history = useHistory();
+
+  const {
+    isOpen: isModalFailOpen,
+    onOpen: onModalFailOpen,
+    onClose: onModalFailClose,
+  } = useDisclosure();
 
   const {
     formState: { errors },
@@ -57,19 +65,19 @@ export const OpenOrder = () => {
 
       .catch((err) => {
         console.log(err);
-        toast({
-          position: "top",
-          title: "Opss algo deu errado!! ",
-          description: err,
-          status: "warning",
-          duration: 2000,
-          isClosable: true,
-        });
+        /*     onModalFailOpen();
+        setTimeout(onModalFailClose, 1500); */
       });
   };
 
   return (
     <>
+      <ModalError
+        isOpen={isModalFailOpen}
+        onClose={onModalFailClose}
+        title={"Ops..."}
+        message={"Algo deu errado, tente novamente"}
+      />
       <Header />
       <Center>
         <VStack mt={50} spacing={5} justifyContent={"center"}>

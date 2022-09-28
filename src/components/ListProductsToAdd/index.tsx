@@ -37,9 +37,10 @@ interface ProductsData {
 
 interface Order {
   order_id: string;
+  loadOrderDetails: () => void;
 }
 
-export const ListProductsToAdd = ({ order_id }: Order) => {
+export const ListProductsToAdd = ({ order_id, loadOrderDetails }: Order) => {
   const [categoryData, setCategoryData] = useState([]);
 
   const [productData, setProductData] = useState([]);
@@ -260,6 +261,7 @@ export const ListProductsToAdd = ({ order_id }: Order) => {
                       image={product.image}
                       price={product.price}
                       order_id={order_id}
+                      loadOrderDetails={loadOrderDetails}
                     />
                   ))}
               </>

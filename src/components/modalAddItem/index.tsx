@@ -21,9 +21,10 @@ import { ListProductsToAdd } from "../../components/ListProductsToAdd";
 
 interface OrderProps {
   order_id: string;
+  loadOrderDetails: () => void;
 }
 
-export const ModalAddItem = ({ order_id }: OrderProps) => {
+export const ModalAddItem = ({ order_id, loadOrderDetails }: OrderProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const token = localStorage.getItem("@AcessToken");
@@ -36,7 +37,7 @@ export const ModalAddItem = ({ order_id }: OrderProps) => {
         w={"300px"}
         leftIcon={<RiAddLine size={40} />}
         children={"Adicionar itens"}
-        color={"theme.white"}
+        color={"theme.black"}
         bg={"theme.green"}
         h={"50px"}
         _hover={{
@@ -60,7 +61,10 @@ export const ModalAddItem = ({ order_id }: OrderProps) => {
 
           <ModalCloseButton />
           <ModalBody>
-            <ListProductsToAdd order_id={order_id}></ListProductsToAdd>
+            <ListProductsToAdd
+              order_id={order_id}
+              loadOrderDetails={loadOrderDetails}
+            ></ListProductsToAdd>
           </ModalBody>
           <Box ml={[2, 10]}></Box>
           <ModalFooter>
