@@ -18,7 +18,10 @@ import { RiDraftLine } from "react-icons/ri";
 import { GiCampCookingPot } from "react-icons/gi";
 import { MdDeliveryDining } from "react-icons/md";
 import { GiHistogram } from "react-icons/gi";
-
+import { Input } from "../../components/Input";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 interface Order {
   id: string;
   table: number;
@@ -30,6 +33,14 @@ interface Order {
   updated_at: string;
 }
 
+interface TableDataProps {
+  table: number;
+}
+
+const tableSchema = yup.object().shape({
+  table: yup.number().required("Número da mesa é obrigatório"),
+});
+
 export const ListOrders = () => {
   const { order } = useContext(OrderContext);
 
@@ -38,6 +49,28 @@ export const ListOrders = () => {
   const [orderData, setOrderData] = useState([]);
 
   const token = localStorage.getItem("@AcessToken");
+
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm<TableDataProps>({
+    resolver: yupResolver(tableSchema),
+  });
+
+  const loadAllOrdersByTable = async (data: TableDataProps) => {
+    api
+      .post(`/orders/table`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        setOrderData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const loadOpenOrder = useCallback(async () => {
     try {
@@ -94,11 +127,11 @@ export const ListOrders = () => {
     }
   }, []);
 
-  console.log(orderData);
-
   useEffect(() => {
-    loadDraftOrder();
+    loadOpenOrder();
   }, []);
+
+  console.log(orderData);
 
   return (
     <>
@@ -187,23 +220,44 @@ export const ListOrders = () => {
                 </HStack>
               </Link>
             </HStack>
-            <HStack>
+            <VStack spacing={10}>
               <HStack>
-                <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
+                <HStack>
+                  <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
 
-                <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
-              </HStack>
-              <HStack>
-                <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
+                  <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
+                </HStack>
+                <HStack>
+                  <Box
+                    w={"30px"}
+                    h={"30px"}
+                    bg={"theme.orange"}
+                    border={"1px"}
+                  />
 
-                <Text fontSize={[12, 15]}>Pedidos em produção</Text>
-              </HStack>
-              <HStack>
-                <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
+                  <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+                </HStack>
+                <HStack>
+                  <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
 
-                <Text fontSize={[12, 15]}>Pedidos em concluidos</Text>
+                  <Text fontSize={[12, 15]}>Pedidos concluidos</Text>
+                </HStack>
               </HStack>
-            </HStack>
+
+              <Center flexDirection={"row"}>
+                <Input
+                  placeholder={"digite o número da mesa para ver todos pedidos"}
+                  {...register("table")}
+                  error={errors.table}
+                />
+                <Button
+                  bg={"theme.green"}
+                  onClick={handleSubmit(loadAllOrdersByTable as any)}
+                >
+                  Consultar
+                </Button>
+              </Center>
+            </VStack>
             {orderData.length > 0 ? (
               <>
                 {orderData &&
@@ -231,7 +285,7 @@ export const ListOrders = () => {
         <>
           {/* mobile */}
 
-          <VStack mt={50} spacing={5} justifyContent={"center"}>
+          <VStack mt={50} spacing={5} justifyContent={"center"} mb={10} ml={5}>
             <VStack>
               <Button
                 w="230px"
@@ -321,19 +375,33 @@ export const ListOrders = () => {
               <HStack>
                 <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
 
-                <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
+                <Text fontSize={[10, 15]}>Pedidos rascunho</Text>
               </HStack>
               <HStack>
                 <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
 
-                <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+                <Text fontSize={[10, 15]}>Pedidos em produção</Text>
               </HStack>
               <HStack>
                 <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
 
-                <Text fontSize={[12, 15]}>Pedidos em concluidos</Text>
+                <Text fontSize={[10, 15]}>Pedidos concluidos</Text>
               </HStack>
             </Center>
+            <HStack>
+              <Input
+                placeholder={"digite o número da mesa para ver todos pedidos"}
+                {...register("table")}
+                error={errors.table}
+              />
+              <Button
+                bg={"theme.green"}
+                onClick={handleSubmit(loadAllOrdersByTable as any)}
+                w={"50px"}
+              >
+                Ok
+              </Button>
+            </HStack>
 
             {orderData.length > 0 ? (
               <>
