@@ -8,6 +8,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
+import { CardTotalValue } from "../../components/CardTotalTableOrderValue";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CardOrdersList } from "../../components/Cards/CardOrders";
 import { Link } from "react-router-dom";
@@ -44,6 +45,12 @@ const tableSchema = yup.object().shape({
 export const ListOrders = () => {
   const { order } = useContext(OrderContext);
 
+  const [table, setTable] = useState(0);
+
+  const [wanteCloseOrder, setWantCloseOrder] = useState(false);
+
+  const [totalTable, setTotalTable] = useState(0);
+
   const [isLargerThan1281] = useMediaQuery("(min-width: 1281px)");
 
   const [orderData, setOrderData] = useState([]);
@@ -59,13 +66,15 @@ export const ListOrders = () => {
   });
 
   const loadAllOrdersByTable = async (data: TableDataProps) => {
+    const { table } = data;
+    setTable(table);
     api
       .post(`/orders/table`, data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response);
         setOrderData(response.data);
+        setWantCloseOrder(true);
       })
       .catch((err) => {
         console.log(err);
@@ -78,6 +87,7 @@ export const ListOrders = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrderData(response.data);
+      setWantCloseOrder(false);
     } catch (err) {
       console.log(err);
     }
@@ -89,6 +99,7 @@ export const ListOrders = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrderData(response.data);
+      setWantCloseOrder(false);
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +111,7 @@ export const ListOrders = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrderData(response.data);
+      setWantCloseOrder(false);
     } catch (err) {
       console.log(err);
     }
@@ -111,6 +123,7 @@ export const ListOrders = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrderData(response.data);
+      setWantCloseOrder(false);
     } catch (err) {
       console.log(err);
     }
@@ -122,6 +135,7 @@ export const ListOrders = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrderData(response.data);
+      setWantCloseOrder(false);
     } catch (err) {
       console.log(err);
     }
@@ -221,13 +235,13 @@ export const ListOrders = () => {
               </Link>
             </HStack>
             <VStack spacing={10}>
-              <HStack>
-                <HStack>
+              <HStack spacing={1}>
+                <HStack spacing={1}>
                   <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
 
-                  <Text fontSize={[12, 15]}>Pedidos rascunho</Text>
+                  <Text fontSize={[12]}>Pedidos rascunho</Text>
                 </HStack>
-                <HStack>
+                <HStack spacing={1}>
                   <Box
                     w={"30px"}
                     h={"30px"}
@@ -235,28 +249,46 @@ export const ListOrders = () => {
                     border={"1px"}
                   />
 
-                  <Text fontSize={[12, 15]}>Pedidos em produção</Text>
+                  <Text fontSize={[12]}>Pedidos em produção</Text>
                 </HStack>
-                <HStack>
+                <HStack spacing={1}>
                   <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
 
-                  <Text fontSize={[12, 15]}>Pedidos concluidos</Text>
+                  <Text fontSize={[12]}>Pedidos concluidos</Text>
                 </HStack>
               </HStack>
 
-              <Center flexDirection={"row"}>
+              <VStack>
                 <Input
-                  placeholder={"digite o número da mesa para ver todos pedidos"}
+                  placeholder={"digite o número da mesa"}
                   {...register("table")}
                   error={errors.table}
+                  label={"Consultar pedidos / Fechar mesa"}
                 />
                 <Button
-                  bg={"theme.green"}
+                  color={"theme.white"}
+                  bg={"theme.darkgreen"}
                   onClick={handleSubmit(loadAllOrdersByTable as any)}
+                  w={["200px", "420px"]}
+                  _hover={{
+                    color: "black",
+                    bg: "white",
+                    border: "1px",
+                    borderColor: "black",
+                  }}
                 >
                   Consultar
                 </Button>
-              </Center>
+              </VStack>
+              {wanteCloseOrder ? (
+                <>
+                  <Text fontWeight={"extrabold"} fontSize={20}>
+                    Todos pedidos da mesa {table}
+                  </Text>
+                </>
+              ) : (
+                <></>
+              )}
             </VStack>
             {orderData.length > 0 ? (
               <>
@@ -273,8 +305,30 @@ export const ListOrders = () => {
                       status={order.status}
                       loadDraftOrder={loadDraftOrder}
                       loadOpenOrder={loadOpenOrder}
+                      setTotalTable={setTotalTable}
+                      totalTable={totalTable}
                     />
                   ))}
+              </>
+            ) : (
+              <></>
+            )}
+            {wanteCloseOrder ? (
+              <>
+                {orderData.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    <CardTotalValue table={Number(table)}></CardTotalValue>
+                  </>
+                )}
+
+                <Button
+                  children={"Fechar mesa"}
+                  bg={"theme.red"}
+                  color={"theme.white"}
+                  w={[200, 320]}
+                />
               </>
             ) : (
               <></>
@@ -372,37 +426,53 @@ export const ListOrders = () => {
             </VStack>
 
             <Center>
-              <HStack>
+              <HStack spacing={1}>
                 <Box w={"30px"} h={"30px"} bg={"theme.blue"} border={"1px"} />
 
-                <Text fontSize={[10, 15]}>Pedidos rascunho</Text>
+                <Text fontSize={[10]}>Pedidos rascunho</Text>
               </HStack>
-              <HStack>
+              <HStack spacing={1}>
                 <Box w={"30px"} h={"30px"} bg={"theme.orange"} border={"1px"} />
 
-                <Text fontSize={[10, 15]}>Pedidos em produção</Text>
+                <Text fontSize={[10]}>Pedidos em produção</Text>
               </HStack>
-              <HStack>
+              <HStack spacing={1}>
                 <Box w={"30px"} h={"30px"} bg={"#089605"} border={"1px"} />
 
-                <Text fontSize={[10, 15]}>Pedidos concluidos</Text>
+                <Text fontSize={[10]}>Pedidos concluidos</Text>
               </HStack>
             </Center>
-            <HStack>
+            <VStack justifyContent={"flex-start"}>
               <Input
-                placeholder={"digite o número da mesa para ver todos pedidos"}
+                placeholder={"digite o número da mesa"}
                 {...register("table")}
                 error={errors.table}
+                label={"Consultar pedidos / Fechar mesa"}
               />
               <Button
-                bg={"theme.green"}
+                color={"theme.white"}
+                bg={"theme.darkgreen"}
                 onClick={handleSubmit(loadAllOrdersByTable as any)}
-                w={"50px"}
+                w={["200px", "420px"]}
+                _hover={{
+                  color: "black",
+                  bg: "white",
+                  border: "1px",
+                  borderColor: "black",
+                }}
               >
-                Ok
+                Consultar
               </Button>
-            </HStack>
-
+            </VStack>
+            {wanteCloseOrder ? (
+              <>
+                <Text fontWeight={"extrabold"} fontSize={20}>
+                  Todos pedidos da mesa {table}
+                </Text>
+              </>
+            ) : (
+              <></>
+            )}
             {orderData.length > 0 ? (
               <>
                 {orderData &&
@@ -418,8 +488,29 @@ export const ListOrders = () => {
                       status={order.status}
                       loadDraftOrder={loadDraftOrder}
                       loadOpenOrder={loadOpenOrder}
+                      setTotalTable={setTotalTable}
+                      totalTable={totalTable}
                     />
                   ))}
+              </>
+            ) : (
+              <></>
+            )}
+            {wanteCloseOrder ? (
+              <>
+                {orderData.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    <CardTotalValue table={Number(table)}></CardTotalValue>
+                  </>
+                )}
+                <Button
+                  children={"Fechar mesa"}
+                  bg={"theme.red"}
+                  color={"theme.white"}
+                  w={[200, 320]}
+                />
               </>
             ) : (
               <></>

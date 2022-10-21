@@ -13,6 +13,7 @@ const theme = extendTheme({
       grafit: "#211D1D",
       yellow: "#F8E00C",
       green: "#74F80C",
+      darkgreen: "#089605",
       blue: "#0CBFF8",
     },
     gray: {

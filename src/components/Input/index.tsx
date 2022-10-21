@@ -50,7 +50,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
 
   return (
     <FormControl isInvalid={!!error} isRequired>
-      {!!label && <FormLabel>{label}</FormLabel>}
+      {!!label && <FormLabel fontSize={[12, 18]}>{label}</FormLabel>}
       <InputGroup flexDirection="column">
         <ChakraInput
           id={name}

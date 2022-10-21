@@ -56,6 +56,9 @@ interface CardOrderProps {
   name: string;
   created_at: string;
   updated_at: string;
+  setTotalTable: any;
+  totalTable: number;
+
   loadDraftOrder: () => void;
   loadOpenOrder: () => void;
 }
@@ -71,6 +74,8 @@ export const CardOrdersList = ({
   updated_at,
   loadDraftOrder,
   loadOpenOrder,
+  setTotalTable,
+  totalTable,
 }: CardOrderProps) => {
   return (
     <HStack>
@@ -178,6 +183,8 @@ export const CardOrdersList = ({
         status={status}
         loadDraftOrder={loadDraftOrder}
         loadOpenOrder={loadOpenOrder}
+        setTotalTable={setTotalTable}
+        totalTable={totalTable}
       />
     </HStack>
   );

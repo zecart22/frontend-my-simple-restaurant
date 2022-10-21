@@ -50,6 +50,9 @@ interface Order {
   name: string;
   created_at: string;
   updated_at: string;
+  setTotalTable: any;
+  totalTable: number;
+
   loadDraftOrder: () => void;
   loadOpenOrder: () => void;
 }
@@ -67,6 +70,9 @@ export const ModalOrder = ({
   isDelivery,
   name,
   status,
+  setTotalTable,
+  totalTable,
+
   loadDraftOrder,
   loadOpenOrder,
 }: Order) => {
@@ -139,7 +145,6 @@ export const ModalOrder = ({
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response);
         setOrderData(response.data);
       })
       .catch((err) => console.log(err));
@@ -215,8 +220,6 @@ export const ModalOrder = ({
 
   let updatedAt = moment(updated_at).format("DD/MM/YYYY hh:mm");
   let updatedAtHour = moment(updated_at).format("hh:mm");
-
-  console.log(orderData);
 
   return (
     <>
@@ -476,6 +479,8 @@ export const ModalOrder = ({
                         draft={draft}
                         orderData={orderData}
                         setTotal={setTotal}
+                        setTotalTable={setTotalTable}
+                        totalTable={totalTable}
                       />
                     ))}
                 </>

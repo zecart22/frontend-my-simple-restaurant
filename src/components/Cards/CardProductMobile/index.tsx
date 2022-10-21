@@ -28,6 +28,8 @@ interface CardProductsProps {
   draft: boolean;
   orderData: any;
   setTotal: any;
+  setTotalTable: any;
+  totalTable: number;
   loadOrderDetails: () => void;
 }
 
@@ -45,6 +47,8 @@ export const CardProductMobile = ({
   draft,
   orderData,
   setTotal,
+  setTotalTable,
+  totalTable,
   loadOrderDetails,
 }: CardProductsProps) => {
   const [wantDelete, setWantDelete] = useState(false);
@@ -61,19 +65,18 @@ export const CardProductMobile = ({
   const token = localStorage.getItem("@AcessToken");
   const toast = useToast();
   let subTotal = Number(price) * amount;
+  const [totalOrderTable, setTotalOrderTable] = useState(0);
 
   const arraySubtotal = orderData.map(
     (order: any) => Number(order.product.price) * order.amount
   );
 
   const len = arraySubtotal.length;
-  console.log(len);
 
   const sumTotal = (len: any) => {
     let acc = 0;
     for (let i = 0; i < len; i++) {
       acc = acc + arraySubtotal[i];
-      console.log(acc);
     }
     return acc;
   };
