@@ -319,16 +319,12 @@ export const ListOrders = () => {
                   <></>
                 ) : (
                   <>
-                    <CardTotalValue table={Number(table)}></CardTotalValue>
+                    <CardTotalValue
+                      table={Number(table)}
+                      loadOpenOrder={loadOpenOrder}
+                    ></CardTotalValue>
                   </>
                 )}
-
-                <Button
-                  children={"Fechar mesa"}
-                  bg={"theme.red"}
-                  color={"theme.white"}
-                  w={[200, 320]}
-                />
               </>
             ) : (
               <></>
@@ -502,15 +498,12 @@ export const ListOrders = () => {
                   <></>
                 ) : (
                   <>
-                    <CardTotalValue table={Number(table)}></CardTotalValue>
+                    <CardTotalValue
+                      table={Number(table)}
+                      loadOpenOrder={loadOpenOrder}
+                    ></CardTotalValue>
                   </>
                 )}
-                <Button
-                  children={"Fechar mesa"}
-                  bg={"theme.red"}
-                  color={"theme.white"}
-                  w={[200, 320]}
-                />
               </>
             ) : (
               <></>
