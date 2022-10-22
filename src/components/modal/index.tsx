@@ -215,6 +215,11 @@ export const ModalOrder = ({
     loadOrderDetails();
   }, []);
 
+  const OpenModal = () => {
+    onOpen();
+    loadOrderDetails();
+  };
+
   let createdAt = moment(created_at).format("DD/MM/YYYY hh:mm");
   let createdAtHour = moment(created_at).format("hh:mm");
 
@@ -232,7 +237,7 @@ export const ModalOrder = ({
       {draft ? (
         <>
           <Button
-            onClick={onOpen}
+            onClick={OpenModal}
             bg={"theme.blue"}
             border={"1px"}
             borderColor={"theme.gray50"}
@@ -246,7 +251,7 @@ export const ModalOrder = ({
       ) : !draft && !status ? (
         <>
           <Button
-            onClick={onOpen}
+            onClick={OpenModal}
             bg={"theme.orange"}
             border={"2px"}
             borderColor={"theme.gray50"}
@@ -260,7 +265,7 @@ export const ModalOrder = ({
       ) : !draft && status ? (
         <>
           <Button
-            onClick={onOpen}
+            onClick={OpenModal}
             bg={"#089605"}
             border={"2px"}
             borderColor={"theme.gray50"}

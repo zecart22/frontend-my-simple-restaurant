@@ -82,7 +82,7 @@ export const CardOrdersList = ({
       {draft ? (
         <>
           <Flex
-            w={["190px", "300px", "350px", "400px"]}
+            w={["190px", "300px", "330px"]}
             h={"50px"}
             border={"1px"}
             borderColor={"theme.gray50"}
@@ -110,7 +110,7 @@ export const CardOrdersList = ({
       ) : !draft && !status ? (
         <>
           <Flex
-            w={["190px", "300px", "350px", "400px"]}
+            w={["190px", "300px", "330px"]}
             h={"50px"}
             border={"1px"}
             borderColor={"theme.gray50"}
@@ -138,7 +138,7 @@ export const CardOrdersList = ({
       ) : !draft && status ? (
         <>
           <Flex
-            w={["190px", "300px", "350px", "400px"]}
+            w={["190px", "300px", "330px"]}
             h={"50px"}
             border={"1px"}
             borderColor={"theme.gray50"}

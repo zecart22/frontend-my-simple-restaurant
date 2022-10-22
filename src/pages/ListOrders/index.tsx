@@ -152,7 +152,7 @@ export const ListOrders = () => {
       <Header />
       {isLargerThan1281 ? (
         <>
-          <VStack mt={50} spacing={5} justifyContent={"center"}>
+          <VStack mt={50} mb={10} spacing={5} justifyContent={"center"}>
             <HStack>
               <Button
                 children={"Todos pedidos"}
