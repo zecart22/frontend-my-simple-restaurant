@@ -38,7 +38,7 @@ interface CreatProductData {
   description: string;
   category_id: string;
   hungryLevel: string;
-  price: string;
+  prices: number;
   protein: string;
   file: string;
   image: string;
@@ -55,7 +55,11 @@ const createProductSchema = yup.object().shape({
   description: yup.string().required(" descrição obrigatória"),
   category_id: yup.string().required(" categoria  obrigatório"),
   hungryLevel: yup.string().required(" tamanho obrigatório"),
-  price: yup.string().required("preço obrigatório"),
+  prices: yup
+    .number()
+    .required("preço obrigatório")
+    .positive("deve ser maior que 0")
+    .integer("deve ser um número inteiro"),
   protein: yup.string().required("proteína obrigatório"),
   image: yup.string().required("url da imagem obrigatório"),
 });
@@ -185,10 +189,10 @@ export const CreateProduct = () => {
             />
 
             <Input
-              placeholder={"adicione o preço do produto"}
-              {...register("price")}
+              placeholder={"adicione o preço do produtos, não use vírgula"}
+              {...register("prices")}
               label={"Preço"}
-              error={errors.price}
+              error={errors.prices}
             />
 
             <Select
